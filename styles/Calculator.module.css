@@ -1,0 +1,160 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #e0e0e0;
+}
+
+.input,
+.select {
+  padding: 0.75rem 1rem;
+  background-color: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: #4a9eff;
+}
+
+.input::placeholder {
+  color: #666;
+}
+
+.button {
+  padding: 1rem;
+  background-color: #4a9eff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #3a8eef;
+}
+
+.button:disabled {
+  background-color: #333;
+  cursor: not-allowed;
+}
+
+.results {
+  background-color: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.resultItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #222;
+}
+
+.resultItem:last-child {
+  border-bottom: none;
+}
+
+.resultLabel {
+  font-size: 0.95rem;
+  color: #b0b0b0;
+}
+
+.resultValue {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+
+.resultValuePrimary {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #4a9eff;
+}
+
+.note {
+  background-color: #1a1a1a;
+  border-left: 3px solid #4a9eff;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #b0b0b0;
+  line-height: 1.5;
+}
+
+.warning {
+  background-color: #2a1a1a;
+  border-left: 3px solid #ff6b6b;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #ffb3b3;
+  line-height: 1.5;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.buttonOption {
+  flex: 1;
+  padding: 0.75rem;
+  background-color: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.buttonOption:hover {
+  border-color: #4a9eff;
+}
+
+.buttonOptionActive {
+  background-color: #4a9eff;
+  border-color: #4a9eff;
+  color: white;
+}
+
+@media (max-width: 640px) {
+  .form {
+    gap: 1.25rem;
+  }
+
+  .resultValue {
+    font-size: 1.1rem;
+  }
+
+  .resultValuePrimary {
+    font-size: 1.5rem;
+  }
+}
