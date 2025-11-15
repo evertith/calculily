@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -17,9 +18,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Google tag (gtag.js) - Immediately after <head> */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-70PPEJM0GG"></script>
-        <script
+        {/* Google tag (gtag.js) */}
+        <Script
+          strategy="beforeInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-70PPEJM0GG"
+        />
+        <Script
+          id="gtag-init"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
