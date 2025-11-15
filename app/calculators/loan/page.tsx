@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import CalculatorLayout from '@/components/CalculatorLayout';
+import FAQ from '@/components/FAQ';
+import RelatedCalculators from '@/components/RelatedCalculators';
 import styles from '@/styles/Calculator.module.css';
 
 export default function LoanCalculator() {
@@ -13,6 +15,38 @@ export default function LoanCalculator() {
     totalInterest: number;
     totalPaid: number;
   } | null>(null);
+
+  const faqItems = [
+    {
+      question: "What's the difference between APR and interest rate?",
+      answer: "The interest rate is the cost of borrowing the principal amount. APR (Annual Percentage Rate) includes the interest rate plus other fees like origination fees, closing costs, and mortgage insurance. APR gives you a more accurate picture of the total cost. For this calculator, use your interest rate - if you want to account for fees, add them to your loan amount."
+    },
+    {
+      question: "Should I choose a shorter loan term to save on interest?",
+      answer: "Shorter terms mean higher monthly payments but significantly less interest paid overall. For example, a $20,000 loan at 7% costs $4,559 in interest over 60 months but only $2,321 over 36 months - saving $2,238! Choose based on your budget: shorter terms if you can afford higher payments and want to save money, longer terms for lower monthly payments and more flexibility."
+    },
+    {
+      question: "Can I pay extra toward my loan to pay it off faster?",
+      answer: "Yes! Most loans allow extra payments toward principal with no penalty. Even an extra $50-100/month can save thousands in interest and years off your loan. Make sure extra payments are applied to principal, not future payments. Check your loan terms - some loans have prepayment penalties, though these are increasingly rare for personal loans."
+    },
+    {
+      question: "How does my credit score affect my interest rate?",
+      answer: "Your credit score has a huge impact. Excellent credit (740+) typically gets rates 3-5% lower than fair credit (650-699). On a $15,000 5-year loan, the difference between 6% and 11% interest is over $2,000. Before applying, check your credit score and consider improving it first if it's below 700 - even a few months of on-time payments can help."
+    }
+  ];
+
+  const relatedCalculators = [
+    {
+      title: "Mortgage Calculator",
+      link: "/calculators/mortgage",
+      description: "Calculate home loan payments with taxes and insurance"
+    },
+    {
+      title: "Tip Calculator",
+      link: "/calculators/tip",
+      description: "Calculate tips and split bills for dining"
+    }
+  ];
 
   const calculateLoan = () => {
     const amount = parseFloat(loanAmount);
@@ -110,6 +144,9 @@ export default function LoanCalculator() {
           </div>
         </div>
       )}
+
+      <FAQ items={faqItems} />
+      <RelatedCalculators calculators={relatedCalculators} />
     </CalculatorLayout>
   );
 }

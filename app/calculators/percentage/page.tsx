@@ -1,0 +1,224 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import CalculatorLayout from '@/components/CalculatorLayout';
+import FAQ from '@/components/FAQ';
+import RelatedCalculators from '@/components/RelatedCalculators';
+import styles from '@/styles/Calculator.module.css';
+
+type CalculationType = 'percentOf' | 'whatPercent' | 'percentIncrease' | 'percentDecrease';
+
+export default function PercentageCalculator() {
+  const [calculationType, setCalculationType] = useState<CalculationType>('percentOf');
+  const [input1, setInput1] = useState<string>('');
+  const [input2, setInput2] = useState<string>('');
+  const [result, setResult] = useState<number | null>(null);
+
+  const percentOf = (percent: number, number: number): number => {
+    return (percent / 100) * number;
+  };
+
+  const whatPercent = (part: number, whole: number): number => {
+    return (part / whole) * 100;
+  };
+
+  const percentIncrease = (original: number, newValue: number): number => {
+    return ((newValue - original) / original) * 100;
+  };
+
+  const percentDecrease = (original: number, newValue: number): number => {
+    return ((original - newValue) / original) * 100;
+  };
+
+  useEffect(() => {
+    if (input1 && input2) {
+      const val1 = parseFloat(input1);
+      const val2 = parseFloat(input2);
+
+      if (!isNaN(val1) && !isNaN(val2)) {
+        let calculated: number;
+        switch (calculationType) {
+          case 'percentOf':
+            calculated = percentOf(val1, val2);
+            break;
+          case 'whatPercent':
+            calculated = whatPercent(val1, val2);
+            break;
+          case 'percentIncrease':
+            calculated = percentIncrease(val1, val2);
+            break;
+          case 'percentDecrease':
+            calculated = percentDecrease(val1, val2);
+            break;
+        }
+        setResult(calculated);
+      }
+    } else {
+      setResult(null);
+    }
+  }, [input1, input2, calculationType]);
+
+  const getLabels = () => {
+    switch (calculationType) {
+      case 'percentOf':
+        return { label1: 'Percentage (%)', label2: 'Number', resultText: 'Result' };
+      case 'whatPercent':
+        return { label1: 'Part', label2: 'Whole', resultText: 'Percentage' };
+      case 'percentIncrease':
+        return { label1: 'Original Value', label2: 'New Value', resultText: 'Percentage Increase' };
+      case 'percentDecrease':
+        return { label1: 'Original Value', label2: 'New Value', resultText: 'Percentage Decrease' };
+    }
+  };
+
+  const getFormula = () => {
+    switch (calculationType) {
+      case 'percentOf':
+        return `${input1}% of ${input2} = ${result?.toFixed(2)}`;
+      case 'whatPercent':
+        return `${input1} is ${result?.toFixed(2)}% of ${input2}`;
+      case 'percentIncrease':
+        return `${result?.toFixed(2)}% increase from ${input1} to ${input2}`;
+      case 'percentDecrease':
+        return `${result?.toFixed(2)}% decrease from ${input1} to ${input2}`;
+    }
+  };
+
+  const labels = getLabels();
+
+  const faqItems = [
+    {
+      question: "How do I calculate what percentage one number is of another?",
+      answer: "Divide the part by the whole and multiply by 100. For example, to find what percentage 25 is of 200: (25 ÷ 200) × 100 = 12.5%. Use the 'X is what % of Y?' calculator type."
+    },
+    {
+      question: "What's the difference between percentage increase and decrease?",
+      answer: "Percentage increase shows how much a value has grown, while percentage decrease shows how much it has shrunk. Both are calculated relative to the original value. A 50% increase from 100 is 150, while a 50% decrease from 100 is 50."
+    },
+    {
+      question: "Can a percentage increase be more than 100%?",
+      answer: "Yes! A percentage increase over 100% means the new value is more than double the original. For example, going from 10 to 25 is a 150% increase. There's no upper limit to percentage increases."
+    },
+    {
+      question: "How do I calculate a discount percentage?",
+      answer: "Use the percentage decrease calculator. Enter the original price and the sale price to find the discount percentage. For example, if an item was $100 and is now $75, that's a 25% discount."
+    }
+  ];
+
+  const relatedCalculators = [
+    {
+      title: "Discount Calculator",
+      link: "/calculators/discount",
+      description: "Calculate sale prices and savings from discounts"
+    },
+    {
+      title: "Sales Tax Calculator",
+      link: "/calculators/sales-tax",
+      description: "Calculate sales tax and total prices"
+    },
+    {
+      title: "Tip Calculator",
+      link: "/calculators/tip",
+      description: "Calculate tips and split bills easily"
+    }
+  ];
+
+  return (
+    <CalculatorLayout
+      title="Percentage Calculator"
+      description="Calculate percentages easily with multiple calculation types including percentage of a number, percentage increase, and percentage decrease."
+    >
+      <div className={styles.form}>
+        <div className={styles.formGroup}>
+          <label className={styles.label}>Calculation Type</label>
+          <div className={styles.buttonGroup}>
+            <button
+              type="button"
+              className={`${styles.buttonOption} ${calculationType === 'percentOf' ? styles.buttonOptionActive : ''}`}
+              onClick={() => setCalculationType('percentOf')}
+            >
+              X% of Y
+            </button>
+            <button
+              type="button"
+              className={`${styles.buttonOption} ${calculationType === 'whatPercent' ? styles.buttonOptionActive : ''}`}
+              onClick={() => setCalculationType('whatPercent')}
+            >
+              X is what % of Y?
+            </button>
+          </div>
+        </div>
+
+        <div className={styles.formGroup}>
+          <div className={styles.buttonGroup}>
+            <button
+              type="button"
+              className={`${styles.buttonOption} ${calculationType === 'percentIncrease' ? styles.buttonOptionActive : ''}`}
+              onClick={() => setCalculationType('percentIncrease')}
+            >
+              % Increase
+            </button>
+            <button
+              type="button"
+              className={`${styles.buttonOption} ${calculationType === 'percentDecrease' ? styles.buttonOptionActive : ''}`}
+              onClick={() => setCalculationType('percentDecrease')}
+            >
+              % Decrease
+            </button>
+          </div>
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="input1" className={styles.label}>
+            {labels.label1}
+          </label>
+          <input
+            id="input1"
+            type="number"
+            className={styles.input}
+            value={input1}
+            onChange={(e) => setInput1(e.target.value)}
+            placeholder={`Enter ${labels.label1.toLowerCase()}`}
+            step="any"
+          />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="input2" className={styles.label}>
+            {labels.label2}
+          </label>
+          <input
+            id="input2"
+            type="number"
+            className={styles.input}
+            value={input2}
+            onChange={(e) => setInput2(e.target.value)}
+            placeholder={`Enter ${labels.label2.toLowerCase()}`}
+            step="any"
+          />
+        </div>
+      </div>
+
+      {result !== null && (
+        <div className={styles.results}>
+          <div className={styles.resultItem}>
+            <span className={styles.resultLabel}>{labels.resultText}</span>
+            <span className={styles.resultValuePrimary}>
+              {calculationType === 'percentOf'
+                ? result.toFixed(2)
+                : `${result.toFixed(2)}%`
+              }
+            </span>
+          </div>
+          <div className={styles.resultItem}>
+            <span className={styles.resultLabel}>Formula</span>
+            <span className={styles.resultValue}>{getFormula()}</span>
+          </div>
+        </div>
+      )}
+
+      <FAQ items={faqItems} />
+      <RelatedCalculators calculators={relatedCalculators} />
+    </CalculatorLayout>
+  );
+}

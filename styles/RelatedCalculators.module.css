@@ -1,0 +1,46 @@
+.relatedContainer {
+  margin: 3rem 0;
+  padding: 2rem;
+  background: #1a1a1a;
+  border-radius: 8px;
+}
+
+.relatedTitle {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #e0e0e0;
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.relatedCard {
+  padding: 1.5rem;
+  background: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: block;
+}
+
+.relatedCard:hover {
+  border-color: #4a9eff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(74, 158, 255, 0.1);
+}
+
+.relatedCardTitle {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #4a9eff;
+}
+
+.relatedCardDescription {
+  color: #c0c0c0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}

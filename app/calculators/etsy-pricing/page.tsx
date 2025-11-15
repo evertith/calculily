@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import CalculatorLayout from '@/components/CalculatorLayout';
+import FAQ from '@/components/FAQ';
+import RelatedCalculators from '@/components/RelatedCalculators';
 import styles from '@/styles/Calculator.module.css';
 
 export default function EtsyPricingCalculator() {
@@ -17,6 +19,43 @@ export default function EtsyPricingCalculator() {
     totalFees: number;
     netProfit: number;
   } | null>(null);
+
+  const faqItems = [
+    {
+      question: "What should I set as my hourly rate?",
+      answer: "Your hourly rate should reflect your skill level and market. Beginners often start at $15-20/hour, intermediate crafters charge $25-35/hour, and experts with specialized skills can charge $40-60+/hour. Don't undervalue your time - remember this needs to cover not just making the item, but photography, listing, customer service, and business overhead too."
+    },
+    {
+      question: "Is 30% profit margin too high or too low?",
+      answer: "30% is a good starting point for handmade items. Serious businesses often target 40-50% to remain sustainable and allow for sales/discounts. Lower margins (20-30%) work for simpler items or competitive markets. Remember, this profit needs to cover your shop overhead, packaging, marketing, and business growth - it's not all take-home pay."
+    },
+    {
+      question: "Should I include packaging and shipping costs?",
+      answer: "Packaging materials should be included in your material costs. Shipping is typically charged separately on Etsy. If you offer free shipping, add your average shipping cost to material costs. Many successful sellers charge shipping separately and pad it slightly to cover materials like boxes, bubble wrap, and tape."
+    },
+    {
+      question: "Are these Etsy fees current and accurate?",
+      answer: "This calculator uses Etsy's current fee structure as of 2024: $0.20 listing fee per item, 6.5% transaction fee on the sale price, and 3% + $0.25 payment processing fee. Etsy occasionally updates fees, so check Etsy's seller handbook for the latest rates. The calculator doesn't include optional advertising costs or off-site ad fees."
+    }
+  ];
+
+  const relatedCalculators = [
+    {
+      title: "Tip Calculator",
+      link: "/calculators/tip",
+      description: "Calculate tips and split bills quickly"
+    },
+    {
+      title: "Fuel Cost Calculator",
+      link: "/calculators/fuel-cost",
+      description: "Estimate fuel costs for shipping or craft fair travel"
+    },
+    {
+      title: "Loan Calculator",
+      link: "/calculators/loan",
+      description: "Plan financing for business equipment or inventory"
+    }
+  ];
 
   const calculatePricing = () => {
     const materials = parseFloat(materialCost);
@@ -157,6 +196,9 @@ export default function EtsyPricingCalculator() {
           </div>
         </div>
       )}
+
+      <FAQ items={faqItems} />
+      <RelatedCalculators calculators={relatedCalculators} />
     </CalculatorLayout>
   );
 }

@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import CalculatorLayout from '@/components/CalculatorLayout';
+import FAQ from '@/components/FAQ';
+import RelatedCalculators from '@/components/RelatedCalculators';
 import styles from '@/styles/Calculator.module.css';
 
 export default function TipCalculator() {
@@ -14,6 +16,43 @@ export default function TipCalculator() {
     totalAmount: number;
     perPerson: number;
   } | null>(null);
+
+  const faqItems = [
+    {
+      question: "What is the standard tip percentage?",
+      answer: "In the United States, 15-20% is standard for table service at restaurants. 18% is a good baseline for good service, 20% or more for excellent service, and 15% for acceptable service. For counter service or takeout, 10% or a few dollars is appreciated but not mandatory. Delivery services typically warrant 15-20% with a $3-5 minimum."
+    },
+    {
+      question: "Should I tip on the pre-tax or post-tax amount?",
+      answer: "There's no strict rule, but most people calculate tips on the pre-tax amount. However, the difference is usually small (under $1 on a $50 bill), so tipping on the post-tax total is also common and acceptable. Choose whichever is easier to calculate or feels right to you."
+    },
+    {
+      question: "How do I split the bill fairly when people ordered different amounts?",
+      answer: "The simplest approach is splitting evenly if orders were roughly similar. For very different orders, you can either: 1) Ask for separate checks upfront, 2) Each person calculates their portion plus their share of tax and tip, or 3) Use a bill-splitting app that lets you assign items to individuals. This calculator helps once you know each person's share."
+    },
+    {
+      question: "Should I tip on discounted or comped items?",
+      answer: "Yes, you should tip on the original price before discounts or coupons. Your server did the same amount of work regardless of your discount. If your meal was completely comped, tipping 20% of what the bill would have been is good etiquette. Remember, the server's effort was the same."
+    }
+  ];
+
+  const relatedCalculators = [
+    {
+      title: "Fuel Cost Calculator",
+      link: "/calculators/fuel-cost",
+      description: "Calculate fuel costs for trips and travel"
+    },
+    {
+      title: "Loan Calculator",
+      link: "/calculators/loan",
+      description: "Calculate loan payments and total interest"
+    },
+    {
+      title: "Mortgage Calculator",
+      link: "/calculators/mortgage",
+      description: "Estimate your monthly mortgage payments"
+    }
+  ];
 
   const calculateTip = () => {
     const bill = parseFloat(billAmount);
@@ -136,6 +175,9 @@ export default function TipCalculator() {
           </div>
         </div>
       )}
+
+      <FAQ items={faqItems} />
+      <RelatedCalculators calculators={relatedCalculators} />
     </CalculatorLayout>
   );
 }

@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import CalculatorLayout from '@/components/CalculatorLayout';
+import FAQ from '@/components/FAQ';
+import RelatedCalculators from '@/components/RelatedCalculators';
 import styles from '@/styles/Calculator.module.css';
 import type { Metadata } from 'next';
 
@@ -13,13 +15,66 @@ export default function WireGaugeCalculator() {
     gauge: string;
     voltageDrop: number;
   } | null>(null);
+  const [errors, setErrors] = useState<string[]>([]);
+
+  const faqItems = [
+    {
+      question: "What happens if I use too small a wire?",
+      answer: "Using wire that's too small can cause several serious problems: excessive voltage drop leading to poor equipment performance, overheating of the wire which creates a fire hazard, and potential damage to connected devices. The wire could also fail electrical code inspections. Always use the recommended gauge or larger for safety."
+    },
+    {
+      question: "What is voltage drop and why does it matter?",
+      answer: "Voltage drop is the reduction in voltage as electricity travels through a wire. The National Electrical Code (NEC) recommends keeping voltage drop under 3% for branch circuits and 5% total for the entire system. Excessive voltage drop can cause lights to dim, motors to overheat, and electronics to malfunction."
+    },
+    {
+      question: "Can I use a larger wire gauge than recommended?",
+      answer: "Yes, using a larger wire (smaller gauge number) is always safe and will reduce voltage drop. The main downsides are increased cost and the wire being more difficult to work with due to its thickness. However, it's a good practice for long runs or critical circuits."
+    },
+    {
+      question: "What's the difference between copper and aluminum wire?",
+      answer: "This calculator assumes copper wire, which is the most common. Aluminum wire is less conductive, so you need a larger size (typically 2 gauges larger) to carry the same current. While aluminum is cheaper and lighter, it requires special installation techniques and connectors."
+    }
+  ];
+
+  const relatedCalculators = [
+    {
+      title: "Voltage Drop Calculator",
+      link: "/calculators/voltage-drop",
+      description: "Calculate voltage drop for a specific wire gauge"
+    },
+    {
+      title: "LED Power Calculator",
+      link: "/calculators/led-power",
+      description: "Calculate power requirements for LED installations"
+    }
+  ];
 
   const calculateWireGauge = () => {
     const dist = parseFloat(distance);
     const amps = parseFloat(amperage);
     const volts = parseFloat(voltage);
 
-    if (!dist || !amps || !volts) return;
+    const newErrors: string[] = [];
+
+    if (!distance || dist <= 0) {
+      newErrors.push("Please enter a valid distance");
+    }
+    if (!amperage || amps <= 0) {
+      newErrors.push("Please enter a valid amperage");
+    }
+    if (dist > 1000) {
+      newErrors.push("Distance over 1000 feet may require special considerations");
+    }
+    if (amps > 200) {
+      newErrors.push("For amperage over 200A, consult a licensed electrician");
+    }
+
+    if (newErrors.length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setErrors([]);
 
     // Circular mils calculation
     const cmils = (2 * 12.9 * dist * amps) / (volts * 0.03);
@@ -109,6 +164,16 @@ export default function WireGaugeCalculator() {
         </button>
       </form>
 
+      {errors.length > 0 && (
+        <div className={styles.errors}>
+          {errors.map((error, index) => (
+            <div key={index} className={styles.error}>
+              {error}
+            </div>
+          ))}
+        </div>
+      )}
+
       {result && (
         <div className={styles.results}>
           <div className={styles.resultItem}>
@@ -137,6 +202,9 @@ export default function WireGaugeCalculator() {
           )}
         </div>
       )}
+
+      <FAQ items={faqItems} />
+      <RelatedCalculators calculators={relatedCalculators} />
     </CalculatorLayout>
   );
 }

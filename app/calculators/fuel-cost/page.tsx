@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import CalculatorLayout from '@/components/CalculatorLayout';
+import FAQ from '@/components/FAQ';
+import RelatedCalculators from '@/components/RelatedCalculators';
 import styles from '@/styles/Calculator.module.css';
 
 export default function FuelCostCalculator() {
@@ -13,6 +15,43 @@ export default function FuelCostCalculator() {
     gallonsNeeded: number;
     costPerMile: number;
   } | null>(null);
+
+  const faqItems = [
+    {
+      question: "How do I find my vehicle's actual fuel economy?",
+      answer: "Your car's real-world MPG often differs from the EPA estimate. To find your actual MPG: Fill your tank completely, reset your trip odometer, drive normally until you need to refuel, fill up again and note the gallons, then divide miles driven by gallons used. Highway driving typically gets better MPG than city driving, so calculate both separately if you can."
+    },
+    {
+      question: "Should I enter one-way or round-trip distance?",
+      answer: "Enter the total distance you'll be traveling. If you're planning a round trip, add the distance both ways. For example, a trip to a destination 100 miles away and back would be 200 miles total. Don't forget to account for any detours, scenic routes, or stops along the way that add mileage."
+    },
+    {
+      question: "How can I improve my fuel economy and reduce costs?",
+      answer: "You can improve MPG by: 1) Maintaining steady speeds and using cruise control on highways, 2) Avoiding rapid acceleration and hard braking, 3) Keeping tires properly inflated, 4) Removing unnecessary weight from your vehicle, 5) Regular maintenance (oil changes, air filters), and 6) Driving at moderate speeds (55-65 mph is optimal for most vehicles). These habits can improve fuel economy by 10-25%."
+    },
+    {
+      question: "Does this calculator include all travel costs?",
+      answer: "No, this calculator only estimates direct fuel costs. For a complete trip budget, also consider: tolls, parking fees, vehicle wear and tear (roughly $0.10-0.20 per mile for maintenance/depreciation), food, lodging, and potential emergency expenses. The IRS standard mileage rate (around $0.67/mile) is a good estimate for total vehicle costs including fuel."
+    }
+  ];
+
+  const relatedCalculators = [
+    {
+      title: "Tip Calculator",
+      link: "/calculators/tip",
+      description: "Calculate tips at restaurants during your trip"
+    },
+    {
+      title: "Loan Calculator",
+      link: "/calculators/loan",
+      description: "Calculate payments if financing a vehicle"
+    },
+    {
+      title: "Etsy Pricing Calculator",
+      link: "/calculators/etsy-pricing",
+      description: "Calculate delivery costs for your handmade business"
+    }
+  ];
 
   const calculateFuelCost = () => {
     const dist = parseFloat(distance);
@@ -107,6 +146,9 @@ export default function FuelCostCalculator() {
           </div>
         </div>
       )}
+
+      <FAQ items={faqItems} />
+      <RelatedCalculators calculators={relatedCalculators} />
     </CalculatorLayout>
   );
 }

@@ -17,7 +17,7 @@ export default function Footer() {
           <Link href="/about#contact" className={styles.link}>
             Contact
           </Link>
-          <Link href="/about#privacy" className={styles.link}>
+          <Link href="/privacy" className={styles.link}>
             Privacy
           </Link>
         </nav>

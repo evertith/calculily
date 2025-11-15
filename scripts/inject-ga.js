@@ -9,6 +9,8 @@ const GA_TAG = `<!-- Google tag (gtag.js) -->
   gtag('js', new Date());
   gtag('config', 'G-70PPEJM0GG');
 </script>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2899164454337185" crossorigin="anonymous"></script>
 `;
 
 function injectGA(filePath) {

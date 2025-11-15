@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import CalculatorLayout from '@/components/CalculatorLayout';
+import FAQ from '@/components/FAQ';
+import RelatedCalculators from '@/components/RelatedCalculators';
 import styles from '@/styles/Calculator.module.css';
 
 export default function VoltageDropCalculator() {
@@ -13,6 +15,38 @@ export default function VoltageDropCalculator() {
     voltageDrop: number;
     voltageDropPercent: number;
   } | null>(null);
+
+  const faqItems = [
+    {
+      question: "What is an acceptable voltage drop percentage?",
+      answer: "The National Electrical Code (NEC) recommends keeping voltage drop under 3% for branch circuits and 5% total for the entire system. Exceeding these limits can cause lights to dim, motors to overheat, and appliances to underperform. For critical equipment or long runs, aim for even lower voltage drop (1-2%)."
+    },
+    {
+      question: "Should I use the one-way or round-trip distance?",
+      answer: "Use the one-way distance from your power source to the load. The calculator automatically accounts for the round-trip (both positive and negative wires) in its formula by multiplying the distance by 2. If you enter the round-trip distance, your voltage drop will be incorrectly doubled."
+    },
+    {
+      question: "How do I reduce voltage drop in my circuit?",
+      answer: "You can reduce voltage drop by: 1) Using a larger wire gauge (lower AWG number), 2) Shortening the wire run distance, 3) Reducing the current/amperage draw, or 4) Increasing the system voltage (e.g., using 240V instead of 120V). Upgrading to the next larger wire gauge is usually the most practical solution."
+    },
+    {
+      question: "Does wire type (copper vs aluminum) affect voltage drop?",
+      answer: "Yes, significantly. This calculator uses copper wire resistance values, which are standard for most residential and commercial applications. Aluminum wire has about 1.6 times the resistance of copper, so voltage drop will be higher. Always use copper resistance values for copper wire and aluminum values for aluminum wire."
+    }
+  ];
+
+  const relatedCalculators = [
+    {
+      title: "Wire Gauge Calculator",
+      link: "/calculators/wire-gauge",
+      description: "Determine the correct wire size for your electrical project"
+    },
+    {
+      title: "LED Power Calculator",
+      link: "/calculators/led-power",
+      description: "Calculate power requirements for LED strips and installations"
+    }
+  ];
 
   // Resistance per 1000ft for each gauge (in ohms)
   const resistance: { [key: string]: number } = {
@@ -146,6 +180,9 @@ export default function VoltageDropCalculator() {
           )}
         </div>
       )}
+
+      <FAQ items={faqItems} />
+      <RelatedCalculators calculators={relatedCalculators} />
     </CalculatorLayout>
   );
 }

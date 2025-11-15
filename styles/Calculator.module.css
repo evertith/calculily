@@ -145,6 +145,25 @@
   color: white;
 }
 
+.errors {
+  background-color: #2a1a1a;
+  border: 1px solid #ff6b6b;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.error {
+  color: #ffb3b3;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding: 0.5rem 0;
+}
+
+.error:not(:last-child) {
+  border-bottom: 1px solid #3a2a2a;
+}
+
 @media (max-width: 640px) {
   .form {
     gap: 1.25rem;
