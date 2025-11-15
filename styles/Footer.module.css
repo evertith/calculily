@@ -16,6 +16,15 @@
   gap: 1rem;
 }
 
+.disclaimer {
+  color: #888;
+  font-size: 0.75rem;
+  font-style: italic;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
 .copyright {
   color: #808080;
   font-size: 0.9rem;

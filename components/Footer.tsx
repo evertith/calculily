@@ -7,6 +7,9 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
+        <p className={styles.disclaimer}>
+          As an Amazon Associate, I earn from qualifying purchases.
+        </p>
         <p className={styles.copyright}>
           &copy; {currentYear} Calculily. All rights reserved.
         </p>
