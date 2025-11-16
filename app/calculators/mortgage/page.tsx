@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function MortgageCalculator() {
@@ -29,6 +30,7 @@ export default function MortgageCalculator() {
   } | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const faqItems = [
     {
@@ -126,6 +128,15 @@ export default function MortgageCalculator() {
       monthlyInsurance,
       monthlyHoa,
       totalMonthly
+    });
+
+    // Track calculator usage
+    trackCalculatorUsage('Mortgage Calculator', {
+      home_price: price,
+      down_payment_percent: down,
+      loan_term: term,
+      interest_rate: rate,
+      monthly_payment: monthlyPayment
     });
   };
 
@@ -342,6 +353,7 @@ export default function MortgageCalculator() {
 
       <ProductRecommendation
         products={getProducts('finance', 3)}
+        calculatorName="Mortgage Calculator"
       />
 
       <FAQ items={faqItems} />

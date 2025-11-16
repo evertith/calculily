@@ -6,10 +6,12 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 import type { Metadata } from 'next';
 
 export default function BatteryRuntimeCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [calculatorMode, setCalculatorMode] = useState<'runtime' | 'capacity'>('runtime');
   const [capacityValue, setCapacityValue] = useState<string>('');
   const [capacityUnit, setCapacityUnit] = useState<'ah' | 'mah'>('ah');
@@ -107,7 +109,7 @@ export default function BatteryRuntimeCalculator() {
       const wattHours = totalCapacity * totalVoltage;
       const usableWattHours = wattHours * eff;
 
-      setResult({
+      const resultData = {
         mode: 'runtime',
         runtimeHours: runtimeHours.toFixed(2),
         runtimeMinutes: runtimeMinutes.toFixed(0),
@@ -117,6 +119,14 @@ export default function BatteryRuntimeCalculator() {
         loadAmps: loadAmps.toFixed(2),
         totalVoltage: totalVoltage.toFixed(1),
         totalCapacity: totalCapacity.toFixed(1)
+      };
+
+      setResult(resultData);
+
+      trackCalculatorUsage('Battery Runtime Calculator', {
+        mode: 'runtime',
+        runtimeHours: resultData.runtimeHours,
+        totalVoltage: resultData.totalVoltage
       });
     } else {
       // Calculate capacity needed
@@ -144,12 +154,20 @@ export default function BatteryRuntimeCalculator() {
       const loadAmps = loadType === 'watts' ? load / totalVoltage : load;
       const capacityNeeded = (runtime * loadAmps) / eff;
 
-      setResult({
+      const resultData = {
         mode: 'capacity',
         capacityNeeded: capacityNeeded.toFixed(2),
         capacityNeededMah: (capacityNeeded * 1000).toFixed(0),
         loadAmps: loadAmps.toFixed(2),
         totalVoltage: totalVoltage.toFixed(1)
+      };
+
+      setResult(resultData);
+
+      trackCalculatorUsage('Battery Runtime Calculator', {
+        mode: 'capacity',
+        capacityNeeded: resultData.capacityNeeded,
+        totalVoltage: resultData.totalVoltage
       });
     }
   };
@@ -416,6 +434,7 @@ export default function BatteryRuntimeCalculator() {
 
       <ProductRecommendation
         products={getProducts('electrical', 3)}
+        calculatorName="Battery Runtime Calculator"
       />
 
       <FAQ items={faqItems} />

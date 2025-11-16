@@ -6,11 +6,13 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 type CalculatorType = 'boardFeet' | 'studs' | 'joists' | 'deck';
 
 export default function LumberCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [calculatorType, setCalculatorType] = useState<CalculatorType>('boardFeet');
 
   // Board feet inputs
@@ -180,6 +182,11 @@ export default function LumberCalculator() {
     }
 
     setResults(calculatedResults);
+
+    trackCalculatorUsage('Lumber Calculator', {
+      calculatorType,
+      resultType: calculatedResults.type
+    });
   };
 
   const faqItems = [
@@ -615,6 +622,7 @@ export default function LumberCalculator() {
 
       <ProductRecommendation
         products={getProducts('lumber', 3)}
+        calculatorName="Lumber Calculator"
       />
 
       <FAQ items={faqItems} />

@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function EtsyPricingCalculator() {
@@ -21,6 +22,7 @@ export default function EtsyPricingCalculator() {
     totalFees: number;
     netProfit: number;
   } | null>(null);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const faqItems = [
     {
@@ -88,6 +90,15 @@ export default function EtsyPricingCalculator() {
       profitAmount,
       totalFees,
       netProfit,
+    });
+
+    // Track calculator usage
+    trackCalculatorUsage('Etsy Pricing Calculator', {
+      material_cost: materials,
+      labor_hours: hours,
+      hourly_rate: rate,
+      profit_margin: margin,
+      recommended_price: recommendedPrice
     });
   };
 
@@ -201,6 +212,7 @@ export default function EtsyPricingCalculator() {
 
       <ProductRecommendation
         products={getProducts('general-tools', 3)}
+        calculatorName="Etsy Pricing Calculator"
       />
 
       <FAQ items={faqItems} />

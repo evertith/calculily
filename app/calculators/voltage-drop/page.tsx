@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function VoltageDropCalculator() {
@@ -17,6 +18,7 @@ export default function VoltageDropCalculator() {
     voltageDrop: number;
     voltageDropPercent: number;
   } | null>(null);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const faqItems = [
     {
@@ -74,6 +76,15 @@ export default function VoltageDropCalculator() {
     const voltageDropPercent = (voltageDrop / volts) * 100;
 
     setResult({ voltageDrop, voltageDropPercent });
+
+    // Track calculator usage
+    trackCalculatorUsage('Voltage Drop Calculator', {
+      wire_gauge: wireGauge,
+      distance: dist,
+      amperage: amps,
+      voltage: volts,
+      voltage_drop_percent: voltageDropPercent
+    });
   };
 
   return (
@@ -185,6 +196,7 @@ export default function VoltageDropCalculator() {
 
       <ProductRecommendation
         products={getProducts('electrical', 3)}
+        calculatorName="Voltage Drop Calculator"
       />
 
       <FAQ items={faqItems} />

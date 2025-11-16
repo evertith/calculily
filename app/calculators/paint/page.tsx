@@ -6,9 +6,11 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function PaintCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [length, setLength] = useState<string>('');
   const [width, setWidth] = useState<string>('');
   const [height, setHeight] = useState<string>('');
@@ -119,6 +121,12 @@ export default function PaintCalculator() {
       totalCost: totalCost.toFixed(2),
       primerGallons: needPrimer ? primerGallons : null,
       coats: parseInt(coats)
+    });
+
+    trackCalculatorUsage('Paint Calculator', {
+      wallArea: wallPaint.paintableArea,
+      includeCeiling: includeCeiling.toString(),
+      totalGallons: totalGallons.toFixed(2)
     });
   };
 
@@ -407,6 +415,7 @@ export default function PaintCalculator() {
 
       <ProductRecommendation
         products={getProducts('paint', 3)}
+        calculatorName="Paint Calculator"
       />
 
       <FAQ items={faqItems} />

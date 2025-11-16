@@ -6,9 +6,11 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function TireSizeCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [originalSize, setOriginalSize] = useState<string>('');
   const [newSize, setNewSize] = useState<string>('');
   const [speedInput, setSpeedInput] = useState<string>('60');
@@ -152,6 +154,13 @@ export default function TireSizeCalculator() {
       originalRevs,
       newRevs
     });
+
+    trackCalculatorUsage('Tire Size Calculator', {
+      originalSize,
+      newSize,
+      percentDifference: percentDifference.toFixed(2),
+      recommended: recommended.toString()
+    });
   };
 
   return (
@@ -280,6 +289,7 @@ export default function TireSizeCalculator() {
 
       <ProductRecommendation
         products={getProducts('automotive', 3)}
+        calculatorName="Tire Size Calculator"
       />
 
       <FAQ items={faqItems} />

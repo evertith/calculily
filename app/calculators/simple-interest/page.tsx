@@ -6,11 +6,13 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 type TimeUnit = 'days' | 'months' | 'years';
 
 export default function SimpleInterestCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [principal, setPrincipal] = useState<string>('');
   const [rate, setRate] = useState<string>('');
   const [time, setTime] = useState<string>('');
@@ -63,7 +65,15 @@ export default function SimpleInterestCalculator() {
       const t = parseFloat(time);
 
       if (!isNaN(p) && !isNaN(r) && !isNaN(t) && p > 0 && r > 0 && t > 0) {
-        setResult(calculateSimpleInterest(p, r, t, timeUnit));
+        const calculationResult = calculateSimpleInterest(p, r, t, timeUnit);
+        setResult(calculationResult);
+
+        trackCalculatorUsage('Simple Interest Calculator', {
+          principal: p.toString(),
+          rate: r.toString(),
+          timeUnit,
+          interest: calculationResult.interest.toFixed(2)
+        });
       } else {
         setResult(null);
       }
@@ -279,6 +289,7 @@ export default function SimpleInterestCalculator() {
 
       <ProductRecommendation
         products={getProducts('finance', 3)}
+        calculatorName="Simple Interest Calculator"
       />
 
       <FAQ items={faqItems} />

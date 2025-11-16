@@ -6,10 +6,12 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 import type { Metadata } from 'next';
 
 export default function SolarPanelCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [dailyUsage, setDailyUsage] = useState<string>('');
   const [sunHours, setSunHours] = useState<string>('5.0');
   const [systemType, setSystemType] = useState<'grid-tied' | 'off-grid'>('grid-tied');
@@ -168,6 +170,12 @@ export default function SolarPanelCalculator() {
       systemCost,
       batteryResults,
       gridTiedResults
+    });
+
+    trackCalculatorUsage('Solar Panel Calculator', {
+      systemType,
+      kilowatts: kilowatts.toFixed(2),
+      numPanels: numPanels.toString()
     });
   };
 
@@ -455,6 +463,7 @@ export default function SolarPanelCalculator() {
 
       <ProductRecommendation
         products={getProducts('electrical', 3)}
+        calculatorName="Solar Panel Calculator"
       />
 
       <FAQ items={faqItems} />

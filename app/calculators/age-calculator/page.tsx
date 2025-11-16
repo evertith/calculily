@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function AgeCalculator() {
@@ -24,6 +25,7 @@ export default function AgeCalculator() {
       daysUntil: number;
     };
   } | null>(null);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const calculateAge = (birthdate: Date, asOfDate: Date) => {
     const birth = new Date(birthdate);
@@ -79,9 +81,16 @@ export default function AgeCalculator() {
         const age = calculateAge(birth, asOf);
         const birthday = nextBirthday(birth, asOf);
 
-        setResult({
+        const resultData = {
           ...age,
           nextBirthday: birthday
+        };
+        setResult(resultData);
+
+        // Track calculator usage
+        trackCalculatorUsage('Age Calculator', {
+          age_years: age.years,
+          total_days: age.totalDays
         });
       } else {
         setResult(null);
@@ -217,6 +226,7 @@ export default function AgeCalculator() {
 
       <ProductRecommendation
         products={getProducts('general-tools', 3)}
+        calculatorName="Age Calculator"
       />
 
       <FAQ items={faqItems} />

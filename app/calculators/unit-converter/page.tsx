@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 type Category = 'length' | 'weight' | 'volume' | 'temperature' | 'area';
@@ -20,6 +21,7 @@ export default function UnitConverter() {
   const [fromUnit, setFromUnit] = useState<string>('meters');
   const [toUnit, setToUnit] = useState<string>('feet');
   const [result, setResult] = useState<number | null>(null);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const lengthToMeters: { [key: string]: number } = {
     'inches': 0.0254,
@@ -100,6 +102,14 @@ export default function UnitConverter() {
       if (!isNaN(value)) {
         const converted = convert(value, fromUnit, toUnit);
         setResult(converted);
+
+        // Track calculator usage
+        trackCalculatorUsage('Unit Converter', {
+          category: category,
+          from_unit: fromUnit,
+          to_unit: toUnit,
+          from_value: value
+        });
       }
     } else {
       setResult(null);
@@ -262,6 +272,7 @@ export default function UnitConverter() {
 
       <ProductRecommendation
         products={getProducts('general-tools', 3)}
+        calculatorName="Unit Converter"
       />
 
       <FAQ items={faqItems} />

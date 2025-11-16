@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 type CalculationType = 'percentOf' | 'whatPercent' | 'percentIncrease' | 'percentDecrease';
@@ -15,6 +16,7 @@ export default function PercentageCalculator() {
   const [input1, setInput1] = useState<string>('');
   const [input2, setInput2] = useState<string>('');
   const [result, setResult] = useState<number | null>(null);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const percentOf = (percent: number, number: number): number => {
     return (percent / 100) * number;
@@ -54,6 +56,14 @@ export default function PercentageCalculator() {
             break;
         }
         setResult(calculated);
+
+        // Track calculator usage
+        trackCalculatorUsage('Percentage Calculator', {
+          calculation_type: calculationType,
+          input1: val1,
+          input2: val2,
+          result: calculated
+        });
       }
     } else {
       setResult(null);
@@ -221,6 +231,7 @@ export default function PercentageCalculator() {
 
       <ProductRecommendation
         products={getProducts('general-tools', 3)}
+        calculatorName="Percentage Calculator"
       />
 
       <FAQ items={faqItems} />

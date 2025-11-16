@@ -6,11 +6,13 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 type FenceType = 'privacy' | 'picket' | 'chainlink';
 
 export default function FenceCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [fenceType, setFenceType] = useState<FenceType>('privacy');
   const [fenceLength, setFenceLength] = useState<string>('');
   const [fenceHeight, setFenceHeight] = useState<string>('6');
@@ -124,6 +126,12 @@ export default function FenceCalculator() {
       fenceHeight: parseFloat(fenceHeight),
       materials: materialsList,
       gates: parseFloat(numGates)
+    });
+
+    trackCalculatorUsage('Fence Calculator', {
+      fenceType,
+      fenceLength,
+      posts: posts.toString()
     });
   };
 
@@ -434,6 +442,7 @@ export default function FenceCalculator() {
 
       <ProductRecommendation
         products={getProducts('lumber', 3)}
+        calculatorName="Fence Calculator"
       />
 
       <FAQ items={faqItems} />

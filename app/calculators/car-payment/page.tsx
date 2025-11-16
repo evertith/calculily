@@ -6,9 +6,11 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function CarPaymentCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [vehiclePrice, setVehiclePrice] = useState<string>('');
   const [tradeInValue, setTradeInValue] = useState<string>('');
   const [tradeInOwed, setTradeInOwed] = useState<string>('');
@@ -117,6 +119,12 @@ export default function CarPaymentCalculator() {
       salesTax,
       netTradeIn,
       totalCost
+    });
+
+    trackCalculatorUsage('Car Payment Calculator', {
+      vehiclePrice: price.toString(),
+      loanTerm: months.toString(),
+      monthlyPayment: monthlyPayment.toFixed(2)
     });
   };
 
@@ -325,6 +333,7 @@ export default function CarPaymentCalculator() {
 
       <ProductRecommendation
         products={getProducts('finance', 3)}
+        calculatorName="Car Payment Calculator"
       />
 
       <FAQ items={faqItems} />

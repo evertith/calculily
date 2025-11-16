@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function FuelCostCalculator() {
@@ -17,6 +18,7 @@ export default function FuelCostCalculator() {
     gallonsNeeded: number;
     costPerMile: number;
   } | null>(null);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const faqItems = [
     {
@@ -67,6 +69,14 @@ export default function FuelCostCalculator() {
     const costPerMile = price / mpg;
 
     setResult({ totalCost, gallonsNeeded, costPerMile });
+
+    // Track calculator usage
+    trackCalculatorUsage('Fuel Cost Calculator', {
+      distance: dist,
+      fuel_economy_mpg: mpg,
+      fuel_price: price,
+      total_cost: totalCost
+    });
   };
 
   return (
@@ -151,6 +161,7 @@ export default function FuelCostCalculator() {
 
       <ProductRecommendation
         products={getProducts('general-tools', 3)}
+        calculatorName="Fuel Cost Calculator"
       />
 
       <FAQ items={faqItems} />

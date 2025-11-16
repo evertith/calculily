@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function LoanCalculator() {
@@ -17,6 +18,7 @@ export default function LoanCalculator() {
     totalInterest: number;
     totalPaid: number;
   } | null>(null);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const faqItems = [
     {
@@ -64,6 +66,14 @@ export default function LoanCalculator() {
     const totalInterest = totalPaid - amount;
 
     setResult({ monthlyPayment, totalInterest, totalPaid });
+
+    // Track calculator usage
+    trackCalculatorUsage('Loan Calculator', {
+      loan_amount: amount,
+      interest_rate: rate,
+      loan_term_months: term,
+      monthly_payment: monthlyPayment
+    });
   };
 
   return (
@@ -149,6 +159,7 @@ export default function LoanCalculator() {
 
       <ProductRecommendation
         products={getProducts('finance', 3)}
+        calculatorName="Loan Calculator"
       />
 
       <FAQ items={faqItems} />

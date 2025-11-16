@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 type CalculationType = 'daysBetween' | 'addDays' | 'subtractDays';
@@ -24,6 +25,7 @@ export default function DateCalculator() {
     workdays?: number;
     resultDate?: Date;
   } | null>(null);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const daysBetween = (date1: Date, date2: Date): number => {
     const oneDay = 24 * 60 * 60 * 1000;
@@ -66,9 +68,17 @@ export default function DateCalculator() {
       const days = daysBetween(d1, d2);
       const detailed = detailedDifference(days);
 
-      setResult({
+      const resultData = {
         ...detailed,
         workdays: excludeWeekends ? workdaysBetween(d1 < d2 ? d1 : d2, d1 < d2 ? d2 : d1) : undefined
+      };
+      setResult(resultData);
+
+      // Track calculator usage
+      trackCalculatorUsage('Date Calculator', {
+        calculation_type: calculationType,
+        days_between: days,
+        exclude_weekends: excludeWeekends
       });
     } else if ((calculationType === 'addDays' || calculationType === 'subtractDays') && date1 && daysToAdd) {
       const d1 = new Date(date1);
@@ -78,9 +88,16 @@ export default function DateCalculator() {
         const daysDiff = Math.abs(days);
         const detailed = detailedDifference(daysDiff);
 
-        setResult({
+        const resultData = {
           ...detailed,
           resultDate
+        };
+        setResult(resultData);
+
+        // Track calculator usage
+        trackCalculatorUsage('Date Calculator', {
+          calculation_type: calculationType,
+          days_added: days
         });
       }
     } else {
@@ -273,6 +290,7 @@ export default function DateCalculator() {
 
       <ProductRecommendation
         products={getProducts('general-tools', 3)}
+        calculatorName="Date Calculator"
       />
 
       <FAQ items={faqItems} />

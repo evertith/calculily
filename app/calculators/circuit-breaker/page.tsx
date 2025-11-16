@@ -6,10 +6,12 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 import type { Metadata } from 'next';
 
 export default function CircuitBreakerCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [inputType, setInputType] = useState<'watts' | 'amps'>('watts');
   const [loadValue, setLoadValue] = useState<string>('');
   const [voltage, setVoltage] = useState<string>('120');
@@ -119,6 +121,13 @@ export default function CircuitBreakerCalculator() {
       : 200;
 
     setResult({ amps, breakerSize, wireGauge, maxLoad });
+
+    trackCalculatorUsage('Circuit Breaker Calculator', {
+      voltage,
+      loadType,
+      amps: amps.toFixed(2),
+      breakerSize: breakerSize.toString()
+    });
   };
 
   return (
@@ -284,6 +293,7 @@ export default function CircuitBreakerCalculator() {
 
       <ProductRecommendation
         products={getProducts('electrical', 3)}
+        calculatorName="Circuit Breaker Calculator"
       />
 
       <FAQ items={faqItems} />

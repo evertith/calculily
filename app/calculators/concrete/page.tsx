@@ -6,11 +6,13 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 type ShapeType = 'slab' | 'footing' | 'column' | 'stairs';
 
 export default function ConcreteCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [shape, setShape] = useState<ShapeType>('slab');
   const [length, setLength] = useState<string>('');
   const [width, setWidth] = useState<string>('');
@@ -139,6 +141,12 @@ export default function ConcreteCalculator() {
       bags80lb,
       truckLoads,
       wasteFactor: waste
+    });
+
+    trackCalculatorUsage('Concrete Calculator', {
+      shape,
+      cubicYards: cubicYards.toFixed(2),
+      wasteFactor: waste.toString()
     });
   };
 
@@ -451,6 +459,7 @@ export default function ConcreteCalculator() {
 
       <ProductRecommendation
         products={getProducts('concrete', 3)}
+        calculatorName="Concrete Calculator"
       />
 
       <FAQ items={faqItems} />

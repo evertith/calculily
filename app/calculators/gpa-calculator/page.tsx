@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 interface Course {
@@ -25,6 +26,7 @@ export default function GPACalculator() {
     totalCredits: number;
     totalPoints: number;
   } | null>(null);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const gradePoints: { [key: string]: number } = {
     'A+': 4.0,
@@ -66,11 +68,20 @@ export default function GPACalculator() {
     });
 
     if (totalCredits > 0) {
-      setResult({
+      const resultData = {
         gpa: totalPoints / totalCredits,
         weightedGpa: totalWeightedPoints / totalCredits,
         totalCredits,
         totalPoints
+      };
+      setResult(resultData);
+
+      // Track calculator usage
+      trackCalculatorUsage('GPA Calculator', {
+        num_courses: courses.length,
+        total_credits: totalCredits,
+        gpa: resultData.gpa,
+        weighted_gpa: resultData.weightedGpa
       });
     } else {
       setResult(null);
@@ -256,6 +267,7 @@ export default function GPACalculator() {
 
       <ProductRecommendation
         products={getProducts('general-tools', 3)}
+        calculatorName="GPA Calculator"
       />
 
       <FAQ items={faqItems} />

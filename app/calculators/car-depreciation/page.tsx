@@ -6,9 +6,11 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function CarDepreciationCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [purchasePrice, setPurchasePrice] = useState<string>('');
   const [vehicleAge, setVehicleAge] = useState<string>('');
   const [vehicleType, setVehicleType] = useState<string>('New Car (Average)');
@@ -117,6 +119,13 @@ export default function CarDepreciationCalculator() {
       futureValue,
       futureDepreciation,
       averageMilesPerYear
+    });
+
+    trackCalculatorUsage('Car Depreciation Calculator', {
+      vehicleType,
+      vehicleAge: age.toString(),
+      currentValue: currentValue.toFixed(2),
+      depreciationPercent: depreciationPercent.toFixed(1)
     });
   };
 
@@ -306,6 +315,7 @@ export default function CarDepreciationCalculator() {
 
       <ProductRecommendation
         products={getProducts('finance', 3)}
+        calculatorName="Car Depreciation Calculator"
       />
 
       <FAQ items={faqItems} />

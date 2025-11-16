@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 import type { Metadata } from 'next';
 
@@ -16,6 +17,7 @@ interface Appliance {
 }
 
 export default function AmpDrawCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [appliances, setAppliances] = useState<Appliance[]>([
     { id: 1, name: '', watts: 0 }
   ]);
@@ -136,6 +138,13 @@ export default function AmpDrawCalculator() {
     else wireGauge = 'Consult electrician';
 
     setResult({ totalWatts, totalAmps, breakerSize, wireGauge });
+
+    trackCalculatorUsage('Amp Draw Calculator', {
+      voltage,
+      totalWatts: totalWatts.toString(),
+      totalAmps: totalAmps.toFixed(2),
+      breakerSize: breakerSize.toString()
+    });
   };
 
   return (
@@ -271,6 +280,7 @@ export default function AmpDrawCalculator() {
 
       <ProductRecommendation
         products={getProducts('electrical', 3)}
+        calculatorName="Amp Draw Calculator"
       />
 
       <FAQ items={faqItems} />

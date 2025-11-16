@@ -6,11 +6,13 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 type ConversionType = 'volume' | 'weight' | 'temperature';
 
 export default function CookingConverter() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [conversionType, setConversionType] = useState<ConversionType>('volume');
   const [amount, setAmount] = useState<string>('');
   const [fromUnit, setFromUnit] = useState<string>('cup');
@@ -100,6 +102,13 @@ export default function CookingConverter() {
           converted = convertTemperature(value, fromUnit, toUnit);
         }
         setResult(converted);
+
+        trackCalculatorUsage('Cooking Converter', {
+          conversionType,
+          fromUnit,
+          toUnit,
+          result: converted.toFixed(2)
+        });
       }
     } else {
       setResult(null);
@@ -312,6 +321,7 @@ export default function CookingConverter() {
 
       <ProductRecommendation
         products={getProducts('general-tools', 3)}
+        calculatorName="Cooking Converter"
       />
 
       <FAQ items={faqItems} />

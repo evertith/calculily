@@ -6,9 +6,11 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function DeckCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [length, setLength] = useState<string>('');
   const [width, setWidth] = useState<string>('');
   const [boardWidth, setBoardWidth] = useState<string>('5.5');
@@ -154,6 +156,12 @@ export default function DeckCalculator() {
       railingLinearFeet,
       balusters,
       estimatedCost
+    });
+
+    trackCalculatorUsage('Deck Calculator', {
+      deckSize: (len * wid).toString(),
+      deckingBoards: deckingBoards.toString(),
+      includeRailing: includeRailing.toString()
     });
   };
 
@@ -393,6 +401,7 @@ export default function DeckCalculator() {
 
       <ProductRecommendation
         products={getProducts('concrete', 3)}
+        calculatorName="Deck Calculator"
       />
 
       <FAQ items={faqItems} />

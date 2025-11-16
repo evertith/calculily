@@ -6,9 +6,11 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function DrywallCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [length, setLength] = useState<string>('');
   const [width, setWidth] = useState<string>('');
   const [height, setHeight] = useState<string>('');
@@ -143,6 +145,12 @@ export default function DrywallCalculator() {
       tapeRolls,
       screwsPounds,
       estimatedCost
+    });
+
+    trackCalculatorUsage('Drywall Calculator', {
+      totalArea: totalArea.toString(),
+      sheetsWithWaste: sheetsWithWaste.toString(),
+      includeCeiling: includeCeiling.toString()
     });
   };
 
@@ -326,6 +334,7 @@ export default function DrywallCalculator() {
 
       <ProductRecommendation
         products={getProducts('concrete', 3)}
+        calculatorName="Drywall Calculator"
       />
 
       <FAQ items={faqItems} />

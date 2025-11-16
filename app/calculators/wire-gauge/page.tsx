@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function WireGaugeCalculator() {
@@ -17,6 +18,7 @@ export default function WireGaugeCalculator() {
     voltageDrop: number;
   } | null>(null);
   const [errors, setErrors] = useState<string[]>([]);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const faqItems = [
     {
@@ -105,6 +107,14 @@ export default function WireGaugeCalculator() {
     const voltageDrop = (2 * 12.9 * dist * amps) / actualCmils;
 
     setResult({ gauge, voltageDrop });
+
+    // Track calculator usage
+    trackCalculatorUsage('Wire Gauge Calculator', {
+      distance: dist,
+      amperage: amps,
+      voltage: volts,
+      recommended_gauge: gauge
+    });
   };
 
   return (
@@ -207,6 +217,7 @@ export default function WireGaugeCalculator() {
       <ProductRecommendation
         title="Recommended Electrical Tools"
         products={getProducts('wire-gauge', 3)}
+        calculatorName="Wire Gauge Calculator"
       />
 
       <FAQ items={faqItems} />

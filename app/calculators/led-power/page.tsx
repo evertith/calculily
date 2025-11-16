@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function LEDPowerCalculator() {
@@ -18,6 +19,7 @@ export default function LEDPowerCalculator() {
     amps: number;
     recommendedPowerSupply: number;
   } | null>(null);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const faqItems = [
     {
@@ -63,6 +65,15 @@ export default function LEDPowerCalculator() {
     const recommendedPowerSupply = Math.ceil(totalWatts * 1.2);
 
     setResult({ totalWatts, amps, recommendedPowerSupply });
+
+    // Track calculator usage
+    trackCalculatorUsage('LED Power Calculator', {
+      num_leds: leds,
+      watts_per_led: watts,
+      usage_factor: usageFactor,
+      voltage: volts,
+      recommended_power_supply: recommendedPowerSupply
+    });
   };
 
   return (
@@ -167,6 +178,7 @@ export default function LEDPowerCalculator() {
 
       <ProductRecommendation
         products={getProducts('electrical', 3)}
+        calculatorName="LED Power Calculator"
       />
 
       <FAQ items={faqItems} />

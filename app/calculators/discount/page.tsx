@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 type CalculationType = 'priceAfterDiscount' | 'originalFromSale' | 'discountPercent';
@@ -21,6 +22,7 @@ export default function DiscountCalculator() {
     discountAmount: number;
     discountPercent?: number;
   } | null>(null);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const priceAfterDiscount = (originalPrice: number, discountPercent: number) => {
     const discountAmount = originalPrice * (discountPercent / 100);
@@ -46,7 +48,15 @@ export default function DiscountCalculator() {
       const disc = parseFloat(discountPercent);
 
       if (!isNaN(orig) && !isNaN(disc) && orig >= 0 && disc >= 0 && disc <= 100) {
-        setResult(priceAfterDiscount(orig, disc));
+        const resultData = priceAfterDiscount(orig, disc);
+        setResult(resultData);
+
+        // Track calculator usage
+        trackCalculatorUsage('Discount Calculator', {
+          calculation_type: calculationType,
+          original_price: orig,
+          discount_percent: disc
+        });
       } else {
         setResult(null);
       }
@@ -55,7 +65,15 @@ export default function DiscountCalculator() {
       const disc = parseFloat(discountPercent);
 
       if (!isNaN(sale) && !isNaN(disc) && sale >= 0 && disc >= 0 && disc < 100) {
-        setResult(originalFromSale(sale, disc));
+        const resultData = originalFromSale(sale, disc);
+        setResult(resultData);
+
+        // Track calculator usage
+        trackCalculatorUsage('Discount Calculator', {
+          calculation_type: calculationType,
+          sale_price: sale,
+          discount_percent: disc
+        });
       } else {
         setResult(null);
       }
@@ -64,7 +82,15 @@ export default function DiscountCalculator() {
       const sale = parseFloat(salePrice);
 
       if (!isNaN(orig) && !isNaN(sale) && orig >= 0 && sale >= 0 && sale <= orig) {
-        setResult(calculateDiscountPercent(orig, sale));
+        const resultData = calculateDiscountPercent(orig, sale);
+        setResult(resultData);
+
+        // Track calculator usage
+        trackCalculatorUsage('Discount Calculator', {
+          calculation_type: calculationType,
+          original_price: orig,
+          sale_price: sale
+        });
       } else {
         setResult(null);
       }
@@ -292,6 +318,7 @@ export default function DiscountCalculator() {
 
       <ProductRecommendation
         products={getProducts('general-tools', 3)}
+        calculatorName="Discount Calculator"
       />
 
       <FAQ items={faqItems} />

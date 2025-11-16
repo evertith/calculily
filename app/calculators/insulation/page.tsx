@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 const recommendedRValues = {
@@ -28,6 +29,7 @@ const insulationTypes = {
 };
 
 export default function InsulationCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [length, setLength] = useState<string>('');
   const [width, setWidth] = useState<string>('');
   const [areaType, setAreaType] = useState<string>('attic');
@@ -134,6 +136,13 @@ export default function InsulationCalculator() {
       estimatedCost,
       annualSavings,
       paybackYears
+    });
+
+    trackCalculatorUsage('Insulation Calculator', {
+      areaType,
+      climateZone,
+      insulationType,
+      squareFeet: squareFeet.toString()
     });
   };
 
@@ -309,6 +318,7 @@ export default function InsulationCalculator() {
 
       <ProductRecommendation
         products={getProducts('concrete', 3)}
+        calculatorName="Insulation Calculator"
       />
 
       <FAQ items={faqItems} />

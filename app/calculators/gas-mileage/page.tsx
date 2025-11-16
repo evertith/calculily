@@ -6,9 +6,11 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function GasMileageCalculator() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [calculationType, setCalculationType] = useState<'simple' | 'refill'>('simple');
   const [milesDriven, setMilesDriven] = useState<string>('');
   const [gallonsUsed, setGallonsUsed] = useState<string>('');
@@ -72,6 +74,12 @@ export default function GasMileageCalculator() {
       const tripCost = price > 0 ? gallons * price : 0;
 
       setResult({ mpg, costPerMile, tripCost });
+
+      trackCalculatorUsage('Gas Mileage Calculator', {
+        calculationType,
+        mpg: mpg.toFixed(2),
+        miles: miles.toString()
+      });
     } else {
       const current = parseFloat(currentOdometer);
       const last = parseFloat(lastOdometer);
@@ -86,6 +94,12 @@ export default function GasMileageCalculator() {
       const tripCost = price > 0 ? gallons * price : 0;
 
       setResult({ mpg, costPerMile, tripCost });
+
+      trackCalculatorUsage('Gas Mileage Calculator', {
+        calculationType,
+        mpg: mpg.toFixed(2),
+        miles: miles.toString()
+      });
     }
   };
 
@@ -248,6 +262,7 @@ export default function GasMileageCalculator() {
 
       <ProductRecommendation
         products={getProducts('automotive', 3)}
+        calculatorName="Gas Mileage Calculator"
       />
 
       <FAQ items={faqItems} />

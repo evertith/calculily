@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function SalesTaxCalculator() {
@@ -18,6 +19,7 @@ export default function SalesTaxCalculator() {
     taxAmount: number;
     total: number;
   } | null>(null);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const stateTaxRates: { [key: string]: number } = {
     'California': 7.25,
@@ -77,11 +79,21 @@ export default function SalesTaxCalculator() {
       const rateNum = parseFloat(taxRate);
 
       if (!isNaN(priceNum) && !isNaN(rateNum) && priceNum >= 0 && rateNum >= 0) {
+        let resultData;
         if (priceIncludesTax) {
-          setResult(priceBeforeTax(priceNum, rateNum));
+          resultData = priceBeforeTax(priceNum, rateNum);
         } else {
-          setResult(calculateTax(priceNum, rateNum));
+          resultData = calculateTax(priceNum, rateNum);
         }
+        setResult(resultData);
+
+        // Track calculator usage
+        trackCalculatorUsage('Sales Tax Calculator', {
+          price: priceNum,
+          tax_rate: rateNum,
+          price_includes_tax: priceIncludesTax,
+          selected_state: selectedState
+        });
       } else {
         setResult(null);
       }
@@ -224,6 +236,7 @@ export default function SalesTaxCalculator() {
 
       <ProductRecommendation
         products={getProducts('general-tools', 3)}
+        calculatorName="Sales Tax Calculator"
       />
 
       <FAQ items={faqItems} />

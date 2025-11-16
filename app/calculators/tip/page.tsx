@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 export default function TipCalculator() {
@@ -18,6 +19,7 @@ export default function TipCalculator() {
     totalAmount: number;
     perPerson: number;
   } | null>(null);
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
 
   const faqItems = [
     {
@@ -68,6 +70,13 @@ export default function TipCalculator() {
     const perPerson = totalAmount / people;
 
     setResult({ tipAmount, totalAmount, perPerson });
+
+    // Track calculator usage
+    trackCalculatorUsage('Tip Calculator', {
+      bill_amount: bill,
+      tip_percentage: tip,
+      num_people: people
+    });
   };
 
   const handleTipButtonClick = (percentage: number) => {
@@ -180,6 +189,7 @@ export default function TipCalculator() {
 
       <ProductRecommendation
         products={getProducts('general-tools', 3)}
+        calculatorName="Tip Calculator"
       />
 
       <FAQ items={faqItems} />

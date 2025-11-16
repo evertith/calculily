@@ -6,6 +6,7 @@ import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
 import { getProducts } from '@/lib/affiliateLinks';
+import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 
 interface TimeZone {
@@ -15,6 +16,7 @@ interface TimeZone {
 }
 
 export default function TimeZoneConverter() {
+  const { trackCalculatorUsage, trackEvent } = useAnalytics();
   const [time, setTime] = useState<string>('12:00');
   const [date, setDate] = useState<string>(new Date().toISOString().split('T')[0]);
   const [fromZone, setFromZone] = useState<string>('America/New_York');
@@ -79,6 +81,12 @@ export default function TimeZoneConverter() {
         convertedTime,
         convertedDate,
         timeDifference
+      });
+
+      trackCalculatorUsage('Time Zone Converter', {
+        fromZone,
+        toZone,
+        timeDifference: timeDifference.toString()
       });
     } catch (error) {
       setResult(null);
@@ -269,6 +277,7 @@ export default function TimeZoneConverter() {
 
       <ProductRecommendation
         products={getProducts('general-tools', 3)}
+        calculatorName="Time Zone Converter"
       />
 
       <FAQ items={faqItems} />
