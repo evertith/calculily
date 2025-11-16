@@ -8,14 +8,35 @@ export const myAffiliateProducts = [
   // For: Wire Gauge, Voltage Drop, LED Power calculators
   // ==========================================
   
-  {
-    name: "Klein Tools Wire Stripper/Cutter",
-    imageUrl: "https://m.media-amazon.com/images/I/51VF23Iz2rL._AC_SL1000_.jpg",
-    affiliateLink: "https://amzn.to/3WU1wXv",
-    description: "Klein Tools 11063W Wire Cutter/Stripper, Heavy Duty Automatic Tool for 8-20 AWG Solid and 10-22 AWG Stranded Electrical Wire",
-    category: ["electrical", "wire-gauge", "voltage-drop"]
-  },
-  
+{
+  name: "KNIPEX Tools 2-Piece Cobra Pliers Set",
+  imageUrl: "https://m.media-amazon.com/images/I/61FRw8c-2YL._AC_SL1398_.jpg",
+  affiliateLink: "https://amzn.to/481pXr4",
+  price: "", // Add price if you want to show it
+  rating: 0, // Add rating if you want to show it
+  description: "Professional pliers set with push-button adjustment for precise gripping.",
+  category: ["electrical", "wire-gauge", "plumbing", "general-tools"]
+},
+
+{
+  name: "FrogTape ProGrade Blue Painters Tape, 1.5 Inch, 6 Rolls",
+  imageUrl: "https://m.media-amazon.com/images/I/71lTguIWUCL._AC_SL1500_.jpg",
+  affiliateLink: "https://amzn.to/47HcA0i",
+  price: "",
+  rating: 0,
+  description: "Professional painter's tape with PaintBlock technology for crisp, clean lines.",
+  category: ["paint"]
+},
+
+{
+  name: "INCLY Full Face Dust Mask - Reusable Respirator",
+  imageUrl: "https://m.media-amazon.com/images/I/81Es-5bGhYL._AC_SL1500_.jpg",
+  affiliateLink: "https://amzn.to/3XweieV",
+  price: "",
+  rating: 0,
+  description: "Safety mask for protection against dust, paint, chemical fumes, and vapors.",
+  category: ["paint", "concrete", "drywall", "safety"]
+},  
   // {
   //   name: "Fluke 117 Digital Multimeter",
   //   imageUrl: "",
