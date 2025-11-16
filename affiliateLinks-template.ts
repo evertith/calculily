@@ -44,7 +44,53 @@ export const myAffiliateProducts = [
   description: "Safety mask for protection against dust, paint, chemical fumes, and vapors.",
   category: ["paint", "concrete", "drywall", "safety"]
 },  
+{
+  name: "Cyanoacrylate Super Glue with Activator (2 Pack)",
+  imageUrl: "https://m.media-amazon.com/images/I/81q2YpduAzL._SL1500_.jpg",
+  affiliateLink: "https://amzn.to/3LGbbhW",
+  price: "",
+  rating: 0,
+  description: "Fast-setting CA glue with activator spray for instant bonding on various materials.",
+  category: ["general-tools", "woodworking", "crafts", "repairs"]
+},
 
+{
+  name: "Kasa Smart Plug Mini 15A, 4-Pack - Apple HomeKit Supported",
+  imageUrl: "https://m.media-amazon.com/images/I/61dy0MWaMhL._SL1500_.jpg",
+  affiliateLink: "https://amzn.to/4nULcAR",
+  price: "",
+  rating: 0,
+  description: "Smart plugs compatible with HomeKit, Alexa, and Google Home for app control and scheduling.",
+  category: ["smart-home", "electrical", "led-power", "automation"]
+},
+{
+  name: "ARES 2-Piece Compact Panel/Trim Wedge Prybar Tool Set",
+  imageUrl: "https://m.media-amazon.com/images/I/61W3nMMxOKL._AC_SX569_.jpg",
+  affiliateLink: "https://amzn.to/48iauE8",
+  price: "",
+  rating: 0,
+  description: "Compact prybar set for removing trim, paneling, and fasteners in tight spaces.",
+  category: ["general-tools", "automotive", "trim-removal"]
+},
+{
+  name: "Wago 221-415 Lever-Nuts 5 Conductor Compact Connectors, 50 Pack",
+  imageUrl: "https://m.media-amazon.com/images/I/61EXwd9as9L._SL1000_.jpg",
+  affiliateLink: "https://amzn.to/49TNgFB",
+  price: "",
+  rating: 0,
+  description: "Premium lever wire connectors for quick, secure electrical connections up to 5 conductors.",
+  category: ["electrical", "wire-gauge", "led-power"]
+},
+
+{
+  name: "IRWIN Fiberglass Claw Hammer, 16 oz",
+  imageUrl: "https://m.media-amazon.com/images/I/31gO9C2-vyL._AC_SL1000_.jpg",
+  affiliateLink: "https://amzn.to/4oFlrFD",
+  price: "",
+  rating: 0,
+  description: "Durable fiberglass handle hammer for general construction and carpentry work.",
+  category: ["general-tools", "lumber", "fence", "deck", "concrete"]
+},
   // {
   //   name: "Fluke 117 Digital Multimeter",
   //   imageUrl: "",
