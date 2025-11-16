@@ -5,6 +5,7 @@ import CalculatorLayout from '@/components/CalculatorLayout';
 import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
+import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
@@ -108,6 +109,9 @@ export default function GasMileageCalculator() {
       title="Gas Mileage Calculator"
       description="Track your vehicle's fuel economy and calculate MPG, cost per mile, and trip fuel costs."
     >
+      {/* Top Banner Ad */}
+      <AdUnit adSlot="6981760215" className="ad-top-banner" />
+
       <div className={styles.buttonGroup}>
         <button
           type="button"
@@ -259,14 +263,22 @@ export default function GasMileageCalculator() {
         </div>
       )}
 
+      {/* Mid Content Square Ad - After results */}
+      <AdUnit adSlot="6129936879" className="ad-mid-content" />
 
       <ProductRecommendation
         products={getProducts('automotive', 3)}
         calculatorName="Gas Mileage Calculator"
       />
 
+      {/* Sidebar Square Ad */}
+      <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />
+
+      {/* Footer Banner Ad */}
+      <AdUnit adSlot="4136105023" className="ad-footer-banner" />
     </CalculatorLayout>
   );
 }

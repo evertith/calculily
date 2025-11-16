@@ -5,6 +5,7 @@ import CalculatorLayout from '@/components/CalculatorLayout';
 import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
+import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
@@ -164,6 +165,9 @@ export default function TimeZoneConverter() {
       title="Time Zone Converter"
       description="Convert time between time zones worldwide. Find meeting times across time zones and see current time in different zones."
     >
+      {/* Top Banner Ad */}
+      <AdUnit adSlot="6981760215" className="ad-top-banner" />
+
       <div className={styles.form}>
         <div className={styles.formGroup}>
           <label htmlFor="date" className={styles.label}>
@@ -274,14 +278,22 @@ export default function TimeZoneConverter() {
         </div>
       )}
 
+      {/* Mid Content Square Ad - After results */}
+      <AdUnit adSlot="6129936879" className="ad-mid-content" />
 
       <ProductRecommendation
         products={getProducts('general-tools', 3)}
         calculatorName="Time Zone Converter"
       />
 
+      {/* Sidebar Square Ad */}
+      <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />
+
+      {/* Footer Banner Ad */}
+      <AdUnit adSlot="4136105023" className="ad-footer-banner" />
     </CalculatorLayout>
   );
 }

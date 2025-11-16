@@ -189,8 +189,28 @@ export default function Home() {
       ],
     },
     {
-      name: "Business & Lifestyle",
+      name: "Etsy Seller Tools",
       calculators: [
+        {
+          title: "Complete Etsy Tools Hub",
+          description: "All Etsy calculators: fees, shipping, and profit",
+          link: "/etsy-tools",
+        },
+        {
+          title: "Etsy Fee Calculator",
+          description: "Calculate all Etsy fees including offsite ads",
+          link: "/etsy-tools/fee-calculator",
+        },
+        {
+          title: "Etsy Shipping Calculator",
+          description: "Compare carrier rates and optimize shipping",
+          link: "/etsy-tools/shipping-calculator",
+        },
+        {
+          title: "Etsy Profit Calculator",
+          description: "Calculate true profit after all costs",
+          link: "/etsy-tools/profit-calculator",
+        },
         {
           title: "Etsy Pricing Calculator",
           description: "Price your handmade products profitably",

@@ -1,0 +1,269 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.hero {
+  text-align: center;
+  padding: 3rem 0;
+  margin-bottom: 3rem;
+}
+
+.heroTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #e0e0e0;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.heroSubtitle {
+  font-size: 1.25rem;
+  color: #b0b0b0;
+  margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.ctaButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.primaryButton {
+  padding: 1rem 2rem;
+  background-color: #4a9eff;
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: background-color 0.2s;
+  text-decoration: none;
+}
+
+.primaryButton:hover {
+  background-color: #3a8eef;
+}
+
+.secondaryButton {
+  padding: 0.875rem 1.5rem;
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  border: 1px solid #333;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.secondaryButton:hover {
+  border-color: #4a9eff;
+  background-color: #222;
+}
+
+.problemSection {
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  border-left: 4px solid #4a9eff;
+}
+
+.sectionTitle {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin-bottom: 1.5rem;
+}
+
+.problemText {
+  font-size: 1.1rem;
+  color: #b0b0b0;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.calculatorsSection {
+  margin-bottom: 4rem;
+}
+
+.calculatorGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.calculatorCard {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.calculatorCard:hover {
+  border-color: #4a9eff;
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(74, 158, 255, 0.1);
+}
+
+.cardIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin-bottom: 1rem;
+}
+
+.cardDescription {
+  font-size: 1rem;
+  color: #b0b0b0;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.featureList {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.featureList li {
+  font-size: 0.95rem;
+  color: #b0b0b0;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #222;
+}
+
+.featureList li:last-child {
+  border-bottom: none;
+}
+
+.cardButton {
+  display: inline-block;
+  padding: 0.875rem 1.5rem;
+  background-color: #4a9eff;
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  transition: background-color 0.2s;
+  text-decoration: none;
+  width: 100%;
+  margin-top: auto;
+}
+
+.cardButton:hover {
+  background-color: #3a8eef;
+}
+
+.educationalSection {
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+.feeBreakdown {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.feeItem {
+  padding: 1.5rem;
+  background-color: #0a0a0a;
+  border-radius: 8px;
+  border: 1px solid #222;
+}
+
+.feeItem h3 {
+  font-size: 1.25rem;
+  color: #4a9eff;
+  margin-bottom: 0.75rem;
+}
+
+.feeItem p {
+  font-size: 1rem;
+  color: #b0b0b0;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.mistakeWarning {
+  background-color: #2a1a1a;
+  border-left: 4px solid #ffaa00;
+  padding: 1.25rem;
+  border-radius: 8px;
+  color: #ffcc66;
+  margin-top: 2rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.valueSection {
+  text-align: center;
+  padding: 2rem 0;
+  margin-bottom: 3rem;
+}
+
+.valueText {
+  font-size: 1.1rem;
+  color: #b0b0b0;
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.footerCta {
+  text-align: center;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  padding: 3rem 2rem;
+  margin-top: 3rem;
+}
+
+.ctaTitle {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .heroSubtitle {
+    font-size: 1.1rem;
+  }
+
+  .calculatorGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .primaryButton,
+  .secondaryButton {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -5,6 +5,7 @@ import CalculatorLayout from '@/components/CalculatorLayout';
 import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
+import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
@@ -144,6 +145,9 @@ export default function SalesTaxCalculator() {
       title="Sales Tax Calculator"
       description="Calculate sales tax by state or custom rate. Find total price including tax or determine price before tax."
     >
+      {/* Top Banner Ad */}
+      <AdUnit adSlot="6981760215" className="ad-top-banner" />
+
       <div className={styles.form}>
         <div className={styles.formGroup}>
           <label htmlFor="state" className={styles.label}>
@@ -233,14 +237,22 @@ export default function SalesTaxCalculator() {
         <strong>Note:</strong> This calculator uses state-level base tax rates. Local taxes may apply in your area, which can increase the total rate. Check with your local tax authority for the exact rate in your location.
       </div>
 
+      {/* Mid Content Square Ad - After results */}
+      <AdUnit adSlot="6129936879" className="ad-mid-content" />
 
       <ProductRecommendation
         products={getProducts('general-tools', 3)}
         calculatorName="Sales Tax Calculator"
       />
 
+      {/* Sidebar Square Ad */}
+      <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />
+
+      {/* Footer Banner Ad */}
+      <AdUnit adSlot="4136105023" className="ad-footer-banner" />
     </CalculatorLayout>
   );
 }
