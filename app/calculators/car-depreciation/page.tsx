@@ -4,6 +4,8 @@ import { useState } from 'react';
 import CalculatorLayout from '@/components/CalculatorLayout';
 import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
+import ProductRecommendation from '@/components/ProductRecommendation';
+import { getProducts } from '@/lib/affiliateLinks';
 import styles from '@/styles/Calculator.module.css';
 
 export default function CarDepreciationCalculator() {
@@ -300,6 +302,11 @@ export default function CarDepreciationCalculator() {
           )}
         </div>
       )}
+
+
+      <ProductRecommendation
+        products={getProducts('finance', 3)}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import CalculatorLayout from '@/components/CalculatorLayout';
 import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
+import ProductRecommendation from '@/components/ProductRecommendation';
+import { getProducts } from '@/lib/affiliateLinks';
 import styles from '@/styles/Calculator.module.css';
 
 type TimeUnit = 'days' | 'months' | 'years';
@@ -273,6 +275,11 @@ export default function SimpleInterestCalculator() {
       <div className={styles.note}>
         <strong>Note:</strong> This calculator uses the simple interest formula (I = P × R × T). Most savings accounts and loans use compound interest, which will result in different amounts. Simple interest is typically used for short-term loans and certain financial instruments.
       </div>
+
+
+      <ProductRecommendation
+        products={getProducts('finance', 3)}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

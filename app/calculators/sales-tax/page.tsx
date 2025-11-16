@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import CalculatorLayout from '@/components/CalculatorLayout';
 import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
+import ProductRecommendation from '@/components/ProductRecommendation';
+import { getProducts } from '@/lib/affiliateLinks';
 import styles from '@/styles/Calculator.module.css';
 
 export default function SalesTaxCalculator() {
@@ -218,6 +220,11 @@ export default function SalesTaxCalculator() {
       <div className={styles.note}>
         <strong>Note:</strong> This calculator uses state-level base tax rates. Local taxes may apply in your area, which can increase the total rate. Check with your local tax authority for the exact rate in your location.
       </div>
+
+
+      <ProductRecommendation
+        products={getProducts('general-tools', 3)}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

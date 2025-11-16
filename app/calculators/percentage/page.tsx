@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import CalculatorLayout from '@/components/CalculatorLayout';
 import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
+import ProductRecommendation from '@/components/ProductRecommendation';
+import { getProducts } from '@/lib/affiliateLinks';
 import styles from '@/styles/Calculator.module.css';
 
 type CalculationType = 'percentOf' | 'whatPercent' | 'percentIncrease' | 'percentDecrease';
@@ -216,6 +218,10 @@ export default function PercentageCalculator() {
           </div>
         </div>
       )}
+
+      <ProductRecommendation
+        products={getProducts('general-tools', 3)}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

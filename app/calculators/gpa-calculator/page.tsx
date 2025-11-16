@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import CalculatorLayout from '@/components/CalculatorLayout';
 import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
+import ProductRecommendation from '@/components/ProductRecommendation';
+import { getProducts } from '@/lib/affiliateLinks';
 import styles from '@/styles/Calculator.module.css';
 
 interface Course {
@@ -250,6 +252,11 @@ export default function GPACalculator() {
       <div className={styles.note}>
         <strong>Note:</strong> This calculator uses the standard 4.0 GPA scale. Weighted courses add 1.0 point to the grade point value. Different schools may use different scales or weighting systems.
       </div>
+
+
+      <ProductRecommendation
+        products={getProducts('general-tools', 3)}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

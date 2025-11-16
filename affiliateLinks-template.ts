@@ -8,6 +8,13 @@ export const myAffiliateProducts = [
   // For: Wire Gauge, Voltage Drop, LED Power calculators
   // ==========================================
   
+  {
+    name: "Klein Tools Wire Stripper/Cutter",
+    imageUrl: "https://m.media-amazon.com/images/I/51VF23Iz2rL._AC_SL1000_.jpg",
+    affiliateLink: "https://amzn.to/3WU1wXv",
+    description: "Klein Tools 11063W Wire Cutter/Stripper, Heavy Duty Automatic Tool for 8-20 AWG Solid and 10-22 AWG Stranded Electrical Wire",
+    category: ["electrical", "wire-gauge", "voltage-drop"]
+  },
 {
   name: "KNIPEX Tools 2-Piece Cobra Pliers Set",
   imageUrl: "https://m.media-amazon.com/images/I/61FRw8c-2YL._AC_SL1398_.jpg",
@@ -37,6 +44,7 @@ export const myAffiliateProducts = [
   description: "Safety mask for protection against dust, paint, chemical fumes, and vapors.",
   category: ["paint", "concrete", "drywall", "safety"]
 },  
+
   // {
   //   name: "Fluke 117 Digital Multimeter",
   //   imageUrl: "",
