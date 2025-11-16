@@ -48,11 +48,11 @@ export default function ProductRecommendation({
                 <p className={styles.description}>{product.description}</p>
               )}
 
-              {product.price && product.price.trim() !== '' && (
+              {product.price && typeof product.price === 'string' && product.price.trim() !== '' && (
                 <p className={styles.price}>{product.price}</p>
               )}
 
-              {product.rating && product.rating > 0 && (
+              {product.rating !== undefined && product.rating !== null && product.rating > 0 && (
                 <div className={styles.rating}>
                   {'⭐'.repeat(Math.floor(product.rating))} {product.rating}
                 </div>
