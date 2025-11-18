@@ -18,6 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <script src="https://analytics.ahrefs.com/analytics.js" data-key="jUJM8Zx+auuWSu8HGjT0kQ" async></script>
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2899164454337185"
