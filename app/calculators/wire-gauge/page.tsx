@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function WireGaugeCalculator() {
   const [distance, setDistance] = useState<string>('');
@@ -44,14 +46,69 @@ export default function WireGaugeCalculator() {
     {
       title: "Voltage Drop Calculator",
       link: "/calculators/voltage-drop",
-      description: "Calculate voltage drop for a specific wire gauge"
+      description: "Calculate voltage drop for any wire run and gauge"
     },
     {
-      title: "LED Power Calculator",
-      link: "/calculators/led-power",
-      description: "Calculate power requirements for LED installations"
+      title: "Circuit Breaker Calculator",
+      link: "/calculators/circuit-breaker",
+      description: "Determine the correct breaker size for your circuit"
+    },
+    {
+      title: "Amp Draw Calculator",
+      link: "/calculators/amp-draw",
+      description: "Calculate total amperage for multiple loads"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Selecting the correct wire gauge is critical for electrical safety. Our calculator helps you determine the right wire size based on your specific requirements:",
+      steps: [
+        "Enter the amperage (current) of your circuit - this is typically determined by your breaker size or the equipment you're powering.",
+        "Input the one-way distance from the power source to the load in feet.",
+        "Select your voltage (120V for standard household, 240V for large appliances, or other common voltages).",
+        "Choose between single-phase and three-phase power systems.",
+        "Click 'Calculate' to see the recommended wire gauge and voltage drop percentage."
+      ]
+    },
+    whyMatters: {
+      description: "Using the wrong wire gauge isn't just an inconvenience - it's a serious safety hazard. Undersized wire can overheat, potentially causing fires, damaging equipment, or creating shock hazards. Oversized wire wastes money on materials. Additionally, excessive voltage drop over long runs can cause equipment to malfunction, lights to dim, and motors to run inefficiently or overheat. This calculator helps you find the balance between safety, performance, and cost.",
+      benefits: [
+        "Prevent electrical fires by ensuring wire can handle the current safely",
+        "Avoid voltage drop issues that cause equipment malfunction or inefficiency",
+        "Save money by not over-specifying wire size unnecessarily",
+        "Meet National Electrical Code (NEC) requirements for your installation",
+        "Properly size wire for long runs where voltage drop becomes significant"
+      ]
+    },
+    examples: [
+      {
+        title: "Shop Subpanel",
+        scenario: "You're running a 60-amp subpanel to a detached workshop 100 feet from your main panel at 240V single-phase.",
+        calculation: "60A at 240V over 100 feet requires #4 AWG copper (or #2 AWG aluminum)",
+        result: "Voltage drop: ~2.5% - well within the 3% recommended maximum for feeders."
+      },
+      {
+        title: "Outdoor Lighting",
+        scenario: "Installing landscape lighting with a 15-amp circuit running 150 feet from the panel at 120V.",
+        calculation: "15A at 120V over 150 feet requires #10 AWG copper minimum",
+        result: "Using #10 AWG keeps voltage drop around 4.8% - acceptable for lighting circuits."
+      },
+      {
+        title: "EV Charger",
+        scenario: "Installing a 50-amp Level 2 EV charger in your garage, 30 feet from the panel at 240V.",
+        calculation: "50A at 240V over 30 feet requires #6 AWG copper",
+        result: "Voltage drop: ~1.2% - excellent for consistent charging performance."
+      }
+    ],
+    commonMistakes: [
+      "Using the breaker rating instead of actual load for calculations - always size for the breaker/circuit protection, not expected usage.",
+      "Forgetting that NEC requires voltage drop under 3% for feeders and 5% total for branch circuits.",
+      "Not accounting for round-trip distance in voltage drop - the calculator handles this, but manual calculations often miss it.",
+      "Using aluminum wire ampacity ratings for copper wire - they're different, and aluminum requires larger gauges.",
+      "Ignoring ambient temperature derating in hot locations like attics - this can require upsizing wire significantly."
+    ]
+  };
 
   const calculateWireGauge = () => {
     const dist = parseFloat(distance);
@@ -121,8 +178,15 @@ export default function WireGaugeCalculator() {
   return (
     <CalculatorLayout
       title="Wire Gauge Calculator"
-      description="Calculate the proper wire gauge for your electrical project based on distance, amperage, and voltage."
+      description="Calculate the correct wire gauge (AWG) for your electrical project. Enter amperage, distance, and voltage to determine safe wire sizing with voltage drop calculations."
     >
+      <CalculatorSchema
+        name="Wire Gauge Calculator"
+        description="Free electrical wire gauge calculator for determining correct AWG wire size. Calculate proper wire gauge based on amperage, distance, and voltage for safe electrical installations."
+        url="/calculators/wire-gauge"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -229,6 +293,13 @@ export default function WireGaugeCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

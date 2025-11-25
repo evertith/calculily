@@ -10,6 +10,8 @@ import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 import type { Metadata } from 'next';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function SolarPanelCalculator() {
   const { trackCalculatorUsage, trackEvent } = useAnalytics();
@@ -65,21 +67,70 @@ export default function SolarPanelCalculator() {
 
   const relatedCalculators = [
     {
+      title: "LED Power Calculator",
+      link: "/calculators/led-power",
+      description: "Calculate power for LED installations"
+    },
+    {
       title: "Battery Runtime Calculator",
       link: "/calculators/battery-runtime",
-      description: "Calculate battery bank runtime and capacity needed"
+      description: "Calculate battery backup times"
     },
     {
       title: "Amp Draw Calculator",
       link: "/calculators/amp-draw",
-      description: "Calculate total power consumption of appliances"
-    },
-    {
-      title: "Wire Gauge Calculator",
-      link: "/calculators/wire-gauge",
-      description: "Size wiring for your solar installation"
+      description: "Calculate electrical load"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Estimate solar panel requirements based on your energy needs:",
+      steps: [
+        "Enter your average daily or monthly electricity usage in kWh (check your utility bill).",
+        "Input your location's average peak sun hours per day (typically 4-6 hours in most of the US).",
+        "Enter the wattage of the solar panels you're considering.",
+        "Click 'Calculate' to see the number of panels and total system size needed."
+      ]
+    },
+    whyMatters: {
+      description: "Solar power can significantly reduce or eliminate your electricity bills, but proper sizing is crucial. An undersized system won't meet your needs, while an oversized system wastes money on unnecessary panels. Factors like roof space, local sun hours, panel efficiency, and future energy needs all play into the calculation. This calculator helps you estimate system size before getting quotes from installers.",
+      benefits: [
+        "Estimate system size before getting installer quotes",
+        "Understand how energy usage affects panel requirements",
+        "Compare different panel wattages for your roof space",
+        "Plan for future energy needs like EV charging",
+        "Calculate rough payback periods based on system size"
+      ]
+    },
+    examples: [
+      {
+        title: "Average Home",
+        scenario: "Home using 900 kWh/month in Arizona (6 peak sun hours). Using 400W panels.",
+        calculation: "30 kWh/day ÷ 6 sun hours = 5 kW system needed. 5,000W ÷ 400W = 12.5 panels",
+        result: "Need approximately 13 panels (5.2 kW system) to offset usage."
+      },
+      {
+        title: "Energy-Efficient Home",
+        scenario: "Efficient home using 500 kWh/month in Oregon (4.5 peak sun hours). 370W panels.",
+        calculation: "16.7 kWh/day ÷ 4.5 hours = 3.7 kW. 3,700W ÷ 370W = 10 panels",
+        result: "10 panels should offset most electricity usage."
+      },
+      {
+        title: "With EV Charging",
+        scenario: "Current usage 800 kWh + EV adds 400 kWh/month. California (5.5 sun hours). 400W panels.",
+        calculation: "40 kWh/day ÷ 5.5 = 7.3 kW system. 7,300W ÷ 400W = 18.25 panels",
+        result: "Plan for 19-20 panels to cover home and EV charging."
+      }
+    ],
+    commonMistakes: [
+      "Using nameplate panel wattage without accounting for real-world efficiency losses (typically 15-20%).",
+      "Forgetting that shading from trees or buildings dramatically reduces output.",
+      "Not considering roof orientation and pitch - south-facing at optimal angle produces most.",
+      "Ignoring local utility policies on net metering and system size limits.",
+      "Sizing only for current needs without considering future EV or heat pump additions."
+    ]
+  };
 
   const selectLocation = (locationName: string) => {
     const location = usStates.find(s => s.name === locationName);
@@ -183,8 +234,15 @@ export default function SolarPanelCalculator() {
   return (
     <CalculatorLayout
       title="Solar Panel Calculator"
-      description="Calculate solar panel array size, battery bank capacity, and system costs for grid-tied or off-grid solar installations."
+      description="Calculate how many solar panels you need based on your electricity usage. Estimate system size and panel count for your home solar installation."
     >
+      <CalculatorSchema
+        name="Solar Panel Calculator"
+        description="Free solar panel calculator to estimate system size and panel count. Calculate how many solar panels you need based on energy usage and sun hours."
+        url="/calculators/solar-panel"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -474,6 +532,13 @@ export default function SolarPanelCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

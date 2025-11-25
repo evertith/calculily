@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function PaintCalculator() {
   const { trackCalculatorUsage, trackEvent } = useAnalytics();
@@ -150,29 +152,86 @@ export default function PaintCalculator() {
     }
   ];
 
+  const contentData = {
+    howToUse: {
+      intro: "Calculate exactly how much paint you need to avoid multiple store trips or wasteful over-buying:",
+      steps: [
+        "Measure the height and width of each wall you plan to paint.",
+        "Enter the room dimensions or total wall area in square feet.",
+        "Subtract areas for windows and doors (or use our default estimates).",
+        "Select whether you need one or two coats (two is recommended for most color changes).",
+        "Click 'Calculate' to see gallons needed based on standard coverage of 350-400 sq ft per gallon."
+      ]
+    },
+    whyMatters: {
+      description: "Paint is sold by the gallon, and getting the quantity wrong is frustrating either way. Too little means a mid-project trip to the store and potential color matching issues with different batches. Too much means wasted money on paint that will eventually dry out. Proper calculation also helps you budget accurately - quality paint runs $30-70 per gallon, so errors add up quickly on larger projects.",
+      benefits: [
+        "Avoid mid-project store runs and color batch variations",
+        "Save money by not over-buying paint that will go to waste",
+        "Budget accurately before starting your painting project",
+        "Account for multiple coats needed for dramatic color changes",
+        "Plan primer needs separately from finish coat requirements"
+      ]
+    },
+    examples: [
+      {
+        title: "Standard Bedroom",
+        scenario: "12' x 14' room with 8' ceilings, one door, two windows. Two coats of new color.",
+        calculation: "Wall area: 416 sq ft - 37 sq ft (openings) = 379 sq ft | × 2 coats = 758 sq ft",
+        result: "Need 2 gallons (each covers 350-400 sq ft). Buy 2 gallons with a little left for touch-ups."
+      },
+      {
+        title: "Living Room",
+        scenario: "18' x 20' great room with 10' ceilings, multiple windows. One coat refresh.",
+        calculation: "Wall area: 760 sq ft - 80 sq ft (openings) = 680 sq ft | One coat",
+        result: "Need 2 gallons minimum. Buy 2 gallons for coverage, third gallon if walls are textured."
+      },
+      {
+        title: "Accent Wall",
+        scenario: "Single 14' wide × 9' tall accent wall, dark color over light.",
+        calculation: "126 sq ft × 2 coats = 252 sq ft",
+        result: "One gallon is sufficient with paint left over for future touch-ups."
+      }
+    ],
+    commonMistakes: [
+      "Forgetting that two coats are usually needed - especially for color changes or covering dark colors.",
+      "Not accounting for textured walls - they can require 20-30% more paint than smooth surfaces.",
+      "Using ceiling paint coverage rates for walls - ceiling paint is thinner and covers more area.",
+      "Forgetting primer when needed - dramatic color changes or new drywall need separate primer.",
+      "Not keeping some extra paint for touch-ups - buy a quart extra for future repairs."
+    ]
+  };
+
   const relatedCalculators = [
     {
-      title: 'Drywall Calculator',
-      link: '/calculators/drywall',
-      description: 'Calculate drywall sheets and materials'
+      title: "Drywall Calculator",
+      link: "/calculators/drywall",
+      description: "Calculate drywall sheets and materials"
     },
     {
-      title: 'Concrete Calculator',
-      link: '/calculators/concrete',
-      description: 'Calculate concrete for floors and slabs'
+      title: "Deck Calculator",
+      link: "/calculators/deck",
+      description: "Estimate deck materials and costs"
     },
     {
-      title: 'Lumber Calculator',
-      link: '/calculators/lumber',
-      description: 'Calculate framing and trim materials'
+      title: "Concrete Calculator",
+      link: "/calculators/concrete",
+      description: "Calculate concrete for your project"
     }
   ];
 
   return (
     <CalculatorLayout
       title="Paint Calculator"
-      description="Calculate how much paint you need for walls and ceilings based on room dimensions"
+      description="Calculate how many gallons of paint you need for walls and rooms. Enter dimensions to estimate coverage with adjustments for doors, windows, and multiple coats."
     >
+      <CalculatorSchema
+        name="Paint Calculator"
+        description="Free paint calculator to estimate gallons needed for your project. Calculate wall coverage, account for doors and windows, and plan for multiple coats."
+        url="/calculators/paint"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -426,6 +485,13 @@ export default function PaintCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

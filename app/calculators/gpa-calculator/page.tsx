@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 interface Course {
   id: number;
@@ -127,29 +129,86 @@ export default function GPACalculator() {
     }
   ];
 
+  const contentData = {
+    howToUse: {
+      intro: "Calculate your GPA accurately by entering your courses and grades. Our calculator handles weighted credit hours:",
+      steps: [
+        "Enter each course name (optional, but helps you keep track).",
+        "Select the letter grade you received for each course.",
+        "Enter the credit hours for each course (typically 3-4 for most courses).",
+        "Click 'Add Course' to add more courses to your calculation.",
+        "Your cumulative GPA updates automatically as you enter grades."
+      ]
+    },
+    whyMatters: {
+      description: "Your GPA is a critical metric throughout your academic career and beyond. It determines eligibility for scholarships, Dean's List recognition, honors programs, and graduate school admission. Many employers also look at GPA when hiring recent graduates. Understanding how individual course grades affect your cumulative GPA helps you make strategic decisions about course selection, studying priorities, and whether to retake a course.",
+      benefits: [
+        "Track your academic progress toward graduation requirements",
+        "Determine eligibility for scholarships and honors programs",
+        "Plan course loads to maintain or improve your GPA",
+        "Calculate what grades you need to reach GPA goals",
+        "Prepare accurate information for job and graduate school applications"
+      ]
+    },
+    examples: [
+      {
+        title: "First Semester Freshman",
+        scenario: "4 courses: English (B, 3 credits), Calculus (A, 4 credits), Psychology (A-, 3 credits), History (B+, 3 credits).",
+        calculation: "English: 3.0×3 + Calc: 4.0×4 + Psych: 3.7×3 + Hist: 3.3×3 = 46.0 points ÷ 13 credits",
+        result: "Semester GPA: 3.54"
+      },
+      {
+        title: "Improving Your GPA",
+        scenario: "Current GPA: 2.8 with 60 credit hours. You take 15 more credits with a 3.5 GPA.",
+        calculation: "(2.8×60 + 3.5×15) ÷ 75 total credits",
+        result: "New cumulative GPA: 2.94 - a 0.14 point improvement"
+      },
+      {
+        title: "Dean's List Calculation",
+        scenario: "Need 3.5 GPA for Dean's List. Current semester: A (4 cr), B+ (3 cr), A- (3 cr), ? (3 cr).",
+        calculation: "Current points: 16 + 9.9 + 11.1 = 37 in 10 credits. Need 45.5 points in 13 credits for 3.5.",
+        result: "You need at least a B+ (3.3) in your last class to make Dean's List."
+      }
+    ],
+    commonMistakes: [
+      "Forgetting to weight grades by credit hours - a 4-credit A matters more than a 3-credit A.",
+      "Using high school GPA scales for college calculations - college typically uses a 4.0 scale without weighting.",
+      "Not understanding that some schools use +/- grades while others don't - know your school's scale.",
+      "Ignoring pass/fail courses in cumulative GPA calculations - they usually don't affect GPA but do count for credits.",
+      "Calculating semester GPA when cumulative is needed (or vice versa) - they're different numbers."
+    ]
+  };
+
   const relatedCalculators = [
     {
       title: "Percentage Calculator",
       link: "/calculators/percentage",
-      description: "Calculate percentages and percentage changes"
-    },
-    {
-      title: "Date Calculator",
-      link: "/calculators/date-calculator",
-      description: "Calculate days between dates and date math"
+      description: "Calculate percentages for grades and scores"
     },
     {
       title: "Age Calculator",
       link: "/calculators/age-calculator",
-      description: "Calculate your exact age from birthdate"
+      description: "Calculate exact age in years, months, and days"
+    },
+    {
+      title: "Simple Interest Calculator",
+      link: "/calculators/simple-interest",
+      description: "Calculate interest on student loans"
     }
   ];
 
   return (
     <CalculatorLayout
       title="GPA Calculator"
-      description="Calculate your grade point average from letter grades or percentages. Support for weighted GPA and multiple courses."
+      description="Calculate your GPA with weighted credit hours. Enter your courses, letter grades, and credits to find your cumulative grade point average."
     >
+      <CalculatorSchema
+        name="GPA Calculator"
+        description="Free GPA calculator to compute your grade point average. Enter courses, grades, and credit hours for accurate cumulative GPA calculations."
+        url="/calculators/gpa-calculator"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -278,6 +337,13 @@ export default function GPACalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

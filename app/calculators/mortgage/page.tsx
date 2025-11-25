@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function MortgageCalculator() {
   const [homePrice, setHomePrice] = useState<string>('');
@@ -60,14 +62,69 @@ export default function MortgageCalculator() {
     {
       title: "Loan Calculator",
       link: "/calculators/loan",
-      description: "Calculate payments for personal loans and other financing"
+      description: "Calculate payments for personal loans, auto loans, and other financing"
     },
     {
-      title: "Tip Calculator",
-      link: "/calculators/tip",
-      description: "Calculate tips and split bills easily"
+      title: "Simple Interest Calculator",
+      link: "/calculators/simple-interest",
+      description: "Understand how interest accumulates on loans and savings"
+    },
+    {
+      title: "Car Payment Calculator",
+      link: "/calculators/car-payment",
+      description: "Calculate monthly auto loan payments with trade-in and down payment"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Our mortgage calculator helps you understand your monthly payment and total cost of homeownership. Follow these steps for accurate results:",
+      steps: [
+        "Enter the home's purchase price - this is the total cost of the property you're considering.",
+        "Input your down payment percentage (default is 20%). Putting down less than 20% typically requires PMI.",
+        "Select your loan term - 30 years is most common, but 15-year mortgages have higher payments with much less total interest.",
+        "Enter the interest rate you've been quoted or expect based on current market rates.",
+        "Optionally, click 'Show Advanced Options' to include property taxes, homeowner's insurance, and HOA fees for a complete PITI payment estimate."
+      ]
+    },
+    whyMatters: {
+      description: "Buying a home is likely the largest financial decision you'll ever make. Understanding your monthly mortgage payment helps you budget accurately and avoid becoming 'house poor' - where too much income goes toward housing. A mortgage calculator lets you experiment with different scenarios before committing to a purchase, helping you find a home price that fits your financial situation.",
+      benefits: [
+        "Compare different home prices to see how they affect your monthly budget",
+        "Understand the true cost of a mortgage including total interest paid over the loan term",
+        "See how different down payment amounts affect your payment and PMI requirements",
+        "Plan ahead by calculating PITI (Principal, Interest, Taxes, Insurance) for a complete picture",
+        "Compare 15-year vs 30-year mortgages to see interest savings versus payment affordability"
+      ]
+    },
+    examples: [
+      {
+        title: "First-Time Homebuyer",
+        scenario: "Sarah is buying her first home for $350,000 with 10% down at 6.5% interest on a 30-year mortgage.",
+        calculation: "Loan amount: $315,000 | Monthly P&I: $1,991.03",
+        result: "Total interest over 30 years: $401,770. PMI will add approximately $131/month until 20% equity is reached."
+      },
+      {
+        title: "Comparing Loan Terms",
+        scenario: "Mike is comparing 15-year vs 30-year mortgages for a $400,000 home with 20% down ($320,000 loan) at 6% interest.",
+        calculation: "30-year: $1,918.56/month | 15-year: $2,699.43/month",
+        result: "The 15-year mortgage saves $196,628 in interest but costs $780 more per month."
+      },
+      {
+        title: "Full PITI Calculation",
+        scenario: "The Johnsons are buying a $500,000 home with 20% down at 6.25%. Property tax is 1.2%, insurance is $200/month, and HOA is $150/month.",
+        calculation: "P&I: $2,462.87 + Tax: $500 + Insurance: $200 + HOA: $150",
+        result: "Total monthly payment: $3,312.87. This is the true monthly housing cost."
+      }
+    ],
+    commonMistakes: [
+      "Only looking at the monthly P&I payment without including taxes, insurance, and HOA - your actual payment will be significantly higher.",
+      "Forgetting about PMI when putting down less than 20% - this can add $100-300+ to your monthly payment.",
+      "Not shopping around for interest rates - even 0.25% difference can save thousands over the loan term.",
+      "Stretching to afford more house than you can comfortably pay - aim for housing costs under 28% of gross income.",
+      "Ignoring closing costs (typically 2-5% of loan amount) when calculating how much cash you need."
+    ]
+  };
 
   const calculateMortgage = () => {
     const price = parseFloat(homePrice);
@@ -144,8 +201,15 @@ export default function MortgageCalculator() {
   return (
     <CalculatorLayout
       title="Mortgage Calculator"
-      description="Calculate your monthly mortgage payments, total interest, and total cost over the life of your loan."
+      description="Calculate your monthly mortgage payments, total interest, and full PITI costs. Compare 15-year vs 30-year mortgages and see how down payment affects your payment."
     >
+      <CalculatorSchema
+        name="Mortgage Calculator"
+        description="Free mortgage calculator to estimate monthly payments, total interest, and PITI. Calculate 15 or 30-year mortgages with property taxes and insurance."
+        url="/calculators/mortgage"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -365,6 +429,13 @@ export default function MortgageCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 type CalculationType = 'priceAfterDiscount' | 'originalFromSale' | 'discountPercent';
 
@@ -123,25 +125,81 @@ export default function DiscountCalculator() {
     {
       title: "Sales Tax Calculator",
       link: "/calculators/sales-tax",
-      description: "Calculate sales tax and total prices"
+      description: "Calculate total price including sales tax"
     },
     {
       title: "Percentage Calculator",
       link: "/calculators/percentage",
-      description: "Calculate percentages and percentage changes"
+      description: "Calculate any percentage or percent change"
     },
     {
       title: "Tip Calculator",
       link: "/calculators/tip",
-      description: "Calculate tips and split bills easily"
+      description: "Calculate tips and split bills"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Never wonder if a sale is really a good deal again. Our discount calculator shows you exactly what you'll pay:",
+      steps: [
+        "Enter the original price of the item before any discounts.",
+        "Input the discount percentage (e.g., 25 for 25% off).",
+        "If there's a second discount (like an extra 10% off sale items), enter that too.",
+        "Click 'Calculate' to see your savings, the discounted price, and the effective discount percentage."
+      ]
+    },
+    whyMatters: {
+      description: "Sales and discounts are everywhere, but not all deals are created equal. Understanding the actual savings helps you make smarter purchasing decisions and avoid marketing tricks. Multiple discounts especially can be confusing - a 20% off plus an extra 15% off doesn't equal 35% off total. This calculator shows you exactly what you'll pay and your true percentage savings, helping you compare deals across different stores and decide if a 'limited time offer' is worth acting on.",
+      benefits: [
+        "Instantly verify if a sale price is calculated correctly",
+        "Compare deals across different stores with varying discount structures",
+        "Understand stacking discounts - multiple percentages off don't simply add together",
+        "Budget accurately for shopping trips with exact after-discount prices",
+        "Spot fake discounts where the 'original' price was inflated"
+      ]
+    },
+    examples: [
+      {
+        title: "Simple Discount",
+        scenario: "A $150 jacket is marked 30% off.",
+        calculation: "$150 × 0.30 = $45 discount",
+        result: "You save $45. Sale price: $105"
+      },
+      {
+        title: "Stacking Discounts",
+        scenario: "A $200 item is 25% off, and you have a coupon for an extra 10% off the sale price.",
+        calculation: "$200 × 0.75 = $150 after first discount | $150 × 0.90 = $135 after second",
+        result: "Final price: $135 | Total savings: $65 (32.5% total, not 35%)"
+      },
+      {
+        title: "Bulk Discount",
+        scenario: "Buy 3 get 1 free on items priced at $25 each. What's the effective discount?",
+        calculation: "4 items normally = $100 | You pay: $75 | Discount: $25",
+        result: "Effective discount: 25% off when buying 4"
+      }
+    ],
+    commonMistakes: [
+      "Adding percentages together for stacking discounts - 20% off plus 10% off is 28% total, not 30%.",
+      "Forgetting that percentage is calculated on different bases - the second discount applies to the already-reduced price.",
+      "Not comparing unit prices after discount - a 'deal' might still be more expensive than alternatives.",
+      "Assuming 'up to X% off' means everything is that percentage off - it's usually just select items.",
+      "Buying something just because it's on sale - a discount on something you don't need isn't saving money."
+    ]
+  };
 
   return (
     <CalculatorLayout
       title="Discount Calculator"
-      description="Calculate sale prices, savings, and discount percentages. Find out how much you save with percentage off deals."
+      description="Calculate sale prices and savings instantly. Enter original price and discount percentage to see how much you save and the final price after discount."
     >
+      <CalculatorSchema
+        name="Discount Calculator"
+        description="Free discount calculator to compute sale prices and savings. Calculate single or stacking discounts and see your true percentage off."
+        url="/calculators/discount"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -329,6 +387,13 @@ export default function DiscountCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

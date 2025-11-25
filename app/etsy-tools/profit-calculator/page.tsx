@@ -8,6 +8,8 @@ import InfoBox from '@/components/InfoBox';
 import AdUnit from '@/components/AdUnit';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function EtsyProfitCalculator() {
   const [itemPrice, setItemPrice] = useState<string>('');
@@ -202,11 +204,86 @@ export default function EtsyProfitCalculator() {
     }
   ];
 
+  const contentData = {
+    howToUse: {
+      intro: "Calculate your true profit on Etsy sales after ALL costs - not just fees:",
+      steps: [
+        "Enter your selling price and shipping charge.",
+        "Input your material/supply costs for making the item.",
+        "Add labor costs (your hourly rate × time to make).",
+        "Include packaging and shipping supply costs.",
+        "Click 'Calculate' to see true profit after costs and Etsy fees."
+      ]
+    },
+    whyMatters: {
+      description: "Many Etsy sellers focus only on fees when calculating profit, but materials, labor, packaging, and shipping supplies often cost more than fees do. A $50 sale might look profitable until you account for $15 in materials, $10 in labor, and $5 in packaging. Knowing your TRUE profit margin helps you price sustainably, identify which products are worth making, and build a profitable business rather than an expensive hobby.",
+      benefits: [
+        "See real profit after ALL costs, not just Etsy fees",
+        "Account for labor at your target hourly rate",
+        "Identify which products are actually profitable",
+        "Price sustainably for long-term business health",
+        "Make informed decisions about product line focus"
+      ]
+    },
+    examples: [
+      {
+        title: "Handmade Candle",
+        scenario: "$28 candle, $5 shipping. Materials: $8, Labor (30 min @ $20/hr): $10, Packaging: $3.",
+        calculation: "$33 revenue - $21 costs - ~$4.50 Etsy fees",
+        result: "True profit: ~$7.50 (23% margin). Need to raise price or reduce costs."
+      },
+      {
+        title: "Digital Download",
+        scenario: "$12 printable, no shipping. One-time creation: 3 hours @ $25/hr.",
+        calculation: "First sale: $12 - $1.50 fees - $75 labor = -$64.50",
+        result: "Break even after ~7 sales, then ~$10.50 profit per sale thereafter."
+      },
+      {
+        title: "Profitable Product",
+        scenario: "$65 leather wallet, $8 shipping. Materials: $12, Labor (1 hr): $25, Packaging: $4.",
+        calculation: "$73 revenue - $41 costs - ~$8 fees",
+        result: "True profit: ~$24 (33% margin). This is a healthy, sustainable product!"
+      }
+    ],
+    commonMistakes: [
+      "Not paying yourself for labor - your time has value, even in a hobby business.",
+      "Forgetting packaging costs - boxes, tissue paper, stickers, and tape add up.",
+      "Ignoring shipping supplies vs charged shipping - you might be losing money on shipping.",
+      "Not accounting for failed/returned items - factor some waste into your costs.",
+      "Setting prices based only on competitor prices - they might be losing money too."
+    ]
+  };
+
+  const relatedCalculators = [
+    {
+      title: "Etsy Fee Calculator",
+      link: "/etsy-tools/fee-calculator",
+      description: "See all Etsy fees breakdown"
+    },
+    {
+      title: "Etsy Shipping Calculator",
+      link: "/etsy-tools/shipping-calculator",
+      description: "Compare carrier shipping rates"
+    },
+    {
+      title: "Etsy Pricing Calculator",
+      link: "/calculators/etsy-pricing",
+      description: "Set prices for profit targets"
+    }
+  ];
+
   return (
     <CalculatorLayout
       title="Complete Etsy Profit Calculator"
-      description="Calculate your true profit after ALL costs: Etsy fees, shipping, materials, labor, and overhead. Get pricing recommendations and profit margin analysis."
+      description="Calculate true profit on Etsy after materials, labor, packaging, and all fees. See your real margins to price products profitably."
     >
+      <CalculatorSchema
+        name="Etsy Profit Calculator"
+        description="Free Etsy profit calculator to compute true profit after materials, labor, packaging, and all Etsy fees. Know your real margins before pricing."
+        url="/etsy-tools/profit-calculator"
+        faqItems={faqItems}
+      />
+
       {/* Breadcrumb */}
       <div style={{ marginBottom: '1.5rem', fontSize: '0.9rem', color: '#666' }}>
         <Link href="/" style={{ color: '#4a9eff' }}>Home</Link>
@@ -764,6 +841,13 @@ export default function EtsyProfitCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
 

@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 type CalculatorType = 'boardFeet' | 'studs' | 'joists' | 'deck';
 
@@ -213,25 +215,81 @@ export default function LumberCalculator() {
     {
       title: 'Deck Calculator',
       link: '/calculators/deck',
-      description: 'Complete deck material calculator'
-    },
-    {
-      title: 'Fence Calculator',
-      link: '/calculators/fence',
-      description: 'Calculate fence materials needed'
+      description: 'Complete deck material estimates'
     },
     {
       title: 'Concrete Calculator',
       link: '/calculators/concrete',
       description: 'Calculate concrete for footings'
+    },
+    {
+      title: 'Fence Calculator',
+      link: '/calculators/fence',
+      description: 'Estimate fence materials'
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Calculate lumber needs for framing, decking, and woodworking projects:",
+      steps: [
+        "Select the type of calculation needed (board feet, framing, or lineal feet).",
+        "Enter the dimensions of your project or individual boards.",
+        "For framing, enter wall length and stud spacing (16\" or 24\" on center).",
+        "Click 'Calculate' to see total board feet, number of boards, or framing members needed."
+      ]
+    },
+    whyMatters: {
+      description: "Lumber is sold in various ways - by the board foot for hardwoods, by the piece for dimensional lumber, and by the lineal foot for trim and molding. Understanding these measurements helps you order accurately and compare prices between suppliers. Over-ordering wastes money on expensive wood, while under-ordering delays projects and means more trips to the lumber yard.",
+      benefits: [
+        "Calculate board feet for accurate hardwood ordering",
+        "Estimate stud counts for wall framing projects",
+        "Plan joist and rafter requirements for floors and roofs",
+        "Compare lumber costs across different suppliers",
+        "Avoid material shortages that delay projects"
+      ]
+    },
+    examples: [
+      {
+        title: "Wall Framing",
+        scenario: "Building a 20-foot wall with 16\" on-center stud spacing.",
+        calculation: "(20 ft × 12 in) ÷ 16 in + 1 = 16 studs | Plus top plate, bottom plate, and headers",
+        result: "Need 16 studs plus 40 lineal feet of plate lumber (two 2×4×20' for plates)."
+      },
+      {
+        title: "Hardwood Table Top",
+        scenario: "Building a 4' × 6' table top from 4/4 (1\") walnut.",
+        calculation: "24 sq ft of surface | Board feet = (thickness × width × length) ÷ 144",
+        result: "Need approximately 24-30 board feet (accounting for waste and edge jointing)."
+      },
+      {
+        title: "Deck Framing",
+        scenario: "12' × 16' deck, joists 16\" on center, double rim joists.",
+        calculation: "12 joists at 16' + 2 rim joists (12' each) + 2 rim joists (16' each)",
+        result: "Need 12 pcs 2×10×16' and 2 pcs 2×10×12' plus beam and post lumber."
+      }
+    ],
+    commonMistakes: [
+      "Confusing board feet with square feet - board feet includes thickness in the calculation.",
+      "Forgetting that nominal sizes aren't actual sizes - a 2×4 is actually 1.5\" × 3.5\".",
+      "Not accounting for waste from cuts, knots, and defects - add 10-15% for most projects.",
+      "Using standard lumber grade for projects requiring better quality - check grade stamps.",
+      "Forgetting blocking, bridging, and connection hardware in framing estimates."
+    ]
+  };
 
   return (
     <CalculatorLayout
       title="Lumber Calculator"
-      description="Calculate board feet, framing materials, and lumber quantities for your construction project"
+      description="Calculate lumber needs including board feet, stud counts, and framing materials. Estimate wood for walls, decks, and woodworking projects."
     >
+      <CalculatorSchema
+        name="Lumber Calculator"
+        description="Free lumber calculator for board feet, framing, and project estimates. Calculate studs, joists, and board feet for construction and woodworking."
+        url="/calculators/lumber"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -633,6 +691,13 @@ export default function LumberCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 type CalculationType = 'daysBetween' | 'addDays' | 'subtractDays';
 
@@ -129,19 +131,68 @@ export default function DateCalculator() {
     {
       title: "Age Calculator",
       link: "/calculators/age-calculator",
-      description: "Calculate your exact age from birthdate"
+      description: "Calculate exact age in years, months, and days"
     },
     {
       title: "Time Zone Converter",
       link: "/calculators/time-zone-converter",
-      description: "Convert time between different time zones"
+      description: "Convert times between world time zones"
     },
     {
       title: "Percentage Calculator",
       link: "/calculators/percentage",
-      description: "Calculate percentages and percentage changes"
+      description: "Calculate percentages and percent changes"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Need to know how many days between two dates or find a date in the future? Our date calculator handles all date math:",
+      steps: [
+        "Choose your calculation type: days between two dates, add days to a date, or subtract days from a date.",
+        "Enter your starting date using the date picker.",
+        "For date difference: enter the second date. For add/subtract: enter the number of days.",
+        "Click 'Calculate' to see the result, including breakdowns by weeks, months, and years where applicable."
+      ]
+    },
+    whyMatters: {
+      description: "Date calculations come up more often than you might think - counting down to events, calculating project timelines, determining age, figuring out when bills are due, or planning vacations. While calendar math seems simple, accounting for varying month lengths, leap years, and weekends makes it surprisingly complex. A date calculator eliminates errors and saves time on these common but tricky calculations.",
+      benefits: [
+        "Count down days to important events like weddings, trips, or deadlines",
+        "Calculate exact time between dates for project planning",
+        "Determine due dates and deadline dates accurately",
+        "Figure out the date X days from now for scheduling",
+        "Calculate age differences or time elapsed precisely"
+      ]
+    },
+    examples: [
+      {
+        title: "Vacation Countdown",
+        scenario: "Today is January 15th and your vacation starts June 20th. How many days until vacation?",
+        calculation: "Days from Jan 15 to June 20",
+        result: "156 days (about 5 months and 5 days)"
+      },
+      {
+        title: "Project Deadline",
+        scenario: "A project needs to be done in 45 business days. You start February 1st.",
+        calculation: "Add 45 weekdays (about 63 calendar days) to Feb 1",
+        result: "Deadline: approximately April 5th"
+      },
+      {
+        title: "Event Planning",
+        scenario: "How many days between Thanksgiving (Nov 28) and Christmas (Dec 25)?",
+        calculation: "Days from Nov 28 to Dec 25",
+        result: "27 days to prepare for Christmas after Thanksgiving"
+      }
+    ],
+    commonMistakes: [
+      "Forgetting about leap years when calculating dates spanning February - every 4 years adds an extra day.",
+      "Confusing 'days from today' with 'days including today' - clarify whether to count the start date.",
+      "Not accounting for time zones when planning international events or deadlines.",
+      "Assuming all months have 30 days - month lengths vary from 28-31 days.",
+      "Mixing up business days (weekdays) with calendar days - 10 business days is typically 14 calendar days."
+    ]
+  };
 
   const formatDate = (date: Date): string => {
     return date.toLocaleDateString('en-US', {
@@ -155,8 +206,15 @@ export default function DateCalculator() {
   return (
     <CalculatorLayout
       title="Date Calculator"
-      description="Calculate days between dates, add or subtract days from a date, and count workdays with our comprehensive date calculator."
+      description="Calculate days between two dates or add/subtract days from any date. Find exact durations for planning deadlines, events, and countdowns."
     >
+      <CalculatorSchema
+        name="Date Calculator"
+        description="Free date calculator to find days between dates, add or subtract days from a date. Calculate durations, deadlines, and countdowns easily."
+        url="/calculators/date-calculator"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -301,6 +359,13 @@ export default function DateCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

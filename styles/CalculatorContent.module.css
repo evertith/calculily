@@ -1,0 +1,191 @@
+.contentContainer {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid #222;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin-bottom: 1rem;
+}
+
+.intro {
+  font-size: 1.05rem;
+  color: #b0b0b0;
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+
+.description {
+  font-size: 1.05rem;
+  color: #b0b0b0;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+/* Steps List */
+.stepsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: step-counter;
+}
+
+.step {
+  font-size: 1rem;
+  color: #b0b0b0;
+  line-height: 1.7;
+  padding: 0.75rem 0 0.75rem 2.5rem;
+  position: relative;
+  counter-increment: step-counter;
+  border-left: 2px solid #333;
+  margin-left: 1rem;
+}
+
+.step::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: -1rem;
+  top: 0.75rem;
+  width: 2rem;
+  height: 2rem;
+  background-color: #4a9eff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: white;
+}
+
+.step:last-child {
+  border-left-color: transparent;
+}
+
+/* Benefits List */
+.benefitsList {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0 0;
+}
+
+.benefit {
+  font-size: 1rem;
+  color: #b0b0b0;
+  line-height: 1.7;
+  padding: 0.5rem 0 0.5rem 1.75rem;
+  position: relative;
+}
+
+.benefit::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #4a9eff;
+  font-weight: bold;
+}
+
+/* Examples Grid */
+.examplesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.exampleCard {
+  background-color: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.exampleTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e0e0e0;
+  margin: 0 0 0.75rem 0;
+}
+
+.exampleScenario {
+  font-size: 0.95rem;
+  color: #b0b0b0;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.exampleCalculation {
+  font-size: 0.9rem;
+  color: #888;
+  background-color: #1a1a1a;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  font-family: 'Monaco', 'Consolas', monospace;
+}
+
+.exampleResult {
+  font-size: 1rem;
+  color: #4a9eff;
+  font-weight: 500;
+}
+
+/* Mistakes List */
+.mistakesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mistake {
+  font-size: 1rem;
+  color: #b0b0b0;
+  line-height: 1.7;
+  padding: 0.75rem 0 0.75rem 1.75rem;
+  position: relative;
+  border-bottom: 1px solid #222;
+}
+
+.mistake:last-child {
+  border-bottom: none;
+}
+
+.mistake::before {
+  content: "!";
+  position: absolute;
+  left: 0;
+  color: #ff6b6b;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contentContainer {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.25rem;
+  }
+
+  .intro,
+  .description {
+    font-size: 1rem;
+  }
+
+  .examplesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .step {
+    padding-left: 2rem;
+  }
+}

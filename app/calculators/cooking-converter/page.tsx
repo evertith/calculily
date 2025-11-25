@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 type ConversionType = 'volume' | 'weight' | 'temperature';
 
@@ -165,25 +167,82 @@ export default function CookingConverter() {
     {
       title: "Unit Converter",
       link: "/calculators/unit-converter",
-      description: "Convert between various units of measurement"
+      description: "Convert any unit of measurement"
     },
     {
       title: "Percentage Calculator",
       link: "/calculators/percentage",
-      description: "Calculate percentages and percentage changes"
+      description: "Scale recipes by percentage"
     },
     {
-      title: "Discount Calculator",
-      link: "/calculators/discount",
-      description: "Calculate sale prices and savings"
+      title: "Tip Calculator",
+      link: "/calculators/tip",
+      description: "Calculate tips for dining out"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Convert between cooking measurements quickly and accurately:",
+      steps: [
+        "Select the type of measurement you're converting (volume, weight, or temperature).",
+        "Choose the unit you're converting FROM in the first dropdown.",
+        "Choose the unit you're converting TO in the second dropdown.",
+        "Enter the amount to convert.",
+        "See your result instantly - perfect for recipe scaling and international recipes."
+      ]
+    },
+    whyMatters: {
+      description: "Cooking measurements vary around the world, and recipes come from everywhere. American recipes use cups and tablespoons, British recipes often use weights, and many international recipes use metric measurements. Being able to convert accurately means you can follow any recipe from any source. For baking especially, precise measurements can make the difference between success and failure.",
+      benefits: [
+        "Convert between cups, tablespoons, teaspoons, and milliliters",
+        "Scale recipes up or down accurately",
+        "Follow international recipes using metric measurements",
+        "Convert oven temperatures between Fahrenheit and Celsius",
+        "Substitute ingredient amounts when you're short on supplies"
+      ]
+    },
+    examples: [
+      {
+        title: "European Recipe",
+        scenario: "A French recipe calls for 250ml of milk. How many cups is that?",
+        calculation: "250ml ÷ 236.6ml per cup",
+        result: "Approximately 1.06 cups - just use 1 cup for practical purposes."
+      },
+      {
+        title: "Scaling a Recipe",
+        scenario: "Recipe serves 4, you need to serve 10. Original calls for 2/3 cup butter.",
+        calculation: "2/3 cup × 2.5 = 1.67 cups | 1.67 cups = 1 cup + 10 tablespoons + 2 teaspoons",
+        result: "Use 1 2/3 cups of butter for the scaled recipe."
+      },
+      {
+        title: "Oven Temperature",
+        scenario: "British recipe says bake at 180°C. What's the Fahrenheit setting?",
+        calculation: "(180 × 9/5) + 32",
+        result: "356°F - set your oven to 350°F (the nearest standard setting)."
+      }
+    ],
+    commonMistakes: [
+      "Confusing fluid ounces (volume) with ounces (weight) - they're different measurements.",
+      "Using volume conversions for ingredients that should be weighed - flour is notorious for this.",
+      "Forgetting that cup sizes vary by country - US, UK, and metric cups are all different.",
+      "Not accounting for ingredient density - 1 cup of flour doesn't weigh the same as 1 cup of sugar.",
+      "Converting without considering significant figures - 3 tablespoons is close enough to 45ml for cooking."
+    ]
+  };
 
   return (
     <CalculatorLayout
       title="Cooking Measurement Converter"
-      description="Convert cooking measurements easily. Convert between cups, tablespoons, grams, ounces, and temperature scales for perfect recipes."
+      description="Convert cooking measurements between cups, tablespoons, teaspoons, milliliters, and more. Includes temperature conversion for international recipes."
     >
+      <CalculatorSchema
+        name="Cooking Converter"
+        description="Free cooking measurement converter for cups, tablespoons, milliliters, and oven temperatures. Convert recipe measurements between US, metric, and imperial units."
+        url="/calculators/cooking-converter"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -332,6 +391,13 @@ export default function CookingConverter() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

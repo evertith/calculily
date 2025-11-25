@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function TireSizeCalculator() {
   const { trackCalculatorUsage, trackEvent } = useAnalytics();
@@ -50,21 +52,70 @@ export default function TireSizeCalculator() {
 
   const relatedCalculators = [
     {
-      title: "Gas Mileage Calculator",
-      link: "/calculators/gas-mileage",
-      description: "Track your vehicle's fuel economy"
-    },
-    {
       title: "Fuel Cost Calculator",
       link: "/calculators/fuel-cost",
-      description: "Calculate trip fuel costs"
+      description: "Calculate fuel costs for trips"
     },
     {
-      title: "Car Depreciation Calculator",
-      link: "/calculators/car-depreciation",
-      description: "Estimate vehicle value over time"
+      title: "Gas Mileage Calculator",
+      link: "/calculators/gas-mileage",
+      description: "Track your vehicle's MPG"
+    },
+    {
+      title: "Car Payment Calculator",
+      link: "/calculators/car-payment",
+      description: "Calculate auto loan payments"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Compare tire sizes to understand how a change affects your vehicle's performance and speedometer accuracy:",
+      steps: [
+        "Enter your current tire size (found on the tire sidewall, e.g., 225/60R16).",
+        "Enter the new tire size you're considering.",
+        "The format is: width (mm) / aspect ratio / R + rim diameter (inches).",
+        "Click 'Calculate' to see the difference in diameter, circumference, and speedometer error."
+      ]
+    },
+    whyMatters: {
+      description: "Changing tire sizes affects more than just looks. Different sized tires alter your speedometer accuracy, fuel economy, ride height, and can even affect safety systems like ABS and stability control. A tire that's too tall or short can cause speedometer errors of 5% or more, meaning your actual speed differs from what's displayed. Understanding these differences helps you choose plus-sizes safely or find equivalent replacement tires.",
+      benefits: [
+        "Understand how tire changes affect speedometer accuracy",
+        "Compare overall diameter when changing wheel sizes",
+        "Ensure replacement tires maintain proper vehicle dynamics",
+        "Calculate actual speed when running different tire sizes",
+        "Find equivalent tire sizes for wheel upgrades"
+      ]
+    },
+    examples: [
+      {
+        title: "Plus-Size Wheels",
+        scenario: "Upgrading from 225/60R16 to 225/50R17 for a sportier look.",
+        calculation: "Old diameter: 26.6\" → New diameter: 25.9\"",
+        result: "Speedometer will read 2.6% high (reads 65 when actually going 63.3 mph)."
+      },
+      {
+        title: "Truck Tire Upgrade",
+        scenario: "Changing from 265/70R17 to 285/70R17 for more aggressive look.",
+        calculation: "Old diameter: 31.6\" → New diameter: 32.7\"",
+        result: "Speedometer reads 3.5% low (reads 65 when actually going 67.3 mph). May need recalibration."
+      },
+      {
+        title: "Finding Equivalent Size",
+        scenario: "Want 18\" wheels but need the same overall diameter as stock 215/55R17.",
+        calculation: "Stock diameter: 26.3\". Need 215/45R18 or 225/45R18.",
+        result: "225/45R18 = 25.9\" diameter - close enough for minimal speedometer error."
+      }
+    ],
+    commonMistakes: [
+      "Ignoring load rating when changing sizes - larger tires may have different weight capacities.",
+      "Forgetting that aspect ratio is a percentage of width - same aspect ratio on wider tires = taller sidewall.",
+      "Not checking for clearance - larger tires may rub on fenders or suspension components.",
+      "Assuming bigger tires always improve performance - they can hurt acceleration and fuel economy.",
+      "Not recalibrating the speedometer after significant size changes - this can affect GPS and trip calculations."
+    ]
+  };
 
   const parseTireSize = (sizeString: string) => {
     // Remove spaces and convert to uppercase
@@ -167,8 +218,15 @@ export default function TireSizeCalculator() {
   return (
     <CalculatorLayout
       title="Tire Size Calculator"
-      description="Compare tire sizes, calculate diameter differences, and determine speedometer correction when changing tire sizes."
+      description="Compare tire sizes to see diameter differences and speedometer error. Find equivalent sizes when changing wheels or upgrading tires."
     >
+      <CalculatorSchema
+        name="Tire Size Calculator"
+        description="Free tire size calculator to compare tire dimensions. See diameter differences, speedometer error, and find equivalent tire sizes for wheel upgrades."
+        url="/calculators/tire-size"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -300,6 +358,13 @@ export default function TireSizeCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

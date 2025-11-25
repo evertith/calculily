@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function VoltageDropCalculator() {
   const [wireGauge, setWireGauge] = useState<string>('12');
@@ -44,14 +46,69 @@ export default function VoltageDropCalculator() {
     {
       title: "Wire Gauge Calculator",
       link: "/calculators/wire-gauge",
-      description: "Determine the correct wire size for your electrical project"
+      description: "Calculate proper wire gauge for amperage and distance"
     },
     {
-      title: "LED Power Calculator",
-      link: "/calculators/led-power",
-      description: "Calculate power requirements for LED strips and installations"
+      title: "Circuit Breaker Calculator",
+      link: "/calculators/circuit-breaker",
+      description: "Size circuit breakers correctly"
+    },
+    {
+      title: "Amp Draw Calculator",
+      link: "/calculators/amp-draw",
+      description: "Calculate total circuit amperage"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Calculate voltage drop to ensure your electrical runs deliver adequate power to loads:",
+      steps: [
+        "Enter the wire gauge (AWG) you're using or planning to use.",
+        "Input the one-way distance from power source to load in feet.",
+        "Enter the current (amps) the circuit will carry.",
+        "Select the voltage of your system (120V, 240V, etc.).",
+        "Click 'Calculate' to see voltage drop percentage and actual voltage at the load."
+      ]
+    },
+    whyMatters: {
+      description: "Voltage drop is the silent killer of electrical efficiency. As current flows through wire, some voltage is lost as heat due to resistance. The National Electrical Code recommends no more than 3% drop for feeders and 5% total for branch circuits. Excessive voltage drop causes lights to dim, motors to run hot and inefficiently, and electronics to malfunction. For long runs to outbuildings, pools, or outdoor lighting, voltage drop often requires larger wire than ampacity alone would suggest.",
+      benefits: [
+        "Ensure lights operate at full brightness without dimming",
+        "Prevent motors from overheating due to low voltage",
+        "Optimize energy efficiency by minimizing power lost in wiring",
+        "Properly size wire for long runs to outbuildings and remote locations",
+        "Meet NEC recommendations for voltage drop limits"
+      ]
+    },
+    examples: [
+      {
+        title: "Long Run to Shed",
+        scenario: "Running a 20A, 120V circuit 150 feet to a shed using #12 AWG wire.",
+        calculation: "Voltage drop = ~7.8% with #12 AWG",
+        result: "Exceeds 5% limit. Upgrade to #10 AWG for ~4.9% drop or #8 AWG for ~3.1%."
+      },
+      {
+        title: "Landscape Lighting",
+        scenario: "Low voltage (12V) landscape lights, 5A load, 100 feet of #14 wire.",
+        calculation: "Voltage drop = ~8.2% (about 1V lost)",
+        result: "Lights will be noticeably dim. Use #10 AWG or shorter runs for low voltage systems."
+      },
+      {
+        title: "EV Charger Circuit",
+        scenario: "50A, 240V circuit, 60 feet from panel to garage, using #6 AWG.",
+        calculation: "Voltage drop = ~2.1%",
+        result: "Well within limits. The charger will receive adequate voltage for full charging speed."
+      }
+    ],
+    commonMistakes: [
+      "Forgetting that voltage drop is a round-trip calculation - current flows out AND back, doubling the wire length.",
+      "Using ampacity tables alone for long runs - you may need larger wire for voltage drop even if ampacity is okay.",
+      "Not accounting for the much higher impact of voltage drop in low-voltage systems (12V, 24V).",
+      "Ignoring NEC guidelines - while not always code requirements, 3%/5% limits are best practice.",
+      "Using aluminum wire ampacity calculations for copper - voltage drop differs between materials."
+    ]
+  };
 
   // Resistance per 1000ft for each gauge (in ohms)
   const resistance: { [key: string]: number } = {
@@ -91,8 +148,15 @@ export default function VoltageDropCalculator() {
   return (
     <CalculatorLayout
       title="Voltage Drop Calculator"
-      description="Calculate voltage drop over distance for various wire gauges and determine if your wire size is appropriate."
+      description="Calculate voltage drop for electrical wiring runs. Enter wire gauge, distance, and amperage to ensure your circuits deliver adequate voltage to loads."
     >
+      <CalculatorSchema
+        name="Voltage Drop Calculator"
+        description="Free voltage drop calculator for electrical wiring. Calculate voltage loss over distance for any wire gauge, amperage, and voltage to ensure proper circuit performance."
+        url="/calculators/voltage-drop"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -208,6 +272,13 @@ export default function VoltageDropCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

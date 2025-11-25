@@ -17,11 +17,14 @@ export default function Footer() {
           <Link href="/about" className={styles.link}>
             About
           </Link>
-          <Link href="/about#contact" className={styles.link}>
+          <Link href="/contact" className={styles.link}>
             Contact
           </Link>
           <Link href="/privacy" className={styles.link}>
             Privacy
+          </Link>
+          <Link href="/terms" className={styles.link}>
+            Terms
           </Link>
         </nav>
       </div>

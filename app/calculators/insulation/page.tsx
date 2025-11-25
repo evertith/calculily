@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 const recommendedRValues = {
   'Zone 1 (Hot)': { attic: 30, walls: 13, floor: 13 },
@@ -67,16 +69,70 @@ export default function InsulationCalculator() {
     }
   ];
 
+  const contentData = {
+    howToUse: {
+      intro: "Calculate insulation needs for walls, attics, and floors to improve energy efficiency:",
+      steps: [
+        "Measure the area to be insulated in square feet.",
+        "Select the type of insulation (batts, blown-in, spray foam).",
+        "Choose the R-value needed for your climate zone and application.",
+        "Click 'Calculate' to see materials needed and estimated costs."
+      ]
+    },
+    whyMatters: {
+      description: "Proper insulation is one of the best investments for home energy efficiency. The Department of Energy estimates that 25-30% of heating and cooling energy is lost through poorly insulated areas. Different climate zones require different R-values, and different applications (walls vs attic) have different requirements. Getting insulation right reduces energy bills for decades while improving comfort year-round.",
+      benefits: [
+        "Reduce heating and cooling costs significantly",
+        "Improve home comfort by eliminating drafts and hot spots",
+        "Meet building code requirements for your climate zone",
+        "Compare costs between different insulation types",
+        "Calculate coverage accounting for framing and obstacles"
+      ]
+    },
+    examples: [
+      {
+        title: "Attic Insulation",
+        scenario: "Adding insulation to 1,200 sq ft attic in Climate Zone 4 (needs R-49).",
+        calculation: "1,200 sq ft × R-49 blown-in cellulose | About 50 bags at typical coverage",
+        result: "Materials around $700-1,000. Significant energy savings in heating/cooling."
+      },
+      {
+        title: "Wall Insulation",
+        scenario: "Insulating 800 sq ft of 2×4 exterior walls with fiberglass batts (R-13).",
+        calculation: "800 sq ft ÷ coverage per package (~100 sq ft) = 8 packages",
+        result: "Need 8-9 packages of R-13 faced batts, around $400-500 in materials."
+      },
+      {
+        title: "Crawl Space",
+        scenario: "500 sq ft crawl space floor, spray foam for moisture barrier and R-19.",
+        calculation: "500 sq ft of closed-cell spray foam at 3\" thickness",
+        result: "Professional installation recommended - budget $1,500-2,500 for spray foam."
+      }
+    ],
+    commonMistakes: [
+      "Using wall R-values for attic applications - attics need much higher R-values.",
+      "Compressing batts to fit - compressed insulation loses R-value significantly.",
+      "Not accounting for framing - studs and joists reduce effective insulating area by 15-20%.",
+      "Ignoring vapor barriers - wrong placement can cause moisture problems.",
+      "Adding insulation without air sealing - air leaks bypass insulation entirely."
+    ]
+  };
+
   const relatedCalculators = [
     {
       title: "Drywall Calculator",
       link: "/calculators/drywall",
-      description: "Calculate drywall sheets and materials needed"
+      description: "Calculate drywall after insulating"
+    },
+    {
+      title: "Lumber Calculator",
+      link: "/calculators/lumber",
+      description: "Estimate framing materials"
     },
     {
       title: "Paint Calculator",
       link: "/calculators/paint",
-      description: "Calculate paint needed for your project"
+      description: "Calculate paint for finished walls"
     }
   ];
 
@@ -150,8 +206,15 @@ export default function InsulationCalculator() {
   return (
     <CalculatorLayout
       title="Insulation Calculator"
-      description="Calculate insulation needed for attics, walls, and floors. Find R-value requirements and estimated energy savings."
+      description="Calculate insulation materials for walls, attics, and floors. Estimate R-value requirements, material quantities, and costs for energy-efficient insulation."
     >
+      <CalculatorSchema
+        name="Insulation Calculator"
+        description="Free insulation calculator to estimate materials and R-value requirements. Calculate batts, blown-in, or spray foam insulation for walls, attics, and floors."
+        url="/calculators/insulation"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -329,6 +392,13 @@ export default function InsulationCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

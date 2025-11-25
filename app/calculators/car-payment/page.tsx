@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function CarPaymentCalculator() {
   const { trackCalculatorUsage, trackEvent } = useAnalytics();
@@ -50,21 +52,72 @@ export default function CarPaymentCalculator() {
 
   const relatedCalculators = [
     {
-      title: "Loan Calculator",
-      link: "/calculators/loan",
-      description: "Calculate general loan payments"
-    },
-    {
       title: "Car Depreciation Calculator",
       link: "/calculators/car-depreciation",
-      description: "Estimate vehicle value over time"
+      description: "See how your car's value decreases over time"
     },
     {
       title: "Fuel Cost Calculator",
       link: "/calculators/fuel-cost",
-      description: "Calculate ongoing fuel expenses"
+      description: "Calculate fuel costs for trips and compare vehicle efficiency"
+    },
+    {
+      title: "Loan Calculator",
+      link: "/calculators/loan",
+      description: "Calculate payments for personal loans and other financing"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Understanding your car payment before visiting the dealership puts you in control. Here's how to calculate what you'll actually pay:",
+      steps: [
+        "Enter the vehicle price - use the 'out-the-door' price if you know it, or the sticker price to estimate.",
+        "Input your down payment amount - the more you put down, the lower your monthly payment and total interest.",
+        "If you have a trade-in, enter its value. This reduces the amount you need to finance.",
+        "Enter the interest rate (APR) you expect - this varies based on your credit score and whether it's new/used.",
+        "Select the loan term - 36, 48, 60, or 72 months are common options.",
+        "Click 'Calculate' to see your monthly payment and total cost of the loan."
+      ]
+    },
+    whyMatters: {
+      description: "Car purchases are the second largest financial decision most people make, yet many focus only on the monthly payment without understanding total cost. Dealerships often negotiate by adjusting loan terms rather than price - extending your loan from 48 to 72 months lowers your payment but can cost thousands more in interest. Knowing your numbers beforehand helps you negotiate effectively and avoid financing traps.",
+      benefits: [
+        "Walk into dealerships knowing exactly what payment to expect",
+        "Compare how different down payments affect your monthly cost",
+        "Understand the true cost difference between loan terms (48 vs 72 months)",
+        "Factor in trade-in value to see your real out-of-pocket costs",
+        "Avoid dealership financing tricks by knowing your numbers in advance"
+      ]
+    },
+    examples: [
+      {
+        title: "New Car Purchase",
+        scenario: "Buying a $32,000 new car with $5,000 down, no trade-in, at 5.9% APR for 60 months.",
+        calculation: "Loan amount: $27,000 | Monthly payment: $520.93",
+        result: "Total interest paid: $4,255.80 | Total cost: $36,255.80"
+      },
+      {
+        title: "Used Car with Trade-In",
+        scenario: "Buying a $18,000 used car with $2,000 down and a trade-in worth $4,500 at 7.9% APR for 48 months.",
+        calculation: "Loan amount: $11,500 | Monthly payment: $280.47",
+        result: "Total interest paid: $1,962.56 | Total cost: $19,962.56"
+      },
+      {
+        title: "Comparing Loan Terms",
+        scenario: "Same $25,000 loan at 6% APR: comparing 48-month vs 72-month terms.",
+        calculation: "48 months: $586.91/mo ($3,171.68 interest) | 72 months: $414.32/mo ($4,831.04 interest)",
+        result: "The longer term costs $1,659 more in interest over the life of the loan."
+      }
+    ],
+    commonMistakes: [
+      "Focusing only on monthly payment - dealerships love stretching terms to lower payments while you pay more overall.",
+      "Forgetting that trade-in value is negotiable separately from the car price - don't let them mix the two.",
+      "Not getting pre-approved before shopping - dealership financing is often more expensive than bank/credit union loans.",
+      "Ignoring the total cost of ownership - insurance, fuel, and maintenance vary significantly between vehicles.",
+      "Financing for longer than you plan to keep the car - you could end up owing more than it's worth (underwater)."
+    ]
+  };
 
   const calculatePayment = () => {
     const price = parseFloat(vehiclePrice);
@@ -132,8 +185,15 @@ export default function CarPaymentCalculator() {
   return (
     <CalculatorLayout
       title="Car Payment Calculator"
-      description="Calculate your monthly car loan payment including trade-in value, down payment, and sales tax."
+      description="Calculate monthly car payments with down payment, trade-in value, and interest rates. Compare loan terms to understand the true cost of financing your vehicle."
     >
+      <CalculatorSchema
+        name="Car Payment Calculator"
+        description="Free auto loan calculator to estimate monthly car payments. Factor in down payment, trade-in value, interest rate, and loan term for accurate payment calculations."
+        url="/calculators/car-payment"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -344,6 +404,13 @@ export default function CarPaymentCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

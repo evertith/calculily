@@ -8,6 +8,8 @@ import InfoBox from '@/components/InfoBox';
 import AdUnit from '@/components/AdUnit';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function EtsyFeeCalculator() {
   const [itemPrice, setItemPrice] = useState<string>('');
@@ -92,6 +94,56 @@ export default function EtsyFeeCalculator() {
     });
   };
 
+  const contentData = {
+    howToUse: {
+      intro: "Calculate the true cost of selling on Etsy with all fees included:",
+      steps: [
+        "Enter your item's selling price.",
+        "Add the shipping amount you'll charge the buyer.",
+        "Select whether you have Etsy Plus (affects listing fees).",
+        "Indicate if this sale might trigger Offsite Ads fees (applies to shops over $10K annual sales).",
+        "Click 'Calculate' to see all fees broken down and your actual earnings."
+      ]
+    },
+    whyMatters: {
+      description: "Etsy's fee structure is complex - listing fees, transaction fees, payment processing fees, and potentially Offsite Ads fees can significantly eat into your profits. Many sellers are surprised to find fees taking 15-25% of their sale price. Understanding these fees BEFORE setting prices ensures you're actually making money on each sale and helps you price competitively while maintaining healthy margins.",
+      benefits: [
+        "See all Etsy fees in one clear breakdown",
+        "Calculate actual profit after all fees are deducted",
+        "Price products to maintain target profit margins",
+        "Understand how Offsite Ads affect high-volume sellers",
+        "Compare Etsy costs with other selling platforms"
+      ]
+    },
+    examples: [
+      {
+        title: "Handmade Jewelry",
+        scenario: "Selling a $35 necklace with $5 shipping to a US buyer.",
+        calculation: "Listing: $0.20 | Transaction (6.5%): $2.60 | Payment (3%+$0.25): $1.45",
+        result: "Total fees: ~$4.25 | You keep: ~$35.75 of the $40 total (89%)"
+      },
+      {
+        title: "With Offsite Ads",
+        scenario: "Same $35 necklace, but buyer came through Offsite Ads (12-15% fee on sale).",
+        calculation: "Base fees: $4.25 + Offsite Ads (12%): $4.80",
+        result: "Total fees: ~$9.05 | You keep: ~$30.95 (77%) - significantly less!"
+      },
+      {
+        title: "Digital Download",
+        scenario: "Selling a $5 digital printable (no shipping).",
+        calculation: "Listing: $0.20 | Transaction: $0.33 | Payment: $0.40",
+        result: "Total fees: ~$0.93 | You keep: ~$4.07 (81%) - still profitable on low-priced items."
+      }
+    ],
+    commonMistakes: [
+      "Forgetting that transaction fees apply to shipping amount too - not just item price.",
+      "Not accounting for Offsite Ads if your shop exceeds $10K annually (mandatory 12-15% fee).",
+      "Ignoring the $0.20 listing fee when calculating margins on low-priced items.",
+      "Thinking payment processing fees are included in transaction fees - they're separate.",
+      "Setting prices based on competitors without checking if they're actually profitable."
+    ]
+  };
+
   const faqItems = [
     {
       question: "What is the listing fee?",
@@ -122,8 +174,15 @@ export default function EtsyFeeCalculator() {
   return (
     <CalculatorLayout
       title="Etsy Fee Calculator"
-      description="Calculate all Etsy fees including listing, transaction, payment processing, and offsite ads. See exactly what Etsy takes from each sale."
+      description="Calculate all Etsy seller fees including listing fees, transaction fees, payment processing, and Offsite Ads. See exactly what you keep from each sale."
     >
+      <CalculatorSchema
+        name="Etsy Fee Calculator"
+        description="Free Etsy fee calculator to see all seller fees including listing, transaction, payment processing, and Offsite Ads. Calculate your true earnings on every sale."
+        url="/etsy-tools/fee-calculator"
+        faqItems={faqItems}
+      />
+
       {/* Breadcrumb */}
       <div style={{ marginBottom: '1.5rem', fontSize: '0.9rem', color: '#666' }}>
         <Link href="/" style={{ color: '#4a9eff' }}>Home</Link>
@@ -332,21 +391,33 @@ export default function EtsyFeeCalculator() {
       <div style={{ marginTop: '2rem', padding: '1.5rem', backgroundColor: '#1a1a1a', borderRadius: '8px' }}>
         <h3 style={{ color: '#e0e0e0', marginBottom: '1rem' }}>Related Tools</h3>
         <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))' }}>
+          <Link href="/etsy-tools/profit-calculator" style={{ padding: '1rem', backgroundColor: '#0a0a0a', borderRadius: '8px', border: '1px solid #333', textDecoration: 'none', transition: 'border-color 0.2s' }}>
+            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📊</div>
+            <div style={{ color: '#e0e0e0', fontWeight: 600, marginBottom: '0.25rem' }}>Etsy Profit Calculator</div>
+            <div style={{ color: '#b0b0b0', fontSize: '0.9rem' }}>Calculate true profit after all costs</div>
+          </Link>
           <Link href="/etsy-tools/shipping-calculator" style={{ padding: '1rem', backgroundColor: '#0a0a0a', borderRadius: '8px', border: '1px solid #333', textDecoration: 'none', transition: 'border-color 0.2s' }}>
             <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>📦</div>
-            <div style={{ color: '#e0e0e0', fontWeight: 600, marginBottom: '0.25rem' }}>Shipping Calculator</div>
-            <div style={{ color: '#b0b0b0', fontSize: '0.9rem' }}>Compare carrier rates and optimize costs</div>
+            <div style={{ color: '#e0e0e0', fontWeight: 600, marginBottom: '0.25rem' }}>Etsy Shipping Calculator</div>
+            <div style={{ color: '#b0b0b0', fontSize: '0.9rem' }}>Compare shipping carrier rates</div>
           </Link>
-          <Link href="/etsy-tools" style={{ padding: '1rem', backgroundColor: '#0a0a0a', borderRadius: '8px', border: '1px solid #333', textDecoration: 'none', transition: 'border-color 0.2s' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🏠</div>
-            <div style={{ color: '#e0e0e0', fontWeight: 600, marginBottom: '0.25rem' }}>All Etsy Tools</div>
-            <div style={{ color: '#b0b0b0', fontSize: '0.9rem' }}>View all Etsy seller calculators</div>
+          <Link href="/calculators/etsy-pricing" style={{ padding: '1rem', backgroundColor: '#0a0a0a', borderRadius: '8px', border: '1px solid #333', textDecoration: 'none', transition: 'border-color 0.2s' }}>
+            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>💰</div>
+            <div style={{ color: '#e0e0e0', fontWeight: 600, marginBottom: '0.25rem' }}>Etsy Pricing Calculator</div>
+            <div style={{ color: '#b0b0b0', fontSize: '0.9rem' }}>Set prices for target profit margins</div>
           </Link>
         </div>
       </div>
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
 

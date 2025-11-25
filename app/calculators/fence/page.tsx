@@ -8,6 +8,8 @@ import ProductRecommendation from '@/components/ProductRecommendation';
 import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 import styles from '@/styles/Calculator.module.css';
 
 type FenceType = 'privacy' | 'picket' | 'chainlink';
@@ -157,27 +159,83 @@ export default function FenceCalculator() {
 
   const relatedCalculators = [
     {
-      title: 'Concrete Calculator',
-      link: '/calculators/concrete',
-      description: 'Calculate concrete for fence post holes'
+      title: "Concrete Calculator",
+      link: "/calculators/concrete",
+      description: "Calculate concrete for post footings"
     },
     {
-      title: 'Lumber Calculator',
-      link: '/calculators/lumber',
-      description: 'Calculate board feet for fence materials'
+      title: "Deck Calculator",
+      link: "/calculators/deck",
+      description: "Estimate deck materials and costs"
     },
     {
-      title: 'Deck Calculator',
-      link: '/calculators/deck',
-      description: 'Calculate decking and railing materials'
+      title: "Lumber Calculator",
+      link: "/calculators/lumber",
+      description: "Calculate board feet and framing"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Plan your fence project with accurate material estimates for posts, rails, and pickets:",
+      steps: [
+        "Enter the total linear feet of fence you need to build.",
+        "Select your fence style (privacy, picket, rail) and height.",
+        "Choose post spacing (typically 6-8 feet between posts).",
+        "Click 'Calculate' to see posts, rails, pickets, and concrete needed."
+      ]
+    },
+    whyMatters: {
+      description: "Fencing materials add up quickly, and fence projects have many components - posts, rails, pickets, fasteners, and concrete for post holes. Running short means project delays, while over-ordering means returning heavy materials or wasting money. Accurate calculations also help you compare quotes from contractors and ensure you're being charged fairly for materials.",
+      benefits: [
+        "Get complete material lists including often-forgotten items like concrete",
+        "Compare costs between different fence styles and materials",
+        "Verify contractor quotes for materials",
+        "Plan post hole digging with accurate counts",
+        "Budget accurately for the complete project"
+      ]
+    },
+    examples: [
+      {
+        title: "Privacy Fence",
+        scenario: "100 linear feet of 6-foot privacy fence, posts 8 feet apart.",
+        calculation: "13 posts + 26 rails (2 per section) + ~200 pickets (6\" width with gap)",
+        result: "Need 13 bags of concrete for post holes plus fasteners. Budget $2,000-3,500 for materials."
+      },
+      {
+        title: "Backyard Enclosure",
+        scenario: "Fencing three sides of a 50' × 80' backyard (160 total feet), 4-foot picket fence.",
+        calculation: "21 posts (8' spacing) + 42 rails + ~270 pickets",
+        result: "Smaller scale project - approximately $1,200-2,000 in materials."
+      },
+      {
+        title: "Split Rail Fence",
+        scenario: "200 feet of 3-rail split rail fence for property line, 10-foot spans.",
+        calculation: "21 posts + 60 rails (3 per section × 20 sections)",
+        result: "Rustic fencing is economical - around $1,000-1,500 in materials."
+      }
+    ],
+    commonMistakes: [
+      "Forgetting corner and end posts need extra concrete and may need larger posts.",
+      "Not accounting for gates - gates require special hardware and affect post placement.",
+      "Using 10-foot spacing for privacy fences - 6-8 feet is more appropriate for structural integrity.",
+      "Underestimating concrete needs - each post typically needs 1-2 bags depending on depth.",
+      "Not checking property lines before building - fences built on neighbor's property create legal issues."
+    ]
+  };
 
   return (
     <CalculatorLayout
       title="Fence Calculator"
-      description="Calculate materials needed for wood privacy, picket, or chain link fences"
+      description="Calculate fence materials including posts, rails, pickets, and concrete for footings. Get complete material lists for privacy, picket, or rail fences."
     >
+      <CalculatorSchema
+        name="Fence Calculator"
+        description="Free fence calculator to estimate posts, rails, pickets, and concrete. Calculate materials for privacy, picket, and rail fence projects."
+        url="/calculators/fence"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -453,6 +511,13 @@ export default function FenceCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

@@ -10,6 +10,8 @@ import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 import type { Metadata } from 'next';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function CircuitBreakerCalculator() {
   const { trackCalculatorUsage, trackEvent } = useAnalytics();
@@ -47,21 +49,71 @@ export default function CircuitBreakerCalculator() {
 
   const relatedCalculators = [
     {
-      title: "Amp Draw Calculator",
-      link: "/calculators/amp-draw",
-      description: "Calculate total amperage from multiple appliances"
-    },
-    {
       title: "Wire Gauge Calculator",
       link: "/calculators/wire-gauge",
-      description: "Find the right wire size for distance and amperage"
+      description: "Calculate proper wire gauge for circuits"
     },
     {
       title: "Voltage Drop Calculator",
       link: "/calculators/voltage-drop",
-      description: "Calculate voltage drop for your circuit"
+      description: "Calculate voltage drop over distance"
+    },
+    {
+      title: "Amp Draw Calculator",
+      link: "/calculators/amp-draw",
+      description: "Calculate total amperage for circuits"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Size your circuit breaker correctly for safety and code compliance:",
+      steps: [
+        "Determine the total wattage of devices that will be on this circuit.",
+        "Enter the circuit voltage (120V for standard outlets, 240V for large appliances).",
+        "Calculate or enter the expected amperage draw.",
+        "Apply the 80% continuous load rule for circuits that run for 3+ hours.",
+        "Click 'Calculate' to see the recommended breaker size."
+      ]
+    },
+    whyMatters: {
+      description: "Circuit breakers are your home's primary defense against electrical fires. An undersized breaker trips constantly, while an oversized breaker won't trip before wires overheat - a serious fire hazard. The NEC requires breakers to be sized correctly for the wire gauge used, and continuous loads (operating 3+ hours) must not exceed 80% of breaker capacity. Proper sizing ensures safety while avoiding nuisance trips.",
+      benefits: [
+        "Prevent electrical fires from overloaded circuits",
+        "Avoid nuisance trips from undersized breakers",
+        "Ensure code compliance for inspections and insurance",
+        "Match breaker size to wire gauge for proper protection",
+        "Account for continuous vs intermittent loads correctly"
+      ]
+    },
+    examples: [
+      {
+        title: "Kitchen Small Appliance Circuit",
+        scenario: "Two 20A kitchen countertop circuits required by code. Maximum expected load: 1,800W.",
+        calculation: "1,800W ÷ 120V = 15A, but code requires 20A minimum for kitchen circuits",
+        result: "Use 20A breaker with #12 AWG wire (code requirement for kitchen small appliance circuits)."
+      },
+      {
+        title: "Electric Dryer",
+        scenario: "Installing a 5,400W electric dryer on 240V.",
+        calculation: "5,400W ÷ 240V = 22.5A | 22.5 × 125% (continuous) = 28.1A",
+        result: "Use 30A breaker with #10 AWG wire (standard dryer circuit)."
+      },
+      {
+        title: "Workshop Subpanel",
+        scenario: "Planning loads: table saw (15A), dust collector (12A), lights (5A), outlets (10A).",
+        calculation: "Max simultaneous: ~30A at 240V for subpanel feed",
+        result: "60A subpanel provides headroom for expansion. Use 60A breaker with #6 AWG feeder."
+      }
+    ],
+    commonMistakes: [
+      "Oversizing breakers to stop tripping - this is extremely dangerous; find the actual problem instead.",
+      "Forgetting the 80% rule for continuous loads - a 20A breaker should only carry 16A continuously.",
+      "Not matching breaker size to wire gauge - the wire must be rated for the breaker, not the load.",
+      "Using single-pole breakers for 240V circuits - large appliances need double-pole breakers.",
+      "Ignoring NEC requirements for dedicated circuits - kitchens, bathrooms, and laundry have specific rules."
+    ]
+  };
 
   const calculateBreaker = () => {
     const volts = parseFloat(voltage);
@@ -134,8 +186,15 @@ export default function CircuitBreakerCalculator() {
   return (
     <CalculatorLayout
       title="Circuit Breaker Sizing Calculator"
-      description="Determine the correct circuit breaker size for your electrical load. NEC-compliant breaker sizing with wire gauge recommendations."
+      description="Calculate the correct circuit breaker size for your electrical load. Enter wattage or amperage to determine proper breaker sizing with NEC guidelines."
     >
+      <CalculatorSchema
+        name="Circuit Breaker Calculator"
+        description="Free circuit breaker sizing calculator. Determine the correct breaker size based on load, voltage, and NEC requirements for safe electrical installations."
+        url="/calculators/circuit-breaker"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -304,6 +363,13 @@ export default function CircuitBreakerCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

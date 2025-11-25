@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function EtsyPricingCalculator() {
   const [materialCost, setMaterialCost] = useState<string>('');
@@ -46,21 +48,71 @@ export default function EtsyPricingCalculator() {
 
   const relatedCalculators = [
     {
-      title: "Tip Calculator",
-      link: "/calculators/tip",
-      description: "Calculate tips and split bills quickly"
+      title: "Etsy Fee Calculator",
+      link: "/etsy-tools/fee-calculator",
+      description: "Calculate all Etsy fees"
     },
     {
-      title: "Fuel Cost Calculator",
-      link: "/calculators/fuel-cost",
-      description: "Estimate fuel costs for shipping or craft fair travel"
+      title: "Etsy Profit Calculator",
+      link: "/etsy-tools/profit-calculator",
+      description: "Calculate true profit after costs"
     },
     {
-      title: "Loan Calculator",
-      link: "/calculators/loan",
-      description: "Plan financing for business equipment or inventory"
+      title: "Percentage Calculator",
+      link: "/calculators/percentage",
+      description: "Calculate margin percentages"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Set Etsy prices that ensure profitability while staying competitive:",
+      steps: [
+        "Enter your costs: materials, labor (time × hourly rate), and packaging.",
+        "Set your target profit margin percentage.",
+        "The calculator factors in all Etsy fees automatically.",
+        "Click 'Calculate' to see the selling price needed to hit your target margin.",
+        "Adjust inputs to find the sweet spot between price and profit."
+      ]
+    },
+    whyMatters: {
+      description: "Pricing handmade items is challenging - too high and you lose sales, too low and you lose money. Many sellers price based on competitors or gut feeling, only to discover they're barely breaking even after costs and fees. Working backward from your target profit margin ensures every sale contributes to a sustainable business. This approach also helps you decide which products are worth making at market prices.",
+      benefits: [
+        "Price confidently knowing you'll hit profit targets",
+        "Account for all Etsy fees in your pricing strategy",
+        "Compare prices needed at different margin targets",
+        "Identify if products can be priced competitively",
+        "Build a sustainable, profitable Etsy business"
+      ]
+    },
+    examples: [
+      {
+        title: "Handmade Earrings",
+        scenario: "Materials: $4, Labor (20 min @ $20/hr): $6.67, Packaging: $1.50. Target: 30% margin.",
+        calculation: "$12.17 costs ÷ (1 - 0.30 margin - 0.15 fees) = $22.13",
+        result: "Price at $22-25 to achieve 30% profit margin after all costs and fees."
+      },
+      {
+        title: "Custom Portrait",
+        scenario: "Materials: $5, Labor (4 hrs @ $30/hr): $120, Packaging: $8. Target: 25% margin.",
+        calculation: "$133 costs ÷ (1 - 0.25 - 0.15) = $221.67",
+        result: "Need to price at $220+ for 25% margin - is the market willing to pay that?"
+      },
+      {
+        title: "Finding Minimum Viable Price",
+        scenario: "Same portrait, but willing to accept 10% margin to be competitive.",
+        calculation: "$133 costs ÷ (1 - 0.10 - 0.15) = $177.33",
+        result: "Minimum sustainable price is ~$180. Below this, you're losing money."
+      }
+    ],
+    commonMistakes: [
+      "Setting prices based only on material costs - labor is usually your biggest expense.",
+      "Forgetting that Etsy takes ~15% of every sale (fees on item + shipping).",
+      "Pricing to match competitors who may be underpricing their own work.",
+      "Not valuing your own time - pay yourself a fair hourly rate.",
+      "Lowering prices when sales are slow instead of improving marketing."
+    ]
+  };
 
   const calculatePricing = () => {
     const materials = parseFloat(materialCost);
@@ -106,8 +158,15 @@ export default function EtsyPricingCalculator() {
   return (
     <CalculatorLayout
       title="Etsy Pricing Calculator"
-      description="Calculate the right price for your handmade products on Etsy, including all fees and desired profit margin."
+      description="Calculate the right selling price for your Etsy products. Enter costs and target profit margin to set prices that ensure profitability."
     >
+      <CalculatorSchema
+        name="Etsy Pricing Calculator"
+        description="Free Etsy pricing calculator to set profitable prices. Enter costs and target margin to find the right selling price with all Etsy fees included."
+        url="/calculators/etsy-pricing"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -224,6 +283,13 @@ export default function EtsyPricingCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

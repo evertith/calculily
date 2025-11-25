@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function AgeCalculator() {
   const [birthdate, setBirthdate] = useState<string>('');
@@ -120,21 +122,70 @@ export default function AgeCalculator() {
     }
   ];
 
+  const contentData = {
+    howToUse: {
+      intro: "Find your exact age or calculate age for any date with our precise age calculator:",
+      steps: [
+        "Enter your birth date (or the date you want to calculate age from) using the date picker.",
+        "Optionally change the 'Calculate age as of' date if you want to find age at a specific point in time.",
+        "Click 'Calculate Age' to see your exact age in years, months, and days.",
+        "View additional information like total days lived, next birthday countdown, and day of the week you were born."
+      ]
+    },
+    whyMatters: {
+      description: "Knowing your exact age matters more than you might think. Age requirements appear everywhere - from legal milestones like voting and drinking age to insurance rates, retirement benefits, and age-restricted activities. Many government forms, medical records, and legal documents require precise age calculations. This calculator also satisfies curiosity about fun facts like how many days you've been alive or what day of the week you were born.",
+      benefits: [
+        "Calculate exact age for legal documents and applications",
+        "Determine eligibility for age-restricted benefits and activities",
+        "Find out how many days you've been alive for milestone celebrations",
+        "Calculate age differences between people accurately",
+        "Plan countdown to significant birthdays (18, 21, 65, etc.)"
+      ]
+    },
+    examples: [
+      {
+        title: "Exact Age Calculation",
+        scenario: "Born March 15, 1990, calculating age as of November 24, 2024.",
+        calculation: "34 years, 8 months, 9 days",
+        result: "You've lived approximately 12,672 days and were born on a Thursday."
+      },
+      {
+        title: "Retirement Age",
+        scenario: "Born June 1, 1960. When will you turn 67 for full Social Security benefits?",
+        calculation: "67th birthday: June 1, 2027",
+        result: "As of November 2024, you're 64 years, 5 months old with about 2.5 years until 67."
+      },
+      {
+        title: "Child's Age in Months",
+        scenario: "Baby born August 20, 2024. How old are they in months?",
+        calculation: "From Aug 20 to Nov 24, 2024",
+        result: "3 months and 4 days old"
+      }
+    ],
+    commonMistakes: [
+      "Forgetting that age changes based on the current date - your age is different in January vs December of the same year.",
+      "Calculating age incorrectly around leap years - February 29 birthdays need special consideration.",
+      "Confusing 'completed years' with 'running year' - legal age usually means completed years.",
+      "Not accounting for time zones when precision matters - your birthday may differ by a day depending on location.",
+      "Using rounded ages when exact age is required - some applications need years, months, and days."
+    ]
+  };
+
   const relatedCalculators = [
     {
       title: "Date Calculator",
       link: "/calculators/date-calculator",
-      description: "Calculate days between dates and date math"
+      description: "Calculate days between dates or add/subtract days"
     },
     {
       title: "Time Zone Converter",
       link: "/calculators/time-zone-converter",
-      description: "Convert time between different time zones"
+      description: "Convert times between world time zones"
     },
     {
-      title: "Percentage Calculator",
-      link: "/calculators/percentage",
-      description: "Calculate percentages and percentage changes"
+      title: "GPA Calculator",
+      link: "/calculators/gpa-calculator",
+      description: "Calculate your grade point average"
     }
   ];
 
@@ -150,8 +201,15 @@ export default function AgeCalculator() {
   return (
     <CalculatorLayout
       title="Age Calculator"
-      description="Calculate your exact age in years, months, and days. Find out how many days you've been alive and when your next birthday is."
+      description="Calculate your exact age in years, months, and days. Find out how many days you've lived, your next birthday countdown, and what day you were born."
     >
+      <CalculatorSchema
+        name="Age Calculator"
+        description="Free age calculator to find exact age in years, months, and days. Calculate total days lived, next birthday, and day of week born."
+        url="/calculators/age-calculator"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -237,6 +295,13 @@ export default function AgeCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

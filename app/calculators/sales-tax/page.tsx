@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function SalesTaxCalculator() {
   const [price, setPrice] = useState<string>('');
@@ -126,25 +128,81 @@ export default function SalesTaxCalculator() {
     {
       title: "Discount Calculator",
       link: "/calculators/discount",
-      description: "Calculate sale prices and savings from discounts"
+      description: "Calculate sale prices and savings"
     },
     {
       title: "Tip Calculator",
       link: "/calculators/tip",
-      description: "Calculate tips and split bills easily"
+      description: "Calculate tips and split bills"
     },
     {
       title: "Percentage Calculator",
       link: "/calculators/percentage",
-      description: "Calculate percentages and percentage changes"
+      description: "Calculate any percentage or percent change"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Knowing the total price including tax helps you budget accurately. Here's how to calculate sales tax:",
+      steps: [
+        "Enter the item price or subtotal before tax.",
+        "Select your state from the dropdown to use the average combined state and local rate, or enter a custom rate.",
+        "If you know your exact local rate differs from the state average, enter it in the custom rate field.",
+        "Click 'Calculate' to see the tax amount and total price."
+      ]
+    },
+    whyMatters: {
+      description: "Sales tax varies dramatically across the United States - from 0% in states like Delaware and Oregon to over 10% in parts of Louisiana and Tennessee when combining state and local rates. Understanding sales tax helps you budget for purchases, compare prices across state lines, and avoid sticker shock at checkout. For large purchases like cars, appliances, or electronics, even a 1% difference can mean hundreds of dollars.",
+      benefits: [
+        "Know exactly what you'll pay before reaching the register",
+        "Compare out-the-door prices when shopping across state lines",
+        "Budget accurately for large purchases where tax adds up significantly",
+        "Understand the true cost of online purchases shipped to your state",
+        "Calculate tax-inclusive prices for business pricing decisions"
+      ]
+    },
+    examples: [
+      {
+        title: "Electronics Purchase",
+        scenario: "Buying a $999 laptop in California with an 8.68% combined sales tax rate.",
+        calculation: "$999 × 0.0868 = $86.71 tax",
+        result: "Total price: $1,085.71"
+      },
+      {
+        title: "Comparing Across States",
+        scenario: "A $500 purchase: Oregon (0% tax) vs Washington (9.29% average).",
+        calculation: "Oregon: $500 total | Washington: $500 + $46.45 = $546.45",
+        result: "You'd save $46.45 buying in Oregon"
+      },
+      {
+        title: "Restaurant Bill",
+        scenario: "A $75 dinner bill in New York City with 8.875% sales tax (before tip).",
+        calculation: "$75 × 0.08875 = $6.66 tax",
+        result: "Subtotal with tax: $81.66 (then add tip on the pre-tax amount)"
+      }
+    ],
+    commonMistakes: [
+      "Forgetting that online purchases often have sales tax now - most states require collection on online orders.",
+      "Using state-only rates when local taxes add significantly - some cities add 3-5% on top of state rates.",
+      "Not accounting for tax when comparing prices across retailers - a lower price plus higher tax might cost more.",
+      "Assuming all items are taxed equally - groceries, clothing, and medications are exempt or reduced in many states.",
+      "Forgetting about use tax - if you buy from a state with no sales tax, you may owe use tax in your home state."
+    ]
+  };
 
   return (
     <CalculatorLayout
       title="Sales Tax Calculator"
-      description="Calculate sales tax by state or custom rate. Find total price including tax or determine price before tax."
+      description="Calculate sales tax for any state or custom rate. See the tax amount and total price for purchases to budget accurately."
     >
+      <CalculatorSchema
+        name="Sales Tax Calculator"
+        description="Free sales tax calculator with rates for all 50 US states. Calculate total price including tax or enter a custom rate for accurate totals."
+        url="/calculators/sales-tax"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -247,6 +305,13 @@ export default function SalesTaxCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

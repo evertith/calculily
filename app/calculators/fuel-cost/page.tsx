@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function FuelCostCalculator() {
   const [distance, setDistance] = useState<string>('');
@@ -42,21 +44,70 @@ export default function FuelCostCalculator() {
 
   const relatedCalculators = [
     {
-      title: "Tip Calculator",
-      link: "/calculators/tip",
-      description: "Calculate tips at restaurants during your trip"
+      title: "Gas Mileage Calculator",
+      link: "/calculators/gas-mileage",
+      description: "Track and calculate your vehicle's actual MPG"
     },
     {
-      title: "Loan Calculator",
-      link: "/calculators/loan",
-      description: "Calculate payments if financing a vehicle"
+      title: "Car Depreciation Calculator",
+      link: "/calculators/car-depreciation",
+      description: "Calculate how your car's value decreases over time"
     },
     {
-      title: "Etsy Pricing Calculator",
-      link: "/calculators/etsy-pricing",
-      description: "Calculate delivery costs for your handmade business"
+      title: "Car Payment Calculator",
+      link: "/calculators/car-payment",
+      description: "Calculate monthly auto loan payments"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Planning a road trip or comparing commute costs? Our fuel cost calculator gives you accurate estimates for any journey:",
+      steps: [
+        "Enter the trip distance in miles (use Google Maps or a similar tool for accurate distances).",
+        "Input your vehicle's fuel efficiency in miles per gallon (MPG). Check your owner's manual or fueleconomy.gov for your car's rating.",
+        "Enter the current fuel price per gallon in your area.",
+        "Click 'Calculate' to see total gallons needed and the cost for your trip."
+      ]
+    },
+    whyMatters: {
+      description: "Fuel costs add up quickly, whether you're planning a road trip vacation, evaluating a job offer with a longer commute, or deciding between driving and flying. Understanding your actual fuel costs helps you budget accurately, compare travel options, and even evaluate whether a more fuel-efficient vehicle would save you money. For regular commuters, small differences in MPG can mean hundreds of dollars saved per year.",
+      benefits: [
+        "Budget accurately for road trips and vacations",
+        "Compare the cost of driving vs flying or taking transit",
+        "Evaluate how a longer commute affects your finances",
+        "Calculate the real savings of a more fuel-efficient vehicle",
+        "Plan multi-leg trips with different fuel prices by region"
+      ]
+    },
+    examples: [
+      {
+        title: "Weekend Road Trip",
+        scenario: "Driving from Los Angeles to Las Vegas (270 miles each way) in a car that gets 28 MPG with gas at $4.50/gallon.",
+        calculation: "540 miles ÷ 28 MPG = 19.3 gallons × $4.50",
+        result: "Total fuel cost: $86.79 for the round trip"
+      },
+      {
+        title: "Monthly Commute Cost",
+        scenario: "A 25-mile each way commute (50 miles/day) working 22 days/month. Your car gets 32 MPG and gas is $3.80/gallon.",
+        calculation: "1,100 miles/month ÷ 32 MPG = 34.4 gallons × $3.80",
+        result: "Monthly commute cost: $130.63"
+      },
+      {
+        title: "Cross-Country Trip",
+        scenario: "Driving from NYC to LA (2,800 miles) in an SUV getting 22 MPG with average gas price of $3.60/gallon.",
+        calculation: "2,800 miles ÷ 22 MPG = 127.3 gallons × $3.60",
+        result: "One-way fuel cost: $458.18 (compare to flights!)"
+      }
+    ],
+    commonMistakes: [
+      "Using the EPA highway rating when you'll be doing mostly city driving - city MPG is often 20-30% lower.",
+      "Forgetting that MPG decreases at higher speeds - driving 80 mph vs 65 mph can reduce efficiency by 15-25%.",
+      "Not accounting for fuel price differences by region - prices can vary by $1 or more across states.",
+      "Ignoring the return trip when budgeting for road trips - always calculate round-trip costs.",
+      "Using manufacturer MPG ratings instead of real-world experience - track your actual fuel usage for accuracy."
+    ]
+  };
 
   const calculateFuelCost = () => {
     const dist = parseFloat(distance);
@@ -83,8 +134,15 @@ export default function FuelCostCalculator() {
   return (
     <CalculatorLayout
       title="Fuel Cost Calculator"
-      description="Calculate the fuel cost for your trip based on distance, fuel economy, and current gas prices."
+      description="Calculate fuel costs for any trip. Enter distance, your vehicle's MPG, and current gas prices to estimate your total fuel expenses."
     >
+      <CalculatorSchema
+        name="Fuel Cost Calculator"
+        description="Free fuel cost calculator to estimate gas expenses for any trip. Enter distance, MPG, and fuel price to calculate total trip costs."
+        url="/calculators/fuel-cost"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -173,6 +231,13 @@ export default function FuelCostCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

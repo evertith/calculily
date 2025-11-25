@@ -7,14 +7,24 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- About & Privacy -->
+  <!-- About, Contact, Privacy & Terms -->
   <url>
     <loc>https://calculily.com/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://calculily.com/contact</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://calculily.com/privacy</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://calculily.com/terms</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

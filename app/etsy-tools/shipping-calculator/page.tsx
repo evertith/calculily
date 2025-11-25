@@ -8,6 +8,8 @@ import InfoBox from '@/components/InfoBox';
 import AdUnit from '@/components/AdUnit';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function EtsyShippingCalculator() {
   const [weight, setWeight] = useState<string>('');
@@ -150,11 +152,85 @@ export default function EtsyShippingCalculator() {
     }
   ];
 
+  const contentData = {
+    howToUse: {
+      intro: "Compare shipping rates across carriers to find the best option for your Etsy orders:",
+      steps: [
+        "Enter package dimensions (length, width, height) in inches.",
+        "Input the package weight in pounds and ounces.",
+        "Enter origin and destination ZIP codes.",
+        "Click 'Calculate' to compare rates across USPS, UPS, and FedEx."
+      ]
+    },
+    whyMatters: {
+      description: "Shipping costs can make or break your Etsy margins. Charge too little and you lose money on every sale; charge too much and buyers abandon their carts. Different carriers have different strengths - USPS is often cheapest for small, light items, while UPS and FedEx may be better for heavier packages. Comparing rates ensures you offer competitive shipping while protecting your profits.",
+      benefits: [
+        "Compare rates across USPS, UPS, and FedEx instantly",
+        "Find the cheapest option for each package size and destination",
+        "Set accurate shipping prices that don't eat into profits",
+        "Identify when flat-rate options make sense",
+        "Factor shipping costs into product pricing decisions"
+      ]
+    },
+    examples: [
+      {
+        title: "Small Jewelry Item",
+        scenario: "Shipping a 4oz padded envelope (6×9×1) from California to New York.",
+        calculation: "USPS First Class: ~$4.50 | USPS Priority Flat Rate: ~$9.50",
+        result: "First Class wins for small, light items - save $5 per shipment."
+      },
+      {
+        title: "Medium Craft Item",
+        scenario: "12×10×4 inch box weighing 2 lbs, shipping coast to coast.",
+        calculation: "USPS Priority: ~$15 | UPS Ground: ~$13 | Priority Flat Rate Medium: ~$16",
+        result: "UPS Ground is cheapest but slower. Balance cost vs delivery speed."
+      },
+      {
+        title: "Heavy Item",
+        scenario: "16×12×8 inch box weighing 8 lbs, shipping 500 miles.",
+        calculation: "UPS Ground: ~$18 | FedEx Ground: ~$17 | USPS Priority: ~$22",
+        result: "Ground services win for heavier items. Consider carrier pickup for convenience."
+      }
+    ],
+    commonMistakes: [
+      "Forgetting dimensional weight - large, light packages are charged by size, not weight.",
+      "Not accounting for packaging weight - boxes and padding add ounces.",
+      "Using retail rates instead of commercial rates - Etsy Labels offer discounts.",
+      "Ignoring delivery time differences - Ground is cheaper but takes longer.",
+      "Setting one flat shipping rate for all items - different products need different rates."
+    ]
+  };
+
+  const relatedCalculators = [
+    {
+      title: "Etsy Fee Calculator",
+      link: "/etsy-tools/fee-calculator",
+      description: "Calculate all Etsy seller fees"
+    },
+    {
+      title: "Etsy Profit Calculator",
+      link: "/etsy-tools/profit-calculator",
+      description: "Calculate true profit after costs"
+    },
+    {
+      title: "Etsy Pricing Calculator",
+      link: "/calculators/etsy-pricing",
+      description: "Set profitable prices"
+    }
+  ];
+
   return (
     <CalculatorLayout
       title="Etsy Shipping Calculator"
-      description="Compare USPS, UPS, and FedEx shipping rates. Optimize package dimensions and choose the best shipping strategy for your Etsy shop."
+      description="Compare shipping rates across USPS, UPS, and FedEx for your Etsy orders. Find the cheapest carrier and set accurate shipping prices."
     >
+      <CalculatorSchema
+        name="Etsy Shipping Calculator"
+        description="Free Etsy shipping calculator to compare USPS, UPS, and FedEx rates. Find the cheapest shipping option for your packages and set accurate shipping prices."
+        url="/etsy-tools/shipping-calculator"
+        faqItems={faqItems}
+      />
+
       {/* Breadcrumb */}
       <div style={{ marginBottom: '1.5rem', fontSize: '0.9rem', color: '#666' }}>
         <Link href="/" style={{ color: '#4a9eff' }}>Home</Link>
@@ -387,21 +463,24 @@ export default function EtsyShippingCalculator() {
       <div style={{ marginTop: '2rem', padding: '1.5rem', backgroundColor: '#1a1a1a', borderRadius: '8px' }}>
         <h3 style={{ color: '#e0e0e0', marginBottom: '1rem' }}>Related Tools</h3>
         <div style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))' }}>
-          <Link href="/etsy-tools/fee-calculator" style={{ padding: '1rem', backgroundColor: '#0a0a0a', borderRadius: '8px', border: '1px solid #333', textDecoration: 'none' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>💰</div>
-            <div style={{ color: '#e0e0e0', fontWeight: 600, marginBottom: '0.25rem' }}>Fee Calculator</div>
-            <div style={{ color: '#b0b0b0', fontSize: '0.9rem' }}>Calculate all Etsy fees</div>
-          </Link>
-          <Link href="/etsy-tools" style={{ padding: '1rem', backgroundColor: '#0a0a0a', borderRadius: '8px', border: '1px solid #333', textDecoration: 'none' }}>
-            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>🏠</div>
-            <div style={{ color: '#e0e0e0', fontWeight: 600, marginBottom: '0.25rem' }}>All Etsy Tools</div>
-            <div style={{ color: '#b0b0b0', fontSize: '0.9rem' }}>View all calculators</div>
-          </Link>
+          {relatedCalculators.map((calc, index) => (
+            <Link key={index} href={calc.link} style={{ padding: '1rem', backgroundColor: '#0a0a0a', borderRadius: '8px', border: '1px solid #333', textDecoration: 'none' }}>
+              <div style={{ color: '#e0e0e0', fontWeight: 600, marginBottom: '0.25rem' }}>{calc.title}</div>
+              <div style={{ color: '#b0b0b0', fontSize: '0.9rem' }}>{calc.description}</div>
+            </Link>
+          ))}
         </div>
       </div>
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
 

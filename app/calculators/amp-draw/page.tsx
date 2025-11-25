@@ -10,6 +10,8 @@ import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
 import type { Metadata } from 'next';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 interface Appliance {
   id: number;
@@ -71,21 +73,71 @@ export default function AmpDrawCalculator() {
 
   const relatedCalculators = [
     {
-      title: "Circuit Breaker Sizing",
+      title: "Circuit Breaker Calculator",
       link: "/calculators/circuit-breaker",
-      description: "Determine the correct breaker size for your electrical load"
+      description: "Size circuit breakers correctly"
     },
     {
       title: "Wire Gauge Calculator",
       link: "/calculators/wire-gauge",
-      description: "Find the right wire size for your amperage and distance"
+      description: "Calculate proper wire gauge for circuits"
     },
     {
       title: "Voltage Drop Calculator",
       link: "/calculators/voltage-drop",
-      description: "Calculate voltage drop for your electrical circuit"
+      description: "Calculate voltage drop over distance"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Calculate total amperage to ensure your circuits aren't overloaded:",
+      steps: [
+        "List all devices that will be on the circuit.",
+        "For each device, enter either the wattage (from the label) or the amp rating.",
+        "If entering wattage, select the circuit voltage (120V or 240V).",
+        "Add all devices that could run simultaneously on this circuit.",
+        "Click 'Calculate' to see total amp draw and whether it's within safe limits."
+      ]
+    },
+    whyMatters: {
+      description: "Every circuit has a maximum amperage capacity determined by the wire gauge and breaker size. Exceeding this capacity causes breakers to trip at best, and can start fires at worst. When adding new devices to a circuit - especially high-draw items like space heaters, air conditioners, or power tools - you need to know if the circuit can handle the additional load. This calculator helps you add up all the loads to ensure safe operation.",
+      benefits: [
+        "Prevent circuit overloads and breaker trips",
+        "Determine if a circuit can handle additional loads",
+        "Plan new circuits with adequate capacity",
+        "Identify circuits that are close to maximum capacity",
+        "Calculate loads for generator sizing"
+      ]
+    },
+    examples: [
+      {
+        title: "Home Office Circuit",
+        scenario: "One 15A circuit powering: computer (300W), two monitors (50W each), printer (500W peak), desk lamp (60W).",
+        calculation: "960W ÷ 120V = 8A continuous, but printer peak could bring it to 12.5A",
+        result: "Safe for a 15A circuit, but at 83% when printer runs. Don't add a space heater!"
+      },
+      {
+        title: "Kitchen Counter Circuit",
+        scenario: "Toaster (1,200W), coffee maker (900W), and microwave (1,500W) on same circuit.",
+        calculation: "3,600W ÷ 120V = 30A if all running together",
+        result: "Exceeds 20A circuit! Never run all three simultaneously, or use different circuits."
+      },
+      {
+        title: "Workshop Planning",
+        scenario: "Table saw (15A), dust collector (12A), shop vac (10A), lights (4A) - need to size subpanel.",
+        calculation: "Max simultaneous: saw + dust collector + lights = 31A at 120V",
+        result: "Need at least a 40A subpanel feed, or split between two 20A circuits."
+      }
+    ],
+    commonMistakes: [
+      "Forgetting that some devices have higher startup (inrush) current than running current - motors especially.",
+      "Adding up nameplate ratings without considering actual simultaneous use - not everything runs at once.",
+      "Ignoring the 80% rule - continuous loads should use only 80% of circuit capacity.",
+      "Not accounting for 'hidden' loads on a circuit like bathroom exhaust fans or always-on devices.",
+      "Using peak wattage instead of typical running wattage for calculations."
+    ]
+  };
 
   const addAppliance = () => {
     const newId = Math.max(...appliances.map(a => a.id), 0) + 1;
@@ -151,8 +203,15 @@ export default function AmpDrawCalculator() {
   return (
     <CalculatorLayout
       title="Amp Draw Calculator"
-      description="Calculate total amperage for your electrical circuit. Find the right breaker size and wire gauge for your appliances and tools."
+      description="Calculate total amperage for electrical circuits. Add up device loads to ensure your circuit can safely handle all connected equipment."
     >
+      <CalculatorSchema
+        name="Amp Draw Calculator"
+        description="Free amp draw calculator to compute total circuit amperage. Add up device wattages to ensure circuits aren't overloaded and size circuits properly."
+        url="/calculators/amp-draw"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -291,6 +350,13 @@ export default function AmpDrawCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

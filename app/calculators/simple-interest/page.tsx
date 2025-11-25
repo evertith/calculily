@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 type TimeUnit = 'days' | 'months' | 'years';
 
@@ -106,25 +108,81 @@ export default function SimpleInterestCalculator() {
     {
       title: "Loan Calculator",
       link: "/calculators/loan",
-      description: "Calculate loan payments and total interest"
+      description: "Calculate loan payments with amortization"
     },
     {
       title: "Mortgage Calculator",
       link: "/calculators/mortgage",
-      description: "Estimate your monthly mortgage payments"
+      description: "Calculate home loan payments"
     },
     {
       title: "Percentage Calculator",
       link: "/calculators/percentage",
-      description: "Calculate percentages and percentage changes"
+      description: "Calculate percentages and percent changes"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Simple interest is calculated only on the principal amount. Here's how to calculate it:",
+      steps: [
+        "Enter the principal amount - this is the initial loan or investment amount.",
+        "Input the annual interest rate as a percentage.",
+        "Enter the time period in years (use decimals for partial years, e.g., 0.5 for 6 months).",
+        "Click 'Calculate' to see the interest earned and total amount."
+      ]
+    },
+    whyMatters: {
+      description: "Simple interest is used in many financial products including car loans, personal loans, and certificates of deposit. Unlike compound interest, simple interest is calculated only on the original principal, making it easier to understand and predict. Knowing how to calculate simple interest helps you compare loan offers, understand the true cost of borrowing, and make informed decisions about short-term investments and loans.",
+      benefits: [
+        "Understand exactly how much interest you'll pay on a loan",
+        "Compare different loan offers fairly",
+        "Calculate returns on CDs and bonds that use simple interest",
+        "Plan payments for interest-only loan periods",
+        "Verify interest charges on financial statements"
+      ]
+    },
+    examples: [
+      {
+        title: "Personal Loan",
+        scenario: "You borrow $5,000 at 8% simple interest for 2 years.",
+        calculation: "$5,000 × 0.08 × 2 = $800 interest",
+        result: "You'll pay $800 in interest, repaying $5,800 total."
+      },
+      {
+        title: "Short-Term Investment",
+        scenario: "Invest $10,000 in a 6-month CD paying 4.5% simple interest.",
+        calculation: "$10,000 × 0.045 × 0.5 = $225 interest",
+        result: "You'll earn $225 in interest over 6 months."
+      },
+      {
+        title: "Car Loan Interest",
+        scenario: "A $20,000 car loan at 6.5% simple interest for 4 years.",
+        calculation: "$20,000 × 0.065 × 4 = $5,200 interest",
+        result: "Total interest: $5,200. Monthly payment: ~$526 (principal + interest divided by 48 months)."
+      }
+    ],
+    commonMistakes: [
+      "Confusing simple interest with compound interest - compound interest grows exponentially, simple interest is linear.",
+      "Using monthly rates when the formula calls for annual rates - convert monthly to annual by multiplying by 12.",
+      "Forgetting to convert percentages to decimals - 8% should be 0.08 in the formula.",
+      "Not converting time periods properly - 6 months = 0.5 years, 18 months = 1.5 years.",
+      "Assuming all loans use simple interest - most mortgages and credit cards use compound interest."
+    ]
+  };
 
   return (
     <CalculatorLayout
       title="Simple Interest Calculator"
-      description="Calculate simple interest on loans, savings, or investments. Find out how much interest you'll earn or pay with our easy-to-use calculator."
+      description="Calculate simple interest on loans and investments. Enter principal, interest rate, and time period to find total interest earned or owed."
     >
+      <CalculatorSchema
+        name="Simple Interest Calculator"
+        description="Free simple interest calculator to compute interest on loans and investments. Enter principal, rate, and time to calculate total interest and amount."
+        url="/calculators/simple-interest"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -300,6 +358,13 @@ export default function SimpleInterestCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

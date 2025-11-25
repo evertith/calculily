@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function LEDPowerCalculator() {
   const [numLEDs, setNumLEDs] = useState<string>('');
@@ -45,14 +47,68 @@ export default function LEDPowerCalculator() {
     {
       title: "Voltage Drop Calculator",
       link: "/calculators/voltage-drop",
-      description: "Check voltage drop for your LED power wire runs"
+      description: "Calculate voltage drop for LED runs"
     },
     {
       title: "Wire Gauge Calculator",
       link: "/calculators/wire-gauge",
-      description: "Find the right wire size for your LED installation"
+      description: "Size wire for LED power feeds"
+    },
+    {
+      title: "Amp Draw Calculator",
+      link: "/calculators/amp-draw",
+      description: "Calculate total circuit amperage"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Size your power supply correctly for LED strip lighting projects:",
+      steps: [
+        "Enter the total length of LED strip you'll be using in feet or meters.",
+        "Input the power consumption per unit length (typically listed as watts per foot or meter on the strip specs).",
+        "Add a safety margin (20% is recommended for reliability and heat management).",
+        "Click 'Calculate' to see the total wattage and recommended power supply size."
+      ]
+    },
+    whyMatters: {
+      description: "LED strips are popular for under-cabinet lighting, accent lighting, and decorative installations, but they require properly sized power supplies. An undersized power supply will run hot, dim the LEDs, shorten lifespan, and potentially fail dangerously. An oversized supply wastes money and space. The key is matching the power supply to actual needs with appropriate headroom for reliability and future expansion.",
+      benefits: [
+        "Prevent power supply overheating and premature failure",
+        "Ensure LEDs operate at full brightness",
+        "Extend lifespan of both LEDs and power supplies",
+        "Calculate correct wire gauge for LED runs",
+        "Plan multi-zone installations with proper power distribution"
+      ]
+    },
+    examples: [
+      {
+        title: "Under Cabinet Lighting",
+        scenario: "Installing 12 feet of LED strip rated at 4.4W per foot for kitchen cabinets.",
+        calculation: "12 ft × 4.4W = 52.8W + 20% margin = 63.4W",
+        result: "Use at least a 75W power supply (next common size up from 60W)."
+      },
+      {
+        title: "Accent Lighting",
+        scenario: "Running 5 meters of RGB LED strip (14.4W/m) around a room perimeter.",
+        calculation: "5m × 14.4W = 72W + 20% = 86.4W",
+        result: "Use a 100W power supply for comfortable headroom."
+      },
+      {
+        title: "Long Run Consideration",
+        scenario: "20 feet of high-density strip at 7W/ft. Single run or split feeds?",
+        calculation: "20 ft × 7W = 140W. Voltage drop over 20ft could cause dimming.",
+        result: "Consider feeding power from both ends or middle, or use 24V strips instead of 12V."
+      }
+    ],
+    commonMistakes: [
+      "Sizing power supply exactly to load with no margin - always add 20% for reliability.",
+      "Ignoring voltage drop on long runs - LED strips dim noticeably over long distances, especially 12V.",
+      "Using watts per meter specs with foot measurements (or vice versa) - double-check units.",
+      "Forgetting that RGB and RGBW strips draw more power at full white than single colors.",
+      "Not accounting for multiple zones when planning power supply capacity."
+    ]
+  };
 
   const calculateLEDPower = () => {
     const leds = parseFloat(numLEDs);
@@ -80,8 +136,15 @@ export default function LEDPowerCalculator() {
   return (
     <CalculatorLayout
       title="LED Power Calculator"
-      description="Calculate power requirements for LED strips and pixels, including recommended power supply sizing."
+      description="Calculate power supply requirements for LED strip lighting. Enter strip length and wattage to size your power supply with proper safety margin."
     >
+      <CalculatorSchema
+        name="LED Power Calculator"
+        description="Free LED power supply calculator for strip lighting. Calculate wattage requirements and proper power supply sizing for LED installations."
+        url="/calculators/led-power"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -190,6 +253,13 @@ export default function LEDPowerCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

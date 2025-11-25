@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function DrywallCalculator() {
   const { trackCalculatorUsage, trackEvent } = useAnalytics();
@@ -57,19 +59,68 @@ export default function DrywallCalculator() {
     {
       title: "Paint Calculator",
       link: "/calculators/paint",
-      description: "Calculate paint needed after drywall installation"
+      description: "Calculate paint needed for walls"
     },
     {
       title: "Insulation Calculator",
       link: "/calculators/insulation",
-      description: "Calculate insulation before drywall"
+      description: "Calculate insulation requirements"
     },
     {
       title: "Lumber Calculator",
       link: "/calculators/lumber",
-      description: "Calculate framing materials for studs"
+      description: "Estimate framing materials"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Estimate drywall materials accurately for your renovation or new construction project:",
+      steps: [
+        "Measure the total wall and ceiling area in square feet.",
+        "Select the drywall sheet size you plan to use (4'×8' is most common).",
+        "Add a waste factor (10-15% for standard rooms, more for complex layouts).",
+        "Click 'Calculate' to see sheets needed, plus estimates for tape, mud, and screws."
+      ]
+    },
+    whyMatters: {
+      description: "Drywall comes in large, heavy sheets that are a pain to return, so accurate ordering matters. You need enough sheets plus materials like joint compound (mud), tape, and screws. Running short mid-project is frustrating, but over-ordering means storing or disposing of bulky materials. Getting it right the first time saves money and multiple trips to the store.",
+      benefits: [
+        "Order the right number of sheets to avoid shortages or waste",
+        "Calculate all associated materials (tape, mud, screws) together",
+        "Plan for proper waste factor based on room complexity",
+        "Estimate costs before starting your project",
+        "Compare costs between different sheet sizes"
+      ]
+    },
+    examples: [
+      {
+        title: "Single Room Addition",
+        scenario: "12' × 14' room with 8' ceilings. Walls and ceiling need drywall.",
+        calculation: "Walls: 416 sq ft + Ceiling: 168 sq ft = 584 sq ft | 584 ÷ 32 (4'×8' sheet) = 18.25 sheets",
+        result: "Order 21 sheets (4'×8') to allow for waste and cuts around openings."
+      },
+      {
+        title: "Basement Finishing",
+        scenario: "600 sq ft basement, walls only (existing ceiling), some columns and angles.",
+        calculation: "600 sq ft ÷ 32 = 18.75 sheets + 15% waste for complex layout",
+        result: "Order 22 sheets plus extra mud and tape for multiple joints and corners."
+      },
+      {
+        title: "Garage Conversion",
+        scenario: "20' × 20' garage, 9' ceilings, walls and ceiling. Using 4'×12' sheets for fewer joints.",
+        calculation: "Walls: 720 sq ft + Ceiling: 400 sq ft = 1,120 sq ft ÷ 48 (4'×12') = 23.3 sheets",
+        result: "Order 27 sheets (4'×12') plus appropriate joint compound and tape."
+      }
+    ],
+    commonMistakes: [
+      "Not adding waste factor - cuts around windows, doors, and outlets create unusable pieces.",
+      "Forgetting about ceiling drywall if applicable - it adds significantly to material needs.",
+      "Using wrong sheet size for the space - 12' sheets mean fewer joints but are harder to handle.",
+      "Underestimating joint compound needs - you'll need more than you think, especially for beginners.",
+      "Not ordering corner bead for outside corners - an easily forgotten but essential material."
+    ]
+  };
 
   const calculateDrywall = () => {
     const len = parseFloat(length);
@@ -158,8 +209,15 @@ export default function DrywallCalculator() {
   return (
     <CalculatorLayout
       title="Drywall Calculator"
-      description="Calculate drywall sheets and materials for walls and ceilings. Includes joint compound, tape, and screws estimates."
+      description="Calculate drywall sheets, joint compound, tape, and screws needed for your project. Enter square footage to estimate all materials with waste factor."
     >
+      <CalculatorSchema
+        name="Drywall Calculator"
+        description="Free drywall calculator to estimate sheets, tape, mud, and screws needed. Calculate materials for walls and ceilings with waste factor included."
+        url="/calculators/drywall"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -345,6 +403,13 @@ export default function DrywallCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

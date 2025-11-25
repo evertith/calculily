@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function LoanCalculator() {
   const [loanAmount, setLoanAmount] = useState<string>('');
@@ -47,11 +49,65 @@ export default function LoanCalculator() {
       description: "Calculate home loan payments with taxes and insurance"
     },
     {
-      title: "Tip Calculator",
-      link: "/calculators/tip",
-      description: "Calculate tips and split bills for dining"
+      title: "Car Payment Calculator",
+      link: "/calculators/car-payment",
+      description: "Calculate auto loan payments with trade-in values"
+    },
+    {
+      title: "Simple Interest Calculator",
+      link: "/calculators/simple-interest",
+      description: "Understand how simple interest works on loans and savings"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Our loan calculator helps you understand the true cost of borrowing before you sign. Here's how to calculate your loan payment:",
+      steps: [
+        "Enter the loan amount - the total principal you need to borrow.",
+        "Input the annual interest rate (APR) you've been offered or expect to qualify for based on your credit score.",
+        "Select the loan term in years - shorter terms mean higher payments but less total interest.",
+        "Click 'Calculate' to see your monthly payment, total interest, and total amount you'll repay."
+      ]
+    },
+    whyMatters: {
+      description: "Whether you're financing a car, consolidating debt, or funding a major purchase, understanding your loan terms is crucial for financial health. The difference between loan offers might seem small (a few percentage points), but over years of payments, it can add up to thousands of dollars. This calculator helps you compare offers and understand exactly what you're committing to before signing loan documents.",
+      benefits: [
+        "Compare loan offers from different lenders to find the best deal",
+        "Understand how interest rate changes affect your total cost",
+        "See the impact of different loan terms on monthly payments vs total interest",
+        "Plan your budget accurately with precise monthly payment calculations",
+        "Make informed decisions about whether to borrow or save for purchases"
+      ]
+    },
+    examples: [
+      {
+        title: "Personal Loan",
+        scenario: "You need a $15,000 personal loan for home improvements. Your bank offers 8.5% APR for 5 years.",
+        calculation: "Monthly payment: $307.26 | Total interest: $3,435.60",
+        result: "You'll pay back $18,435.60 total over 60 months."
+      },
+      {
+        title: "Comparing Loan Terms",
+        scenario: "You're borrowing $10,000 at 7% APR. Compare a 3-year vs 5-year term.",
+        calculation: "3-year: $308.77/mo ($1,115.72 interest) | 5-year: $198.01/mo ($1,880.60 interest)",
+        result: "The shorter term saves $764.88 in interest but costs $110.76 more monthly."
+      },
+      {
+        title: "Debt Consolidation",
+        scenario: "You're consolidating $25,000 in credit card debt (was 22% APR) to a personal loan at 10% APR for 4 years.",
+        calculation: "New payment: $634.07/mo | Total interest: $5,435.36",
+        result: "Much better than credit card minimum payments - you'll be debt-free in 4 years with a clear end date."
+      }
+    ],
+    commonMistakes: [
+      "Focusing only on monthly payment instead of total cost - a longer term means lower payments but much more interest overall.",
+      "Not comparing APR across lenders - even 1% difference on a $20,000 loan can mean $1,000+ in savings.",
+      "Forgetting about origination fees - some lenders charge 1-5% upfront, which should factor into your comparison.",
+      "Taking the longest term available just for lower payments - you'll pay significantly more interest over time.",
+      "Not checking your credit score first - knowing your score helps you understand what rates you'll qualify for."
+    ]
+  };
 
   const calculateLoan = () => {
     const amount = parseFloat(loanAmount);
@@ -80,8 +136,15 @@ export default function LoanCalculator() {
   return (
     <CalculatorLayout
       title="Loan Calculator"
-      description="Calculate your loan payments, total interest, and see a complete amortization summary."
+      description="Calculate monthly loan payments, total interest, and total repayment amount. Compare loan terms to find the best financing option for personal loans, auto loans, and more."
     >
+      <CalculatorSchema
+        name="Loan Calculator"
+        description="Free loan calculator to compute monthly payments and total interest for personal loans, auto loans, and other financing. Compare terms and find the best loan option."
+        url="/calculators/loan"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -171,6 +234,13 @@ export default function LoanCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

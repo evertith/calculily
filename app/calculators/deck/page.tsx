@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function DeckCalculator() {
   const { trackCalculatorUsage, trackEvent } = useAnalytics();
@@ -57,21 +59,70 @@ export default function DeckCalculator() {
 
   const relatedCalculators = [
     {
-      title: "Lumber Calculator",
-      link: "/calculators/lumber",
-      description: "Calculate board feet for lumber projects"
-    },
-    {
       title: "Concrete Calculator",
       link: "/calculators/concrete",
-      description: "Calculate concrete for deck footings"
+      description: "Calculate concrete for footings"
+    },
+    {
+      title: "Lumber Calculator",
+      link: "/calculators/lumber",
+      description: "Calculate board feet and framing"
     },
     {
       title: "Fence Calculator",
       link: "/calculators/fence",
-      description: "Calculate fence materials for deck perimeter"
+      description: "Estimate fence materials"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Plan your deck build with accurate material estimates for framing, decking, and hardware:",
+      steps: [
+        "Enter the deck dimensions (length and width in feet).",
+        "Select the decking material (pressure-treated wood, cedar, or composite).",
+        "Choose joist spacing (16\" for most applications, 12\" for diagonal decking or heavy loads).",
+        "Click 'Calculate' to see complete material lists including decking, framing, posts, and hardware."
+      ]
+    },
+    whyMatters: {
+      description: "Deck projects involve many different materials - decking boards, joists, beams, posts, concrete for footings, and hundreds of fasteners. Missing any component can delay your project while you wait for materials. A comprehensive estimate helps you order everything at once, compare material costs between wood and composite options, and create an accurate budget before breaking ground.",
+      benefits: [
+        "Get complete material lists in one calculation",
+        "Compare costs between different decking materials",
+        "Plan concrete footings with proper spacing",
+        "Estimate fastener quantities (often overlooked)",
+        "Budget accurately before starting construction"
+      ]
+    },
+    examples: [
+      {
+        title: "Standard Deck",
+        scenario: "12' × 16' deck, 16\" joist spacing, pressure-treated lumber.",
+        calculation: "192 sq ft decking + 11 joists (2×10×12') + 2 beams + 6 posts + 6 footings",
+        result: "Approximately $2,500-3,500 in materials for pressure-treated, $4,000-6,000 for composite."
+      },
+      {
+        title: "Small Entry Deck",
+        scenario: "6' × 8' entry deck at back door, composite decking.",
+        calculation: "48 sq ft | 5 joists + rim + 4 posts + 4 footings",
+        result: "Compact project - materials around $800-1,200 for composite with hidden fasteners."
+      },
+      {
+        title: "Large Entertainment Deck",
+        scenario: "16' × 24' deck for outdoor living space, cedar decking.",
+        calculation: "384 sq ft decking + 18 joists + beams + 9+ footings",
+        result: "Significant project - budget $6,000-10,000+ for materials depending on cedar grade."
+      }
+    ],
+    commonMistakes: [
+      "Forgetting concrete for post footings - each footing needs 1-2 bags of concrete minimum.",
+      "Underestimating fastener quantities - you need hundreds of screws for a typical deck.",
+      "Not accounting for the 5-10% waste factor on decking boards.",
+      "Using wrong joist spacing for the decking type - composite often requires 12\" spacing.",
+      "Forgetting ledger board, flashing, and attachment hardware for house-attached decks."
+    ]
+  };
 
   const calculateDeck = () => {
     const len = parseFloat(length);
@@ -169,8 +220,15 @@ export default function DeckCalculator() {
   return (
     <CalculatorLayout
       title="Deck Calculator"
-      description="Calculate materials for building a deck. Includes decking, joists, posts, and railing estimates with cost breakdown."
+      description="Calculate deck materials including decking, framing, posts, and footings. Get complete material lists and cost estimates for your deck building project."
     >
+      <CalculatorSchema
+        name="Deck Calculator"
+        description="Free deck calculator to estimate materials and costs. Calculate decking, joists, posts, footings, and fasteners for your deck building project."
+        url="/calculators/deck"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -412,6 +470,13 @@ export default function DeckCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

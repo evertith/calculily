@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import CalculatorLayout from '@/components/CalculatorLayout';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 import FAQ from '@/components/FAQ';
 import RelatedCalculators from '@/components/RelatedCalculators';
 import ProductRecommendation from '@/components/ProductRecommendation';
@@ -43,21 +45,69 @@ export default function TipCalculator() {
 
   const relatedCalculators = [
     {
-      title: "Fuel Cost Calculator",
-      link: "/calculators/fuel-cost",
-      description: "Calculate fuel costs for trips and travel"
+      title: "Discount Calculator",
+      link: "/calculators/discount",
+      description: "Calculate sale prices and savings on purchases"
     },
     {
-      title: "Loan Calculator",
-      link: "/calculators/loan",
-      description: "Calculate loan payments and total interest"
+      title: "Sales Tax Calculator",
+      link: "/calculators/sales-tax",
+      description: "Calculate sales tax for any state or custom rate"
     },
     {
-      title: "Mortgage Calculator",
-      link: "/calculators/mortgage",
-      description: "Estimate your monthly mortgage payments"
+      title: "Percentage Calculator",
+      link: "/calculators/percentage",
+      description: "Calculate percentages, increases, and decreases"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Calculating the right tip is simple with our calculator. Here's how to get an accurate tip amount in seconds:",
+      steps: [
+        "Enter your total bill amount before tax (though calculating on the post-tax total is also acceptable and common).",
+        "Select a preset tip percentage (15%, 18%, or 20%) or enter a custom percentage that matches the service level.",
+        "If you're splitting the bill, enter the number of people in your party.",
+        "Click 'Calculate Tip' to see the tip amount, total with tip, and each person's share."
+      ]
+    },
+    whyMatters: {
+      description: "Tipping is more than just a social custom in the United States - it's a significant part of how service industry workers earn their living. Many servers, bartenders, and delivery drivers earn a base wage below minimum wage, with the expectation that tips will make up the difference. Understanding appropriate tipping helps you show appreciation for good service while supporting workers who depend on gratuities.",
+      benefits: [
+        "Quickly calculate the exact tip amount without mental math errors",
+        "Easily split bills among groups for fair, hassle-free payments",
+        "Ensure you're tipping appropriately for the level of service received",
+        "Avoid awkward moments of under-tipping or over-calculating at the table"
+      ]
+    },
+    examples: [
+      {
+        title: "Dinner for Two",
+        scenario: "You and a friend have dinner with a $75 bill before tax. The service was excellent, so you want to tip 20%.",
+        calculation: "$75 × 20% = $75 × 0.20 = $15 tip",
+        result: "Total: $90.00 | Per person: $45.00"
+      },
+      {
+        title: "Group Lunch",
+        scenario: "A work lunch for 5 people comes to $125. You decide on a standard 18% tip and want to split evenly.",
+        calculation: "$125 × 18% = $22.50 tip | Total: $147.50",
+        result: "Per person: $29.50"
+      },
+      {
+        title: "Quick Service",
+        scenario: "You grab a $12 coffee and pastry at a counter-service cafe. You want to leave a 15% tip.",
+        calculation: "$12 × 15% = $1.80 tip",
+        result: "Total: $13.80"
+      }
+    ],
+    commonMistakes: [
+      "Forgetting to account for tax when tipping - while optional, many people tip on the pre-tax amount to avoid inflating the tip.",
+      "Not adjusting tip percentage based on service quality - 15% is for adequate service, 18-20% for good service, and 20%+ for exceptional service.",
+      "Splitting tips unevenly when someone had a much cheaper meal - consider calculating individual tips for fairness in mixed-order groups.",
+      "Forgetting to tip on delivery orders - delivery drivers rely on tips just like restaurant servers, typically 15-20% or $3-5 minimum.",
+      "Not tipping on discounted or comped items - tip should be calculated on what the meal would have cost at full price."
+    ]
+  };
 
   const calculateTip = () => {
     const bill = parseFloat(billAmount);
@@ -88,8 +138,14 @@ export default function TipCalculator() {
   return (
     <CalculatorLayout
       title="Tip Calculator"
-      description="Calculate tips and split bills easily with your dining companions."
+      description="Calculate tips and split bills easily with your dining companions. Enter your bill amount, choose a tip percentage, and instantly see the total with per-person amounts for group dining."
     >
+      <CalculatorSchema
+        name="Tip Calculator"
+        description="Free online tip calculator to calculate restaurant tips and split bills. Enter bill amount, tip percentage, and number of people for instant calculations."
+        url="/calculators/tip"
+        faqItems={faqItems}
+      />
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -201,6 +257,13 @@ export default function TipCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

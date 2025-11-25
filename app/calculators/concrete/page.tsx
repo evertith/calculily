@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 type ShapeType = 'slab' | 'footing' | 'column' | 'stairs';
 
@@ -174,25 +176,82 @@ export default function ConcreteCalculator() {
     {
       title: 'Fence Calculator',
       link: '/calculators/fence',
-      description: 'Calculate fence materials and concrete for posts'
+      description: 'Calculate fence posts, rails, and concrete for footings'
     },
     {
       title: 'Deck Calculator',
       link: '/calculators/deck',
-      description: 'Estimate decking and framing materials'
+      description: 'Estimate materials for your deck including footings'
     },
     {
       title: 'Drywall Calculator',
       link: '/calculators/drywall',
-      description: 'Calculate drywall sheets needed'
+      description: 'Calculate drywall sheets, tape, and mud for your project'
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Ordering the right amount of concrete prevents waste and costly delays. Here's how to calculate exactly what you need:",
+      steps: [
+        "Select your project type - slab (patios, driveways), footing (foundation walls), column (posts, piers), or stairs.",
+        "Enter the dimensions in feet and inches. For slabs, you'll need length, width, and thickness. Other shapes have specific measurements.",
+        "Adjust the waste factor if needed - 10% is standard, but complex forms or remote pours may need more.",
+        "Optionally enter your local concrete price per cubic yard to estimate total material cost.",
+        "Click 'Calculate' to see cubic yards needed, including the waste allowance."
+      ]
+    },
+    whyMatters: {
+      description: "Concrete is sold by the cubic yard, and getting the quantity wrong is expensive either way. Order too little and you'll have an incomplete pour, cold joints, and potentially need to tear out and start over. Order too much and you're paying for material you can't use - concrete trucks charge for full loads regardless of what you pour. Most suppliers require a minimum order of 1 cubic yard, and short-load fees apply for less than full trucks (typically 8-10 yards).",
+      benefits: [
+        "Avoid costly short pours that compromise structural integrity",
+        "Prevent over-ordering and paying for unused material",
+        "Account for waste from spillage, uneven subgrade, and form overflow",
+        "Plan accurate budgets with material cost estimates",
+        "Calculate complex shapes like stairs and columns with confidence"
+      ]
+    },
+    examples: [
+      {
+        title: "Patio Slab",
+        scenario: "You're pouring a 12' x 14' patio slab at 4 inches thick.",
+        calculation: "12 × 14 × (4/12) = 56 cubic feet ÷ 27 = 2.07 cubic yards + 10% waste",
+        result: "Order 2.3 cubic yards of concrete (about $350-$400 delivered)."
+      },
+      {
+        title: "Fence Post Footings",
+        scenario: "You need 15 fence post footings, each 10 inches diameter and 36 inches deep.",
+        calculation: "Each footing: π × (5/12)² × 3 = 1.64 cubic feet | Total: 24.5 cubic feet",
+        result: "Order 1 cubic yard (minimum order) - you'll have some extra for adjustments."
+      },
+      {
+        title: "Driveway",
+        scenario: "A 10' × 40' driveway at 5 inches thick in an area where concrete is $145/yard.",
+        calculation: "10 × 40 × (5/12) = 166.67 cubic feet ÷ 27 = 6.17 yards + 10% waste",
+        result: "Order 6.8 cubic yards at approximately $986 for material."
+      }
+    ],
+    commonMistakes: [
+      "Measuring in inches but forgetting to convert to feet - always double-check your units.",
+      "Forgetting that thickness is part of the volume - a 4-inch slab uses much less concrete than a 6-inch slab.",
+      "Not accounting for waste - forms leak, subgrade is uneven, and you'll always lose some to the mixer.",
+      "Ordering exactly the calculated amount with no buffer - always round up to avoid a short pour.",
+      "Not checking minimum order requirements - most suppliers won't deliver less than 1 cubic yard."
+    ]
+  };
 
   return (
     <CalculatorLayout
       title="Concrete Calculator"
-      description="Calculate cubic yards of concrete needed for slabs, footings, columns, and stairs"
+      description="Calculate cubic yards of concrete needed for slabs, footings, columns, and stairs. Includes waste factor and cost estimates for accurate material ordering."
     >
+      <CalculatorSchema
+        name="Concrete Calculator"
+        description="Free concrete calculator to estimate cubic yards for slabs, footings, columns, and stairs. Calculate material costs and avoid over or under-ordering concrete."
+        url="/calculators/concrete"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -470,6 +529,13 @@ export default function ConcreteCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

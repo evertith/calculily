@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function CarDepreciationCalculator() {
   const { trackCalculatorUsage, trackEvent } = useAnalytics();
@@ -58,19 +60,68 @@ export default function CarDepreciationCalculator() {
     {
       title: "Car Payment Calculator",
       link: "/calculators/car-payment",
-      description: "Calculate monthly car loan payments"
-    },
-    {
-      title: "Gas Mileage Calculator",
-      link: "/calculators/gas-mileage",
-      description: "Track your vehicle's fuel economy"
+      description: "Calculate monthly auto loan payments"
     },
     {
       title: "Fuel Cost Calculator",
       link: "/calculators/fuel-cost",
-      description: "Calculate trip fuel costs"
+      description: "Calculate fuel costs for trips"
+    },
+    {
+      title: "Gas Mileage Calculator",
+      link: "/calculators/gas-mileage",
+      description: "Track your vehicle's fuel efficiency"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Understand how your car's value changes over time with our depreciation calculator:",
+      steps: [
+        "Enter the original purchase price or current value of the vehicle.",
+        "Input the vehicle's age in years or select a depreciation timeline.",
+        "Choose the depreciation rate - standard is 15-20% per year, luxury vehicles depreciate faster.",
+        "Click 'Calculate' to see projected values over time."
+      ]
+    },
+    whyMatters: {
+      description: "The average new car loses 20% of its value in the first year and about 60% over five years. Understanding depreciation helps you make smarter buying decisions - sometimes a 2-3 year old car offers much better value than buying new. Depreciation also matters for insurance, trade-ins, and knowing when to sell before major value drops. For those considering leasing vs buying, depreciation is the hidden cost that makes the difference.",
+      benefits: [
+        "Make informed decisions about buying new vs used vehicles",
+        "Understand the true cost of ownership over time",
+        "Time your sale or trade-in for maximum value",
+        "Compare depreciation rates between different vehicle types",
+        "Calculate equity in your vehicle for loan or trade decisions"
+      ]
+    },
+    examples: [
+      {
+        title: "New Car First Year",
+        scenario: "You buy a $35,000 new car. How much value does it lose in year one?",
+        calculation: "$35,000 × 20% first-year depreciation",
+        result: "Worth approximately $28,000 after one year - a $7,000 loss just driving off the lot."
+      },
+      {
+        title: "Five-Year Projection",
+        scenario: "A $45,000 SUV with standard 15% annual depreciation after year one.",
+        calculation: "Year 1: $36,000 → Year 2: $30,600 → Year 3: $26,010 → Year 4: $22,109 → Year 5: $18,793",
+        result: "After 5 years, worth ~$18,800 (42% of original price)."
+      },
+      {
+        title: "Used Car Value",
+        scenario: "Considering a 3-year-old luxury sedan originally $60,000, now listed at $32,000.",
+        calculation: "Standard depreciation would put it at ~$34,000. Listed at $32,000.",
+        result: "The asking price is reasonable - slightly below average depreciation curve."
+      }
+    ],
+    commonMistakes: [
+      "Assuming all cars depreciate equally - luxury cars, EVs, and certain brands hold value differently.",
+      "Forgetting that mileage affects value independently of age - high-mileage cars depreciate faster.",
+      "Not considering that some models hold value exceptionally well (Toyotas, Porsches) vs others.",
+      "Ignoring condition factors - accidents, maintenance history, and wear significantly impact value.",
+      "Using new car prices for used car calculations without adjusting for initial depreciation hit."
+    ]
+  };
 
   const calculateCurrentValue = (price: number, years: number, type: string): number => {
     const rates = depreciationRates[type];
@@ -133,8 +184,15 @@ export default function CarDepreciationCalculator() {
   return (
     <CalculatorLayout
       title="Car Depreciation Calculator"
-      description="Calculate vehicle depreciation and estimated current or future value based on age, type, and mileage."
+      description="Calculate how your car's value decreases over time. Estimate future vehicle worth for trade-ins, sales, and understanding true ownership costs."
     >
+      <CalculatorSchema
+        name="Car Depreciation Calculator"
+        description="Free car depreciation calculator to estimate your vehicle's future value. See how cars lose value over time and plan for trade-ins or sales."
+        url="/calculators/car-depreciation"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -326,6 +384,13 @@ export default function CarDepreciationCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

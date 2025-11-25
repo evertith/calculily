@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 export default function GasMileageCalculator() {
   const { trackCalculatorUsage, trackEvent } = useAnalytics();
@@ -48,19 +50,69 @@ export default function GasMileageCalculator() {
     {
       title: "Fuel Cost Calculator",
       link: "/calculators/fuel-cost",
-      description: "Calculate total fuel cost for a trip"
-    },
-    {
-      title: "Car Payment Calculator",
-      link: "/calculators/car-payment",
-      description: "Calculate monthly car loan payments"
+      description: "Calculate fuel costs for any trip"
     },
     {
       title: "Car Depreciation Calculator",
       link: "/calculators/car-depreciation",
-      description: "Estimate vehicle value over time"
+      description: "Track your car's value over time"
+    },
+    {
+      title: "Car Payment Calculator",
+      link: "/calculators/car-payment",
+      description: "Calculate monthly auto loan payments"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Track your actual fuel efficiency by recording fill-ups. Here's how to calculate your real-world MPG:",
+      steps: [
+        "Fill your tank completely and note your odometer reading (or reset your trip odometer).",
+        "Drive normally until you need to refuel.",
+        "Fill up again and record the gallons pumped and new odometer reading.",
+        "Enter the miles driven and gallons used into the calculator.",
+        "Click 'Calculate' to see your actual miles per gallon."
+      ]
+    },
+    whyMatters: {
+      description: "Your vehicle's actual fuel economy often differs significantly from EPA ratings. Real-world MPG depends on your driving style, terrain, weather, tire pressure, and vehicle condition. Tracking your gas mileage helps you spot problems early - a sudden drop in MPG often indicates maintenance issues like dirty air filters, underinflated tires, or engine problems. Regular tracking also helps you understand how your driving habits affect fuel costs.",
+      benefits: [
+        "Monitor vehicle health - sudden MPG drops indicate potential problems",
+        "Understand how driving habits affect fuel economy",
+        "Verify if vehicle modifications actually improve efficiency",
+        "Track seasonal variations in fuel economy",
+        "Make informed decisions about vehicle maintenance"
+      ]
+    },
+    examples: [
+      {
+        title: "Weekly Commute",
+        scenario: "You drove 280 miles this week and filled up with 9.5 gallons.",
+        calculation: "280 miles ÷ 9.5 gallons",
+        result: "29.5 MPG - pretty good for mixed driving!"
+      },
+      {
+        title: "Road Trip Check",
+        scenario: "Highway trip: 450 miles on 12.8 gallons in your sedan rated for 35 MPG highway.",
+        calculation: "450 ÷ 12.8 = 35.2 MPG",
+        result: "You're right at the EPA rating - your car is running efficiently."
+      },
+      {
+        title: "Detecting a Problem",
+        scenario: "Usually get 26 MPG but this tank calculated to only 21 MPG (195 miles on 9.3 gallons).",
+        calculation: "195 ÷ 9.3 = 21 MPG (19% below normal)",
+        result: "Check tire pressure, air filter, or driving conditions - something's affecting efficiency."
+      }
+    ],
+    commonMistakes: [
+      "Not filling the tank completely - partial fills give inaccurate MPG calculations.",
+      "Using one tank's data as gospel - average several fill-ups for accurate baseline MPG.",
+      "Comparing city driving MPG to highway ratings - they're very different scenarios.",
+      "Forgetting that MPG varies seasonally - winter fuel, cold engines, and snow tires reduce efficiency.",
+      "Not resetting the trip odometer at fill-up - guessing at miles driven leads to inaccurate results."
+    ]
+  };
 
   const calculateMPG = () => {
     if (calculationType === 'simple') {
@@ -107,8 +159,15 @@ export default function GasMileageCalculator() {
   return (
     <CalculatorLayout
       title="Gas Mileage Calculator"
-      description="Track your vehicle's fuel economy and calculate MPG, cost per mile, and trip fuel costs."
+      description="Calculate your vehicle's actual MPG by tracking fill-ups. Enter miles driven and gallons used to monitor your real-world fuel efficiency."
     >
+      <CalculatorSchema
+        name="Gas Mileage Calculator"
+        description="Free MPG calculator to track your vehicle's actual fuel efficiency. Enter miles driven and gallons used to calculate real-world gas mileage."
+        url="/calculators/gas-mileage"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -273,6 +332,13 @@ export default function GasMileageCalculator() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />

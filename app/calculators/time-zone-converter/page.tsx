@@ -9,6 +9,8 @@ import AdUnit from '@/components/AdUnit';
 import { getProducts } from '@/lib/affiliateLinks';
 import { useAnalytics } from '@/lib/useAnalytics';
 import styles from '@/styles/Calculator.module.css';
+import CalculatorSchema from '@/components/CalculatorSchema';
+import CalculatorContent from '@/components/CalculatorContent';
 
 interface TimeZone {
   name: string;
@@ -135,19 +137,68 @@ export default function TimeZoneConverter() {
     {
       title: "Date Calculator",
       link: "/calculators/date-calculator",
-      description: "Calculate days between dates and date math"
+      description: "Calculate days between dates"
     },
     {
       title: "Age Calculator",
       link: "/calculators/age-calculator",
-      description: "Calculate your exact age from birthdate"
+      description: "Calculate age in years, months, days"
     },
     {
       title: "Unit Converter",
       link: "/calculators/unit-converter",
-      description: "Convert between various units of measurement"
+      description: "Convert units of measurement"
     }
   ];
+
+  const contentData = {
+    howToUse: {
+      intro: "Convert times between any world time zones for meetings, calls, and travel planning:",
+      steps: [
+        "Enter the time you want to convert.",
+        "Select the source time zone (where the time is currently).",
+        "Select the target time zone (where you want to know the time).",
+        "See the converted time instantly, with date change indicators if applicable."
+      ]
+    },
+    whyMatters: {
+      description: "In our globally connected world, time zone conversions are a daily necessity. Remote teams span continents, international business operates around the clock, and travel plans cross multiple zones. Getting time zones wrong means missed meetings, confused travel itineraries, and frustrated colleagues. A reliable converter prevents these errors and helps you find meeting times that work for everyone.",
+      benefits: [
+        "Schedule international meetings without confusion",
+        "Plan travel arrivals and departures accurately",
+        "Know when to call friends and family abroad",
+        "Convert broadcast times for international events",
+        "Coordinate with remote team members across time zones"
+      ]
+    },
+    examples: [
+      {
+        title: "International Meeting",
+        scenario: "Scheduling a call between New York, London, and Tokyo at 9am ET.",
+        calculation: "9am ET = 2pm GMT = 11pm JST",
+        result: "9am New York works for London (2pm) but is tough for Tokyo (11pm) - try earlier."
+      },
+      {
+        title: "Flight Arrival",
+        scenario: "Flight departs LAX at 3pm PST, flies 11 hours to Paris.",
+        calculation: "3pm PST + 11 hours = 2am PST next day = 11am Paris time (CET)",
+        result: "You'll arrive at 11am Paris time despite leaving at 3pm - jet lag awaits!"
+      },
+      {
+        title: "Live Event",
+        scenario: "Soccer match kicks off at 8pm London time. When is that in Chicago?",
+        calculation: "8pm GMT - 6 hours (CST)",
+        result: "2pm Chicago time - a nice afternoon watch!"
+      }
+    ],
+    commonMistakes: [
+      "Forgetting about Daylight Saving Time changes - not all regions observe DST, and dates differ.",
+      "Confusing time zone abbreviations - EST and EDT are different (Eastern Standard vs Daylight).",
+      "Not accounting for date changes - 11pm in one zone might be tomorrow in another.",
+      "Assuming all time zones are whole hours - India is UTC+5:30, Nepal is UTC+5:45.",
+      "Using outdated time zone information - zones occasionally change due to political decisions."
+    ]
+  };
 
   const getCurrentTime = (timezone: string): string => {
     const now = new Date();
@@ -163,8 +214,15 @@ export default function TimeZoneConverter() {
   return (
     <CalculatorLayout
       title="Time Zone Converter"
-      description="Convert time between time zones worldwide. Find meeting times across time zones and see current time in different zones."
+      description="Convert times between any world time zones. Schedule international meetings, plan travel, and coordinate across time zones with ease."
     >
+      <CalculatorSchema
+        name="Time Zone Converter"
+        description="Free time zone converter for any world city. Convert times between time zones for scheduling international meetings, calls, and travel planning."
+        url="/calculators/time-zone-converter"
+        faqItems={faqItems}
+      />
+
       {/* Top Banner Ad */}
       <AdUnit adSlot="6981760215" className="ad-top-banner" />
 
@@ -288,6 +346,13 @@ export default function TimeZoneConverter() {
 
       {/* Sidebar Square Ad */}
       <AdUnit adSlot="5668678546" className="ad-sidebar" />
+
+      <CalculatorContent
+        howToUse={contentData.howToUse}
+        whyMatters={contentData.whyMatters}
+        examples={contentData.examples}
+        commonMistakes={contentData.commonMistakes}
+      />
 
       <FAQ items={faqItems} />
       <RelatedCalculators calculators={relatedCalculators} />
