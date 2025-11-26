@@ -4,42 +4,47 @@ import styles from "@/styles/Home.module.css";
 export default function Home() {
   const categories = [
     {
-      name: "Home & Property",
+      name: "Construction Calculators",
       calculators: [
+        {
+          title: "All Construction Calculators",
+          description: "40+ calculators for concrete, roofing, decking, and more",
+          link: "/construction",
+        },
         {
           title: "Concrete Calculator",
           description: "Calculate cubic yards for slabs, footings, and more",
           link: "/calculators/concrete",
         },
         {
-          title: "Lumber Calculator",
-          description: "Calculate board feet and framing materials",
-          link: "/calculators/lumber",
+          title: "Roofing Calculator",
+          description: "Calculate shingles, underlayment, and roofing materials",
+          link: "/construction/roofing",
         },
         {
-          title: "Paint Calculator",
-          description: "Calculate gallons of paint needed for walls and ceilings",
-          link: "/calculators/paint",
+          title: "Deck Board Calculator",
+          description: "Calculate deck boards with optimized layouts",
+          link: "/construction/deck-boards",
         },
         {
-          title: "Fence Calculator",
-          description: "Calculate fence materials and concrete for posts",
-          link: "/calculators/fence",
+          title: "Tile Calculator",
+          description: "Calculate tiles, grout, and thinset needed",
+          link: "/construction/tile",
         },
         {
-          title: "Insulation Calculator",
-          description: "Calculate R-value and insulation materials needed",
-          link: "/calculators/insulation",
+          title: "Mulch Calculator",
+          description: "Calculate cubic yards of mulch for landscaping",
+          link: "/construction/mulch",
         },
         {
-          title: "Drywall Calculator",
-          description: "Calculate drywall sheets, mud, and materials",
-          link: "/calculators/drywall",
+          title: "Stud Calculator",
+          description: "Calculate wall studs, plates, and headers",
+          link: "/construction/stud",
         },
         {
-          title: "Deck Calculator",
-          description: "Calculate deck materials, joists, and railings",
-          link: "/calculators/deck",
+          title: "Gravel Calculator",
+          description: "Calculate gravel for driveways and paths",
+          link: "/construction/gravel",
         },
       ],
     },
@@ -84,36 +89,6 @@ export default function Home() {
       ],
     },
     {
-      name: "Automotive",
-      calculators: [
-        {
-          title: "Gas Mileage Tracker",
-          description: "Track and calculate your MPG",
-          link: "/calculators/gas-mileage",
-        },
-        {
-          title: "Tire Size Calculator",
-          description: "Compare tire sizes and speedometer error",
-          link: "/calculators/tire-size",
-        },
-        {
-          title: "Car Payment Calculator",
-          description: "Calculate car loan payments with trade-in",
-          link: "/calculators/car-payment",
-        },
-        {
-          title: "Car Depreciation Calculator",
-          description: "Calculate vehicle depreciation over time",
-          link: "/calculators/car-depreciation",
-        },
-        {
-          title: "Fuel Cost Calculator",
-          description: "Calculate trip fuel costs",
-          link: "/calculators/fuel-cost",
-        },
-      ],
-    },
-    {
       name: "Math & Conversions",
       calculators: [
         {
@@ -130,61 +105,6 @@ export default function Home() {
           title: "Cooking Converter",
           description: "Convert cooking measurements and ingredients",
           link: "/calculators/cooking-converter",
-        },
-      ],
-    },
-    {
-      name: "Date & Time",
-      calculators: [
-        {
-          title: "Date Calculator",
-          description: "Calculate days between dates and date math",
-          link: "/calculators/date-calculator",
-        },
-        {
-          title: "Age Calculator",
-          description: "Calculate your exact age and next birthday",
-          link: "/calculators/age-calculator",
-        },
-        {
-          title: "Time Zone Converter",
-          description: "Convert time between time zones worldwide",
-          link: "/calculators/time-zone-converter",
-        },
-      ],
-    },
-    {
-      name: "Finance & Money",
-      calculators: [
-        {
-          title: "Mortgage Calculator",
-          description: "Calculate monthly payments and total interest",
-          link: "/calculators/mortgage",
-        },
-        {
-          title: "Loan Calculator",
-          description: "Calculate loan payments and amortization",
-          link: "/calculators/loan",
-        },
-        {
-          title: "Simple Interest Calculator",
-          description: "Calculate simple interest on loans and savings",
-          link: "/calculators/simple-interest",
-        },
-        {
-          title: "Sales Tax Calculator",
-          description: "Calculate sales tax by state or custom rate",
-          link: "/calculators/sales-tax",
-        },
-        {
-          title: "Discount Calculator",
-          description: "Calculate sale prices and savings",
-          link: "/calculators/discount",
-        },
-        {
-          title: "Tip Calculator",
-          description: "Calculate tips and split bills",
-          link: "/calculators/tip",
         },
       ],
     },
@@ -215,16 +135,6 @@ export default function Home() {
           title: "Etsy Pricing Calculator",
           description: "Price your handmade products profitably",
           link: "/calculators/etsy-pricing",
-        },
-      ],
-    },
-    {
-      name: "Education",
-      calculators: [
-        {
-          title: "GPA Calculator",
-          description: "Calculate your grade point average",
-          link: "/calculators/gpa-calculator",
         },
       ],
     },
