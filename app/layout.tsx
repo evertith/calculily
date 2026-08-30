@@ -1,8 +1,18 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Fraunces } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PromoBanner from "@/components/PromoBanner";
+
+// Display face for The House Year promo banner only (self-hosted via next/font).
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["600"],
+  display: "swap",
+  variable: "--font-house-year",
+});
 
 export const metadata: Metadata = {
   title: "Calculily - Free Online Calculators",
@@ -16,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={fraunces.variable}>
       <head>
         <script src="https://analytics.ahrefs.com/analytics.js" data-key="jUJM8Zx+auuWSu8HGjT0kQ" async></script>
         <Script
@@ -28,6 +38,7 @@ export default function RootLayout({
       </head>
       <body>
         <Header />
+        <PromoBanner />
         <main>{children}</main>
         <Footer />
       </body>
