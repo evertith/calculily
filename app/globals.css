@@ -7,10 +7,16 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
   background-color: #0a0a0a;
   color: #e0e0e0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Only on <html>: it propagates to the viewport. Putting overflow-x: hidden
+   on <body> too would make body a scroll container, which silently breaks
+   position: sticky (the promo banner). */
+html {
+  overflow-x: hidden;
 }
 
 a {
